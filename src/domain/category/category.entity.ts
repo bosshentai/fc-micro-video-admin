@@ -1,5 +1,11 @@
+import { AggregateRoot } from "../shared/domain/aggregate-root";
+import { Uuid } from "../shared/domain/value-objects/uuid.vo";
+import { ValidatorRules } from "../shared/domain/validator/validator-rules";
+import { CategoryValidatorFactory } from "./category.validator";
+import { ValueObject } from "../shared/domain/value-object";
+
 export type CategoryConstructorProps = {
-  category_id?: string;
+  category_id?: Uuid;
   name: string;
   description?: string | null;
   is_active?: boolean;
@@ -12,8 +18,8 @@ export type CategoryCreatedCommand = {
   is_active?: boolean;
 };
 
-export class Category {
-  category_id: string;
+export class Category extends AggregateRoot {
+  category_id: Uuid;
   name: string;
 
   description: string | null;
@@ -23,7 +29,8 @@ export class Category {
   created_at: Date;
 
   constructor(props: CategoryConstructorProps) {
-    this.category_id = props.category_id;
+    super();
+    this.category_id = props.category_id ?? new Uuid();
     this.name = props.name;
     this.description = props.description ?? null;
     this.is_active = props.is_active ?? true;
@@ -33,10 +40,12 @@ export class Category {
   // factory
   static create(props: CategoryCreatedCommand): Category {
     // good for events
+
     return new Category(props);
   }
 
   changeName(name: string): void {
+    ValidatorRules.values(name, "name").required().string().maxLength(255);
     this.name = name;
   }
 
@@ -52,9 +61,18 @@ export class Category {
     this.is_active = false;
   }
 
+  get entity_id(): ValueObject {
+    throw new Error("Method not implemented.");
+  }
+
+  static validate(fields?: string[]) {
+    const validator = CategoryValidatorFactory.create();
+    return validator.validate(this.notification, this, fields);
+  }
+
   toJSON() {
     return {
-      category_id: this.category_id,
+      category_id: this.category_id.id,
       name: this.name,
       description: this.description,
       is_active: this.is_active,
