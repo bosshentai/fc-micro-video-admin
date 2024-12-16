@@ -1,8 +1,9 @@
-import { AggregateRoot } from "../shared/domain/aggregate-root";
-import { Uuid } from "../shared/domain/value-objects/uuid.vo";
-import { ValidatorRules } from "../shared/domain/validator/validator-rules";
+import { AggregateRoot } from "../../shared/domain/aggregate-root";
+import { Uuid } from "../../shared/domain/value-objects/uuid.vo";
+import { ValidatorRules } from "../../shared/domain/validator/validator-rules";
 import { CategoryValidatorFactory } from "./category.validator";
-import { ValueObject } from "../shared/domain/value-object";
+import { ValueObject } from "../../shared/domain/value-object";
+import { EntityValidationError } from "../../shared/domain/validator/validation.error";
 
 export type CategoryConstructorProps = {
   category_id?: Uuid;
@@ -39,18 +40,23 @@ export class Category extends AggregateRoot {
 
   // factory
   static create(props: CategoryCreatedCommand): Category {
+    const category = new Category(props);
+    Category.validate(category);
     // good for events
 
-    return new Category(props);
+    return category;
   }
 
   changeName(name: string): void {
-    ValidatorRules.values(name, "name").required().string().maxLength(255);
+    // ValidatorRules.values(name, "name").required().string().maxLength(255);
     this.name = name;
+    Category.validate(this);
   }
 
   changeDescription(description: string): void {
     this.description = description;
+    Category.validate(this);
+    // this.validate(["description"]);
   }
 
   activate() {
@@ -65,9 +71,14 @@ export class Category extends AggregateRoot {
     throw new Error("Method not implemented.");
   }
 
-  static validate(fields?: string[]) {
+  static validate(entity?: Category) {
     const validator = CategoryValidatorFactory.create();
-    return validator.validate(this.notification, this, fields);
+    const isValid = validator.validate(entity);
+
+    if (!isValid) {
+      throw new EntityValidationError(validator.errors);
+    }
+    // return validator.validate(this.notification, this, fields);
   }
 
   toJSON() {

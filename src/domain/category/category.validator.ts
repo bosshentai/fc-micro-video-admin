@@ -6,8 +6,8 @@ import {
   MaxLength,
 } from "class-validator";
 import { Category } from "./category.entity";
-import { ClassValidatorFields } from "../shared/domain/validator/class-validator-fields";
-import { Notification } from "../shared/domain/validator/notification";
+import { ClassValidatorFields } from "../../shared/domain/validator/class-validator-fields";
+import { Notification } from "../../shared/domain/validator/notification";
 
 export class CategoryRules {
   @MaxLength(255)

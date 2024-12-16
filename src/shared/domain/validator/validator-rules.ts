@@ -1,4 +1,4 @@
-import { ValidationError } from "./valitaion.error";
+import { ValidationError } from "./validation.error";
 
 export class ValidatorRules {
   private constructor(private value: any, private property: string) {}
