@@ -3,11 +3,10 @@ import { Uuid } from "../../../shared/domain/value-objects/uuid.vo";
 import { Category } from "../category.entity";
 
 describe("Category Unit Test", () => {
-  // let validateSp: jest.SpyInstance;
-
-  // beforeEach(() => {
-  //   validateSpy = jest.spyOn(Category, "validate");
-  // });
+  let validateSpy: any;
+  beforeEach(() => {
+    validateSpy = jest.spyOn(Category, "validate");
+  });
 
   describe("constructor", () => {
     test("should create a category with default values", () => {
@@ -66,6 +65,7 @@ describe("Category Unit Test", () => {
       expect(category.description).toBeNull();
       expect(category.is_active).toBe(true);
       expect(category.created_at).toBeInstanceOf(Date);
+      expect(validateSpy).toHaveBeenCalledTimes(1);
     });
 
     test("should create a category with description", () => {
@@ -80,6 +80,7 @@ describe("Category Unit Test", () => {
       expect(category.description).toBe("some description");
       expect(category.is_active).toBe(true);
       expect(category.created_at).toBeInstanceOf(Date);
+      expect(validateSpy).toHaveBeenCalledTimes(1);
     });
 
     test("should create a category with is_active", () => {
@@ -94,6 +95,7 @@ describe("Category Unit Test", () => {
       expect(category.description).toBeNull();
       expect(category.is_active).toBeFalsy();
       expect(category.created_at).toBeInstanceOf(Date);
+      expect(validateSpy).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -240,6 +242,28 @@ describe("Category Validator", () => {
       expect(() => category.changeDescription(5 as any)).containsErrorMessage({
         description: ["description must be a string"],
       });
+    });
+  });
+});
+
+describe("Category abstration Entity Test ", () => {
+  describe("constructor", () => {
+    test("should get the entity_id", () => {
+      const category = new Category({
+        name: "Movie",
+      });
+
+      expect(category.entity_id).toBeInstanceOf(Uuid);
+    });
+  });
+
+  describe("create command", () => {
+    test("should get the entity_id", () => {
+      const category = Category.create({
+        name: "Movie",
+      });
+
+      expect(category.entity_id).toBeInstanceOf(Uuid);
     });
   });
 });
