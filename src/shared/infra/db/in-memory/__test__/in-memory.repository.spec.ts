@@ -1,7 +1,7 @@
-import { Entity } from "../../../domain/entity";
-import { Uuid } from "../../../domain/value-objects/uuid.vo";
-import { NotFoundError } from "../../../domain/errors/not-found.error";
-import { InMemoryRepository } from "./in-memory.repository";
+import { Entity } from "../../../../domain/entity";
+import { Uuid } from "../../../../domain/value-objects/uuid.vo";
+import { NotFoundError } from "../../../../domain/errors/not-found.error";
+import { InMemoryRepository } from "../in-memory.repository";
 
 type StubEntityConstructor = {
   entity_id?: Uuid;
@@ -27,14 +27,12 @@ class StubEntity extends Entity {
       name: this.name,
       price: this.price,
     };
-    // throw new Error("Method not implemented.");
   }
 }
 
 class StubInMemoryRepository extends InMemoryRepository<StubEntity, Uuid> {
   getEntity(): new (...args: any[]) => StubEntity {
     return StubEntity;
-    // throw new Error("Method not implemented.");
   }
 }
 
@@ -109,25 +107,25 @@ describe("InMemoryRepository Unit Test", () => {
     expect(entityUpdated.toJSON()).toStrictEqual(repo.items[0].toJSON());
   });
 
-  // it("should throws errors on delete when entity not found", async () => {
-  //   const uuid = new Uuid();
+  it("should throws errors on delete when entity not found", async () => {
+    const uuid = new Uuid();
 
-  //   await expect(repo.delete(uuid)).rejects.toThrow(
-  //     new NotFoundError(uuid.id, StubEntity)
-  //   );
+    await expect(repo.delete(uuid)).rejects.toThrow(
+      new NotFoundError(uuid.id, StubEntity)
+    );
 
-  //   await expect(
-  //     repo.delete(new Uuid("6fee3721-455a-41b3-8c3c-173e3608ac0e"))
-  //   ).rejects.toThrow(
-  //     new NotFoundError("6fee3721-455a-41b3-8c3c-173e3608ac0e", StubEntity)
-  //   );
-  // });
+    await expect(
+      repo.delete(new Uuid("6fee3721-455a-41b3-8c3c-173e3608ac0e"))
+    ).rejects.toThrow(
+      new NotFoundError("6fee3721-455a-41b3-8c3c-173e3608ac0e", StubEntity)
+    );
+  });
 
-  // it("should delete an entity", async () => {
-  //   const entity = new StubEntity({ name: "name value", price: 5 });
-  //   await repo.insert(entity);
+  it("should delete an entity", async () => {
+    const entity = new StubEntity({ name: "name value", price: 5 });
+    await repo.insert(entity);
 
-  //   await repo.delete(entity.entity_id);
-  //   expect(repo.items).toHaveLength(0);
-  // });
+    await repo.delete(entity.entity_id);
+    expect(repo.items).toHaveLength(0);
+  });
 });
