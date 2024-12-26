@@ -1,12 +1,12 @@
 import { Entity } from "../../../domain/entity";
-import { IRepositorry } from "../../domain/repository/repository-interface";
+import { IRepository } from "../../../domain/repository/repository-interface";
 import { ValueObject } from "../../../domain/value-object";
-import { NotFoundError } from "../../../errors/not-found.error";
+import { NotFoundError } from "../../../domain/errors/not-found.error";
 
 export abstract class InMemoryRepository<
   E extends Entity,
   EntityId extends ValueObject
-> implements IRepositorry<E, EntityId>
+> implements IRepository<E, EntityId>
 {
   items: E[] = [];
   async insert(entity: any): Promise<void> {
@@ -21,7 +21,6 @@ export abstract class InMemoryRepository<
     );
 
     if (indexFound === -1) {
-      // throw new Error("Entity not found");
       throw new NotFoundError(entity.entity_id, this.getEntity());
     }
     this.items[indexFound] = entity;
