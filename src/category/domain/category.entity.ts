@@ -1,9 +1,9 @@
-import { AggregateRoot } from "../../shared/domain/aggregate-root";
 import { Uuid } from "../../shared/domain/value-objects/uuid.vo";
 import { ValidatorRules } from "../../shared/domain/validator/validator-rules";
 import { CategoryValidatorFactory } from "./category.validator";
 import { ValueObject } from "../../shared/domain/value-object";
 import { EntityValidationError } from "../../shared/domain/validator/validation.error";
+import { Entity } from "../../shared/domain/entity";
 
 export type CategoryConstructorProps = {
   category_id?: Uuid;
@@ -19,7 +19,7 @@ export type CategoryCreatedCommand = {
   is_active?: boolean;
 };
 
-export class Category extends AggregateRoot {
+export class Category extends Entity {
   category_id: Uuid;
   name: string;
 
