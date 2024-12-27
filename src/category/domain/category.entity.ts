@@ -4,6 +4,7 @@ import { CategoryValidatorFactory } from "./category.validator";
 import { ValueObject } from "../../shared/domain/value-object";
 import { EntityValidationError } from "../../shared/domain/validator/validation.error";
 import { Entity } from "../../shared/domain/entity";
+import { CategoryFakeBuilder } from "./category-fake.builder";
 
 export type CategoryConstructorProps = {
   category_id?: Uuid;
@@ -41,7 +42,7 @@ export class Category extends Entity {
   // factory
   static create(props: CategoryCreatedCommand): Category {
     const category = new Category(props);
-    Category.validate(category);
+    category.validate(["name"]);
     // good for events
 
     return category;
@@ -50,12 +51,12 @@ export class Category extends Entity {
   changeName(name: string): void {
     // ValidatorRules.values(name, "name").required().string().maxLength(255);
     this.name = name;
-    Category.validate(this);
+    this.validate(["name"]);
   }
 
   changeDescription(description: string): void {
     this.description = description;
-    Category.validate(this);
+    // Category.validate(this);
     // this.validate(["description"]);
   }
 
@@ -71,14 +72,13 @@ export class Category extends Entity {
     throw new Error("Method not implemented.");
   }
 
-  static validate(entity?: Category) {
+  validate(fields?: string[]) {
     const validator = CategoryValidatorFactory.create();
-    const isValid = validator.validate(entity);
+    return validator.validate(this.notification, this, fields);
+  }
 
-    if (!isValid) {
-      throw new EntityValidationError(validator.errors);
-    }
-    // return validator.validate(this.notification, this, fields);
+  static fake() {
+    return CategoryFakeBuilder;
   }
 
   toJSON() {
