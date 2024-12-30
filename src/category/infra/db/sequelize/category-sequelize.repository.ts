@@ -16,8 +16,8 @@ export class CategorySequelizeRepository implements ICategoryRepository {
   constructor(private categoryModel: typeof CategoryModel) {}
 
   async insert(entity: Category): Promise<void> {
-    const model = CategoryModelMapper.toModel(entity);
-    await this.categoryModel.create(model.toJSON());
+    const modelProps = CategoryModelMapper.toModel(entity);
+    await this.categoryModel.create(modelProps.toJSON());
     // await this.categoryModel.create({
     //   category_id: entity.category_id.id,
     //   name: entity.name,
@@ -28,7 +28,7 @@ export class CategorySequelizeRepository implements ICategoryRepository {
   }
   async bulkInsert(entities: Category[]): Promise<void> {
     const models = entities.map((entities) =>
-      CategoryModelMapper.toModel(entities)
+      CategoryModelMapper.toModel(entities).toJSON()
     );
     await this.categoryModel.bulkCreate(models);
     // await this.categoryModel.bulkCreate(
@@ -49,9 +49,9 @@ export class CategorySequelizeRepository implements ICategoryRepository {
       throw new NotFoundError(id, this.getEntity());
     }
 
-    const modelToUpdate = CategoryModelMapper.toModel(entity);
+    const modelProps = CategoryModelMapper.toModel(entity);
 
-    await this.categoryModel.update(modelToUpdate.toJSON(), {
+    await this.categoryModel.update(modelProps.toJSON(), {
       where: {
         category_id: id,
       },
@@ -139,13 +139,14 @@ export class CategorySequelizeRepository implements ICategoryRepository {
 
     return new CategorySearchResult({
       items: models.map((model) => {
-        return new Category({
-          category_id: new Uuid(model.category_id),
-          name: model.name,
-          description: model.description,
-          is_active: model.is_active,
-          created_at: model.created_at,
-        });
+        return CategoryModelMapper.toEntity(model);
+        // return new Category({
+        //   category_id: new Uuid(model.category_id),
+        //   name: model.name,
+        //   description: model.description,
+        //   is_active: model.is_active,
+        //   created_at: model.created_at,
+        // });
       }),
       total: count,
       current_page: props.page,
