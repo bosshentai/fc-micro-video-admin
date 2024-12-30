@@ -23,15 +23,16 @@ export class CategoryRules {
   @IsNotEmpty()
   is_active: boolean;
 
-  constructor(entity: Category) {
-    Object.assign(this, entity);
+  constructor({ name, description, is_active }: Category) {
+    Object.assign(this, { name, description, is_active });
   }
 }
 
-export class CategoryValidator extends ClassValidatorFields {
-  validate(notification: Notification, data: any, fields?: string[]): boolean {
-    const newFields = fields?.length ? fields : ["name"];
-    return super.validate(notification, new CategoryRules(data), newFields);
+export class CategoryValidator extends ClassValidatorFields<CategoryRules> {
+  validate(emtity: Category): boolean {
+    return super.validate(new CategoryRules(emtity));
+    // const newFields = fields?.length ? fields : ["name"];
+    // return super.validate(notification, new CategoryRules(data), newFields);
   }
 }
 

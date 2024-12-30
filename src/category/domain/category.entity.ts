@@ -42,20 +42,22 @@ export class Category extends Entity {
   // factory
   static create(props: CategoryCreatedCommand): Category {
     const category = new Category(props);
-    category.validate(["name"]);
-    // good for events
-
+    Category.validate(category);
     return category;
+    // category.validate(["name"]);
+    // good for events
   }
 
   changeName(name: string): void {
     // ValidatorRules.values(name, "name").required().string().maxLength(255);
     this.name = name;
-    this.validate(["name"]);
+    Category.validate(this);
+    // this.validate(["name"]);
   }
 
   changeDescription(description: string): void {
     this.description = description;
+    Category.validate(this);
     // Category.validate(this);
     // this.validate(["description"]);
   }
@@ -72,9 +74,14 @@ export class Category extends Entity {
     throw new Error("Method not implemented.");
   }
 
-  validate(fields?: string[]) {
+  static validate(entity: Category) {
     const validator = CategoryValidatorFactory.create();
-    return validator.validate(this.notification, this, fields);
+    const isValid = validator.validate(entity);
+
+    if (!isValid) {
+      throw new EntityValidationError(validator.errors);
+    }
+    // return validator.validate(this.notification, this, fields);
   }
 
   static fake() {
