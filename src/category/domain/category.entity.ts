@@ -71,7 +71,7 @@ export class Category extends Entity {
   }
 
   get entity_id(): ValueObject {
-    throw new Error("Method not implemented.");
+    return this.category_id;
   }
 
   static validate(entity: Category) {
