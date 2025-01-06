@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "test:watch": "jest --watch --verbose"
+    "test": "npm run tsc:check && jest",
+    "test:watch": "npm run tsc:check && jest --watch --verbose",
+    "tsc:check": "tsc --noEmit"
   },
   "keywords": [],
   "author": "",
