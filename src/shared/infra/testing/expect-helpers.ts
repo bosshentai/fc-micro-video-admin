@@ -1,53 +1,54 @@
-import { ClassValidatorFields } from "../../domain/validator/class-validator-fields";
-import { EntityValidationError } from "../../domain/validator/validation.error";
-import { FieldsErrors } from "../../domain/validator/validator-fields.interface";
-
-type Expected =
-  | {
-      validator: ClassValidatorFields<any>;
-      data: any;
-    }
-  | (() => any);
+import { Notification } from "../../domain/validator/notification";
 
 expect.extend({
-  containsErrorMessage(expected: any, received: FieldsErrors) {
-    if (typeof expected === "function") {
-      try {
-        expected();
-        return isValid();
-      } catch (e) {
-        const error = e as EntityValidationError;
-        return assertContainsErrorsMessages(error.error, received);
-      }
-    } else {
-      const { validator, data } = expected;
-      const validated = validator.validate(data);
-      if (validated) {
-        return isValid();
-      }
+  notificationContainsErrorMessages(
+    expected: Notification,
+    received: Array<string | { [key: string]: string[] }>
+  ) {
+    const every = received.every((error) => {
+      if (typeof error === "string") {
+        return expected.errors.has(error);
+      } else {
+        return Object.entries(error).every(([field, messages]) => {
+          const fieldMessages = expected.errors.get(field) as string[];
 
-      return assertContainsErrorsMessages(validator.errors, received);
-    }
+          return (
+            fieldMessages &&
+            fieldMessages.length &&
+            fieldMessages.every((message) => messages.includes(message))
+          );
+        });
+      }
+    });
+    return every
+      ? { pass: true, message: () => "" }
+      : {
+          pass: false,
+          message: () =>
+            `The validation errors not contains ${JSON.stringify(
+              received
+            )}. Current: ${JSON.stringify(expected.toJSON())}`,
+        };
   },
 });
 
-function assertContainsErrorsMessages(
-  expected: FieldsErrors,
-  received: FieldsErrors
-) {
-  const isMath = expect.objectContaining(received).asymetricMatch(expected);
+// function assertContainsErrorsMessages(
+//   expected: FieldsErrors,
+//   received: FieldsErrors
+// ) {
+//   const isMath = expect.objectContaining(received).asymetricMatch(expected);
 
-  return isMath
-    ? isValid()
-    : {
-        pass: false,
-        message: () =>
-          `The validation errors not contains ${JSON.stringify(
-            received
-          )}. Current: ${JSON.stringify(expected)}`,
-      };
-}
+//   return isMath
+//     ? isValid()
+//     : {
+//         pass: false,
+//         message: () =>
+//           `The validation errors not contains ${JSON.stringify(
+//             received
+//           )}. Current: ${JSON.stringify(expected)}`,
+//       };
+// }
 
-function isValid() {
-  return { pass: true, message: () => "" };
-}
+// function isValid() {
+//   return { pass: true, message: () => "" };
+// }

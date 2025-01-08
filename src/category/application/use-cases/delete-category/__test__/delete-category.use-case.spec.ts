@@ -5,15 +5,15 @@ import {
 } from "../../../../../shared/domain/value-objects/uuid.vo";
 import { Category } from "../../../../domain/category.entity";
 import { CategoryInMemoryRepository } from "../../../../infra/db/in-memory/category-in-memory.repository";
-import { GetCategoryUseCase } from "../../get-category.use-case";
+import { DeleteCategoryUseCase } from "../delete-category.use-case";
 
-describe("GetCategoryUseCase unit Tests", () => {
-  let useCase: GetCategoryUseCase;
+describe("DeleteCategoryUseCase unit Tests", () => {
+  let useCase: DeleteCategoryUseCase;
   let repository: CategoryInMemoryRepository;
 
   beforeEach(() => {
     repository = new CategoryInMemoryRepository();
-    useCase = new GetCategoryUseCase(repository);
+    useCase = new DeleteCategoryUseCase(repository);
   });
 
   it("should throws error when entity not found", async () => {
@@ -22,24 +22,20 @@ describe("GetCategoryUseCase unit Tests", () => {
     );
 
     const uuid = new Uuid();
+
     await expect(() => useCase.execute({ id: uuid.id })).rejects.toThrow(
       new NotFoundError(uuid.id, Category)
     );
   });
 
-  it("should returns a category", async () => {
-    const items = [Category.create({ name: "test" })];
+  it("should delete a category", async () => {
+    const items = [new Category({ name: "test" })];
     repository.items = items;
 
-    const spyFindById = jest.spyOn(repository, "findById");
-    const output = await useCase.execute({ id: items[0].category_id.id });
-    expect(spyFindById).toHaveBeenCalledTimes(1);
-    expect(output).toStrictEqual({
+    await useCase.execute({
       id: items[0].category_id.id,
-      name: items[0].name,
-      description: items[0].description,
-      is_active: items[0].is_active,
-      created_at: items[0].created_at,
     });
+
+    expect(repository.items).toHaveLength(0);
   });
 });

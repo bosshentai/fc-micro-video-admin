@@ -1,5 +1,5 @@
 import { CategoryInMemoryRepository } from "../../../../infra/db/in-memory/category-in-memory.repository";
-import { CreateCategoryUseCase } from "../../create-category.use-case";
+import { CreateCategoryUseCase } from "../create-category.use-case";
 
 describe("CreateCategoyUseCase Unit Tests", () => {
   let useCase: CreateCategoryUseCase;
@@ -8,6 +8,13 @@ describe("CreateCategoyUseCase Unit Tests", () => {
   beforeEach(() => {
     repository = new CategoryInMemoryRepository();
     useCase = new CreateCategoryUseCase(repository);
+  });
+
+  it("should throws error when entity is not valid", async () => {
+    const input = { name: "t".repeat(256) };
+    await expect(() => useCase.execute(input)).rejects.toThrow(
+      "Entity Validation Error"
+    );
   });
 
   it("should create a category", async () => {

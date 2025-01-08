@@ -42,24 +42,18 @@ export class Category extends Entity {
   // factory
   static create(props: CategoryCreatedCommand): Category {
     const category = new Category(props);
-    Category.validate(category);
+
+    category.validate(["name"]);
     return category;
-    // category.validate(["name"]);
-    // good for events
   }
 
   changeName(name: string): void {
-    // ValidatorRules.values(name, "name").required().string().maxLength(255);
     this.name = name;
-    Category.validate(this);
-    // this.validate(["name"]);
+    this.validate(["name"]);
   }
 
   changeDescription(description: string): void {
     this.description = description;
-    Category.validate(this);
-    // Category.validate(this);
-    // this.validate(["description"]);
   }
 
   activate() {
@@ -74,14 +68,9 @@ export class Category extends Entity {
     return this.category_id;
   }
 
-  static validate(entity: Category) {
+  validate(fields?: string[]) {
     const validator = CategoryValidatorFactory.create();
-    const isValid = validator.validate(entity);
-
-    if (!isValid) {
-      throw new EntityValidationError(validator.errors);
-    }
-    // return validator.validate(this.notification, this, fields);
+    return validator.validate(this.notification, this, fields);
   }
 
   static fake() {
