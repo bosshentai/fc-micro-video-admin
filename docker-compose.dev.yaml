@@ -1,4 +1,4 @@
-service:
+services:
   app:
     build: .
     command: ./.docker/start.sh
@@ -7,7 +7,7 @@ service:
     volumes:
       - .:/home/node/app
 
-    db:
+  db:
     image: mysql:8.0.40-debian
     environment:
       - MYSQL_DATABASE=micro_videos
