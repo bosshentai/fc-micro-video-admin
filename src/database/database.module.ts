@@ -17,7 +17,7 @@ const models = [CategoryModel];
             host: configService.get('DB_HOST'),
             port: configService.get('DB_PORT'),
             database: configService.get('DB_DATABASE'),
-            username: configService.get('DB_USERBNAME'),
+            username: configService.get('DB_USERNAME'),
             password: configService.get('DB_PASSWORD'),
             models,
             logging: configService.get('DB_LOGGING'),

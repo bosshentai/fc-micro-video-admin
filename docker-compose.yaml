@@ -10,8 +10,8 @@ services:
   db:
     image: mysql:8.0.40-debian
     environment:
-      - MYSQL_DATABASE=micro_videos
-      - MYSQL_ROOT_PASSWORD=root
+      MYSQL_DATABASE: micro_videos
+      MYSQL_ROOT_PASSWORD: root
     tmpfs:
       - /var/lib/mysql
     security_opt:

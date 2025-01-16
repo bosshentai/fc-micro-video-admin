@@ -80,7 +80,7 @@ export class CategorySequelizeRepository implements ICategoryRepository {
   }
 
   async search(props: CategorySearchParams): Promise<CategorySearchResult> {
-    const offtSet = props.per_page * (props.page - 1);
+    const offset = (props.page - 1) * props.per_page;
     const limit = props.per_page;
     const { rows: models, count } = await this.categoryModel.findAndCountAll({
       ...(props.filter && {
@@ -91,7 +91,7 @@ export class CategorySequelizeRepository implements ICategoryRepository {
       ...(props.sort && this.sortableFields.includes(props.sort)
         ? { order: [[props.sort, props.sort_dir]] }
         : { order: [['created_at', 'desc']] }),
-      offset: offtSet,
+      offset,
       limit,
     });
 
