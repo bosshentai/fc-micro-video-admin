@@ -1,6 +1,6 @@
 import { Test } from '@nestjs/testing/test';
 import { DatabaseModule } from '../database.module';
-import { ConfigModule } from 'src/nest-modules/config/config.module';
+import { ConfigModule } from 'src/nest-modules/config-module/config.module';
 import { Sequelize } from 'sequelize-typescript';
 import { getConnectionToken } from '@nestjs/sequelize/dist/common';
 
@@ -41,15 +41,16 @@ describe('DatabaseModule Unit Tests', () => {
     const connOptions = {
       DB_VENDOR: 'mysql',
       DB_HOST: 'db',
+      DB_PORT: 3306,
       DB_DATABASE: 'micro_videos',
       DB_USERNAME: 'root',
       DB_PASSWORD: 'root',
-      DB_PORT: 33060,
       DB_LOGGING: false,
       DB_AUTO_LOAD_MODELS: true,
     };
 
     it('should be a mysql connection', async () => {
+      console.log(connOptions);
       const module = await Test.createTestingModule({
         imports: [
           DatabaseModule,
@@ -57,6 +58,7 @@ describe('DatabaseModule Unit Tests', () => {
             isGlobal: true,
             ignoreEnvFile: true,
             ignoreEnvVars: true,
+            cache: true,
             validationSchema: null,
             load: [() => connOptions],
           }),

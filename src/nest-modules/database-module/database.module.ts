@@ -2,7 +2,7 @@ import { CategoryModel } from '@core/category/infra/db/sequelize/category.model'
 import { Module } from '@nestjs/common/decorators/modules';
 import { ConfigService } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize/dist';
-import { CONFIG_SCHEMA_TYPE } from 'src/nest-modules/config/config.module';
+import { CONFIG_SCHEMA_TYPE } from 'src/nest-modules/config-module/config.module';
 
 const models = [CategoryModel];
 
@@ -11,7 +11,19 @@ const models = [CategoryModel];
     SequelizeModule.forRootAsync({
       useFactory: (configService: ConfigService<CONFIG_SCHEMA_TYPE>) => {
         const dbVendor = configService.get('DB_VENDOR');
+
+        if (dbVendor === 'sqlite') {
+          return {
+            dialect: 'sqlite',
+            host: configService.get('DB_HOST'),
+            models,
+            logging: configService.get('DB_LOGGING'),
+            autoLoadModels: configService.get('DB_AUTO_LOAD_MODELS'),
+          };
+        }
+
         if (dbVendor === 'mysql') {
+          console.log(`Sequelize module ${JSON.stringify(configService)}`);
           return {
             dialect: 'mysql',
             host: configService.get('DB_HOST'),
@@ -19,17 +31,8 @@ const models = [CategoryModel];
             database: configService.get('DB_DATABASE'),
             username: configService.get('DB_USERNAME'),
             password: configService.get('DB_PASSWORD'),
-            models,
             logging: configService.get('DB_LOGGING'),
-            autoLoadModels: configService.get('DB_AUTO_LOAD_MODELS'),
-          };
-        }
-        if (dbVendor === 'sqlite') {
-          return {
-            dialect: 'sqlite',
-            host: configService.get('DB_HOST'),
             models,
-            logging: configService.get('DB_LOGGING'),
             autoLoadModels: configService.get('DB_AUTO_LOAD_MODELS'),
           };
         }
