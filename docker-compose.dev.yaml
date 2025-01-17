@@ -2,7 +2,7 @@ services:
   app:
     build: .
     command: ./.docker/start.sh
-    container_name: micro-videos-admin-app
+    container_name: micro-videos-admin
     ports:
       - 3000:3000
     volumes:
@@ -10,14 +10,14 @@ services:
 
   db:
     platform: linux/amd64
-    image: mysql:8.0.40-debian
+    image: mysql:8.0.30-debian
     container_name: micro-videos-admin-db
     environment:
       - MYSQL_DATABASE=micro_videos
       - MYSQL_ROOT_PASSWORD=root
-    # volumes:
-    #   - ./.docker/mysql:/docker-entrypoint-initdb.d
-    tmpfs:
-      - /var/lib/mysql
+    volumes:
+      - .docker/dbdata:/var/lib/mysql:delegated
     security_opt:
       - seccomp:unconfined
+    ports:
+      - 3306:3306
