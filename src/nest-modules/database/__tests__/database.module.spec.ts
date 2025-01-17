@@ -1,6 +1,6 @@
 import { Test } from '@nestjs/testing/test';
 import { DatabaseModule } from '../database.module';
-import { ConfigModule } from 'src/config/config.module';
+import { ConfigModule } from 'src/nest-modules/config/config.module';
 import { Sequelize } from 'sequelize-typescript';
 import { getConnectionToken } from '@nestjs/sequelize/dist/common';
 

@@ -1,9 +1,9 @@
 import { Test } from '@nestjs/testing/test';
 import { TestingModule } from '@nestjs/testing/testing-module';
 import { CategoriesController } from './categories.controller';
-import { DatabaseModule } from 'src/database/database.module';
+import { DatabaseModule } from 'src/nest-modules/database/database.module';
 import { CategoriesModule } from './categories.module';
-import { ConfigModule } from 'src/config/config.module';
+import { ConfigModule } from 'src/nest-modules/config/config.module';
 import { ConfigService } from '@nestjs/config';
 
 describe('CategoriesController', () => {
