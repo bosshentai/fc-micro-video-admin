@@ -11,14 +11,6 @@ import { getModelToken } from '@nestjs/sequelize';
 @Module({
   imports: [ConfigModule.forRoot(), DatabaseModule, CategoriesModule],
   controllers: [AppController],
-  providers: [
-    AppService,
-    {
-      provide: CategorySequelizeRepository,
-      useFactory: (categoryModel: typeof CategoryModel) =>
-        new CategorySequelizeRepository(categoryModel),
-      inject: [getModelToken(CategoryModel)],
-    },
-  ],
+  providers: [AppService],
 })
 export class AppModule {}

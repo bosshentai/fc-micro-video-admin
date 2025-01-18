@@ -23,7 +23,6 @@ const models = [CategoryModel];
         }
 
         if (dbVendor === 'mysql') {
-          console.log(`Sequelize module ${JSON.stringify(configService)}`);
           return {
             dialect: 'mysql',
             host: configService.get('DB_HOST'),
