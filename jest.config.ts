@@ -223,6 +223,7 @@ const config: Config = {
     '.input.ts',
     '.d.ts',
   ],
+  setupFiles: ['reflect-metadata'],
   coverageThreshold: {
     global: {
       statements: 80,
