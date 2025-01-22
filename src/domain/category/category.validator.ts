@@ -7,7 +7,6 @@ import {
 } from "class-validator";
 import { Category } from "./category.entity";
 import { ClassValidatorFields } from "../../shared/domain/validator/class-validator-fields";
-import { Notification } from "../../shared/domain/validator/notification";
 
 export class CategoryRules {
   @MaxLength(255)
@@ -28,10 +27,9 @@ export class CategoryRules {
   }
 }
 
-export class CategoryValidator extends ClassValidatorFields {
-  validate(notification: Notification, data: any, fields?: string[]): boolean {
-    const newFields = fields?.length ? fields : ["name"];
-    return super.validate(notification, new CategoryRules(data), newFields);
+export class CategoryValidator extends ClassValidatorFields<CategoryRules> {
+  validate(entity: Category) {
+    return super.validate(new CategoryRules(entity));
   }
 }
 

@@ -57,7 +57,6 @@ export class Category extends Entity {
   changeDescription(description: string): void {
     this.description = description;
     Category.validate(this);
-    // this.validate(["description"]);
   }
 
   activate() {
@@ -72,14 +71,13 @@ export class Category extends Entity {
     return this.category_id;
   }
 
-  static validate(entity?: Category) {
+  static validate(entity: Category) {
     const validator = CategoryValidatorFactory.create();
     const isValid = validator.validate(entity);
 
     if (!isValid) {
       throw new EntityValidationError(validator.errors);
     }
-    // return validator.validate(this.notification, this, fields);
   }
 
   toJSON() {

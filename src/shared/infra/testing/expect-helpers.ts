@@ -10,7 +10,7 @@ type Expected =
   | (() => any);
 
 expect.extend({
-  containsErrorMessage(expected: any, received: FieldsErrors) {
+  containsErrorMessages(expected: Expected, received: FieldsErrors) {
     if (typeof expected === "function") {
       try {
         expected();
@@ -22,6 +22,7 @@ expect.extend({
     } else {
       const { validator, data } = expected;
       const validated = validator.validate(data);
+
       if (validated) {
         return isValid();
       }
@@ -35,7 +36,7 @@ function assertContainsErrorsMessages(
   expected: FieldsErrors,
   received: FieldsErrors
 ) {
-  const isMath = expect.objectContaining(received).asymetricMatch(expected);
+  const isMath = expect.objectContaining(received).asymmetricMatch(expected);
 
   return isMath
     ? isValid()

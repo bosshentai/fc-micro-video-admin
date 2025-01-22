@@ -168,8 +168,8 @@ describe("Category Unit Test", () => {
 
 describe("Category Validator", () => {
   describe("create Command", () => {
-    test("should an invalida category with name property", () => {
-      expect(() => Category.create({ name: null })).containsErrorMessage({
+    test("should an invalid category with name property", () => {
+      expect(() => Category.create({ name: null })).containsErrorMessages({
         name: [
           "name should not be empty",
           "name must be a string",
@@ -177,11 +177,11 @@ describe("Category Validator", () => {
         ],
       });
 
-      expect(() => Category.create({ name: "" })).containsErrorMessage({
+      expect(() => Category.create({ name: "" })).containsErrorMessages({
         name: ["name should not be empty"],
       });
 
-      expect(() => Category.create({ name: 5 as any })).containsErrorMessage({
+      expect(() => Category.create({ name: 5 as any })).containsErrorMessages({
         name: [
           "name must be a string",
           "name must be shorter than or equal to 255 characters",
@@ -190,7 +190,7 @@ describe("Category Validator", () => {
 
       expect(() =>
         Category.create({ name: "t".repeat(256) })
-      ).containsErrorMessage({
+      ).containsErrorMessages({
         name: ["name must be shorter than or equal to 255 characters"],
       });
     });
@@ -198,15 +198,15 @@ describe("Category Validator", () => {
     test("should a invalid category using description property", () => {
       expect(() =>
         Category.create({ description: 5 } as any)
-      ).containsErrorMessage({
-        descripption: ["description must be a string"],
+      ).containsErrorMessages({
+        description: ["description must be a string"],
       });
     });
 
     test("should a invalid category using is_acting property", () => {
-      expect(() => {
-        Category.create({ is_ative: 5 } as any);
-      }).containsErrorMessage({
+      expect(() =>
+        Category.create({ is_active: 5 } as any)
+      ).containsErrorMessages({
         is_active: ["is_active must be a boolean value"],
       });
     });
@@ -215,19 +215,19 @@ describe("Category Validator", () => {
   describe("changeName method", () => {
     test("should a invalid category using name property", () => {
       const category = Category.create({ name: "Movie" });
-      expect(() => category.changeName(null)).containsErrorMessage({
+      expect(() => category.changeName(null)).containsErrorMessages({
         name: [
           "name should not be empty",
           "name must be a string",
-          "name must shorter than or equal to 255 characters",
+          "name must be shorter than or equal to 255 characters",
         ],
       });
 
-      expect(() => category.changeName("")).containsErrorMessage({
+      expect(() => category.changeName("")).containsErrorMessages({
         name: ["name should not be empty"],
       });
 
-      expect(() => category.changeName(5 as any)).containsErrorMessage({
+      expect(() => category.changeName(5 as any)).containsErrorMessages({
         name: [
           "name must be a string",
           "name must be shorter than or equal to 255 characters",
@@ -239,7 +239,7 @@ describe("Category Validator", () => {
   describe("changeDescription method", () => {
     test("should a invalid category using description property", () => {
       const category = Category.create({ name: "Movie" });
-      expect(() => category.changeDescription(5 as any)).containsErrorMessage({
+      expect(() => category.changeDescription(5 as any)).containsErrorMessages({
         description: ["description must be a string"],
       });
     });
