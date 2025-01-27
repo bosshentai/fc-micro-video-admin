@@ -43,7 +43,7 @@ export class CreateCategoryFixture {
           is_active: true,
         },
         expected: {
-          nane: faker.name,
+          name: faker.name,
           description: null,
           is_active: true,
         },
@@ -150,6 +150,214 @@ export class CreateCategoryFixture {
   }
 }
 
-export class UpdateCategoryFixture {}
+export class UpdateCategoryFixture {
+  static keyInResponse = _keyInResponse;
 
-export class ListCategoriesFixture {}
+  static arrangeForUpdate() {
+    const faker = Category.fake()
+      .aCategory()
+      .withName('Movie')
+      .withDescription('descriptionn test');
+    return [
+      {
+        send_data: {
+          name: faker.name,
+          description: null,
+          is_active: true,
+        },
+        expected: {
+          name: faker.name,
+          description: null,
+          is_active: true,
+        },
+      },
+      {
+        send_data: {
+          name: faker.name,
+          description: faker.description,
+        },
+        expected: {
+          name: faker.name,
+          description: faker.description,
+          is_active: true,
+        },
+      },
+      {
+        send_data: {
+          name: faker.name,
+          is_active: false,
+        },
+        expected: {
+          name: faker.name,
+          is_active: false,
+        },
+      },
+    ];
+  }
+
+  static arrangeInvalidRequest() {
+    const defaultExpected = {
+      statusCode: 422,
+      error: 'Unprocessable Entity',
+    };
+
+    return {
+      DESCRIPTION_NOT_A_STRING: {
+        send_data: {
+          description: 5,
+        },
+        expected: {
+          message: ['description must be a string'],
+          ...defaultExpected,
+        },
+      },
+      IS_ACTIVE_NOT_A_BOOLEAN: {
+        send_data: {
+          is_active: 'a',
+        },
+        expected: {
+          message: ['is_active must be a boolean value'],
+          ...defaultExpected,
+        },
+      },
+    };
+  }
+
+  static arrangeForEntityValidationError() {
+    const faker = Category.fake().aCategory();
+    const defaultExpected = {
+      statusCode: 422,
+      error: 'Unprocessabel Entity',
+    };
+
+    return {
+      NAME_TOTO_LONG: {
+        name: faker.withInvalidNameTooLong().name,
+      },
+      expected: {
+        message: ['name must be shorter than or equal to 255 characters'],
+        ...defaultExpected,
+      },
+    };
+  }
+}
+
+export class ListCategoriesFixture {
+  static arrangeIncrementedWithCreatedAt() {
+    const _entities = Category.fake()
+      .theCategories(4)
+      .withName((i) => i + '')
+      .withCreatedAt((i) => new Date(new Date().getTime() + 2000 * i))
+      .build();
+
+    const entitiesMap = {
+      first: _entities[0],
+      second: _entities[1],
+      third: _entities[2],
+      fourth: _entities[3],
+    };
+
+    const arrange = [
+      {
+        send_data: {},
+        expected: {
+          entities: [
+            entitiesMap.fourth,
+            entitiesMap.third,
+            entitiesMap.second,
+            entitiesMap.first,
+          ],
+          meta: {
+            current_page: 1,
+            last_page: 1,
+            per_page: 15,
+            total: 4,
+          },
+        },
+      },
+      {
+        send_data: {
+          page: 1,
+          per_page: 2,
+        },
+        expected: {
+          entities: [entitiesMap.fourth, entitiesMap.third],
+          meta: {
+            current_page: 1,
+            last_page: 2,
+            per_page: 2,
+            total: 4,
+          },
+        },
+      },
+      {
+        send_data: {
+          page: 2,
+          per_page: 2,
+        },
+        expected: {
+          entities: [entitiesMap.second, entitiesMap.first],
+          meta: {
+            current_page: 2,
+            last_page: 2,
+            per_page: 2,
+            total: 4,
+          },
+        },
+      },
+    ];
+
+    return { arrange, entitiesMap };
+  }
+
+  static arrangeUnsorted() {
+    const faker = Category.fake().aCategory();
+
+    const entitiesMap = {
+      a: faker.withName('a').build(),
+      AAA: faker.withName('AAA').build(),
+      AaA: faker.withName('AaA').build(),
+      b: faker.withName('b').build(),
+      c: faker.withName('c').build(),
+    };
+
+    const arrange = [
+      {
+        send_data: {
+          page: 1,
+          per_page: 2,
+          sort: 'name',
+          filter: 'a',
+        },
+        expected: {
+          entities: [entitiesMap.AAA, entitiesMap.AaA],
+          meta: {
+            total: 3,
+            current_page: 1,
+            last_page: 2,
+            per_page: 2,
+          },
+        },
+      },
+      {
+        send_data: {
+          page: 2,
+          per_page: 2,
+          sort: 'name',
+          filter: 'a',
+        },
+        expected: {
+          entities: [entitiesMap.a],
+          meta: {
+            total: 3,
+            current_page: 2,
+            last_page: 2,
+            per_page: 2,
+          },
+        },
+      },
+    ];
+
+    return { arrange, entitiesMap };
+  }
+}

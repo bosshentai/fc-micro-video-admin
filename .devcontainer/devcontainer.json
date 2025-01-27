@@ -34,7 +34,10 @@
         "ms-vscode.vscode-typescript-next",
         "codeium.codeium",
         "wix.vscode-import-cost",
-        "steoates.autoimport"
+        "steoates.autoimport",
+        "donjayamanne.githistory",
+        "eamodio.gitlens",
+        "mhutchie.git-graph"
       ]
     }
   }
