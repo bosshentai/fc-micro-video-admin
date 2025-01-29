@@ -35,7 +35,8 @@
         "codeium.codeium",
         "wix.vscode-import-cost",
         "steoates.autoimport",
-        "donjayamanne.githistory"
+        "donjayamanne.githistory",
+        "humao.rest-client"
       ]
     }
   }

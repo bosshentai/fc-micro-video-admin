@@ -37,7 +37,8 @@
         "steoates.autoimport",
         "donjayamanne.githistory",
         "eamodio.gitlens",
-        "mhutchie.git-graph"
+        "mhutchie.git-graph",
+        "humao.rest-client"
       ]
     }
   }
