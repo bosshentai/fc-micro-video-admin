@@ -1,6 +1,8 @@
 import { INestApplication } from '@nestjs/common/interfaces';
+import { getConnectionToken } from '@nestjs/sequelize/dist/common';
 import { Test } from '@nestjs/testing/test';
 import { TestingModule } from '@nestjs/testing/testing-module';
+import { Sequelize } from 'sequelize-typescript';
 import { AppModule } from 'src/app.module';
 import { applyGlobalConfig } from 'src/nest-modules/global-config';
 
@@ -11,6 +13,10 @@ export function startApp() {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();
+
+    const sequelize = moduleFixture.get<Sequelize>(getConnectionToken());
+
+    await sequelize.sync({ force: true });
 
     _app = moduleFixture.createNestApplication();
     applyGlobalConfig(_app);

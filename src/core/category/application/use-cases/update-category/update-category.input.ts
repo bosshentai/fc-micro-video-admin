@@ -19,7 +19,7 @@ export class UpdateCategoryInput {
   id: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   name?: string;
 
   @IsString()
@@ -30,7 +30,7 @@ export class UpdateCategoryInput {
   @IsOptional()
   is_active?: boolean;
 
-  constructor(props: UpdateCategoryInputConstructorProps) {
+  constructor(props?: UpdateCategoryInputConstructorProps) {
     if (!props) return;
     this.id = props.id;
     props.name && (this.name = props.name);

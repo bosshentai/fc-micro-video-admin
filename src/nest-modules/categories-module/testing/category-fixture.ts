@@ -248,7 +248,7 @@ export class UpdateCategoryFixture {
     };
 
     return {
-      NAME_TOTO_LONG: {
+      NAME_TOO_LONG: {
         name: faker.withInvalidNameTooLong().name,
       },
       expected: {
