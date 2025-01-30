@@ -17,7 +17,7 @@ export class CreateCategoryInput {
   @IsNotEmpty()
   name: string;
 
-  @IsOptional()
+  @IsString()
   @IsOptional()
   description?: string | null;
 

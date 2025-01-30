@@ -145,8 +145,25 @@ export class CreateCategoryFixture {
     };
   }
 
-  static arrangeEntityValidationError() {
+  static arrangeForEntityValidationError() {
     const faker = Category.fake().aCategory();
+
+    const defaultExpected = {
+      statusCode: 422,
+      error: 'Unprocessable Entity',
+    };
+
+    return {
+      NAME_TOO_LONG: {
+        send_data: {
+          name: faker.withInvalidNameTooLong().name,
+        },
+        expected: {
+          message: ['name must be shorter than or equal to 255 characters'],
+          ...defaultExpected,
+        },
+      },
+    };
   }
 }
 
