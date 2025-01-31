@@ -68,6 +68,7 @@ export class CategoriesController {
     @Param('id', new ParseUUIDPipe({ errorHttpStatusCode: 422 })) id: string,
     @Body() updateCategoryDto: UpdateCategoryDto,
   ) {
+    console.info('controller id: ' + JSON.stringify(id));
     const output = await this.updateUseCase.execute({
       id,
       ...updateCategoryDto,

@@ -4,15 +4,15 @@ import {
   IsOptional,
   IsString,
   MaxLength,
-} from "class-validator";
-import { Category } from "./category.entity";
-import { ClassValidatorFields } from "../../shared/domain/validator/class-validator-fields";
-import { Notification } from "../../shared/domain/validator/notification";
+} from 'class-validator';
+import { Category } from './category.entity';
+import { ClassValidatorFields } from '../../shared/domain/validator/class-validator-fields';
+import { Notification } from '../../shared/domain/validator/notification';
 
 // domain validation vs syntax validation
 
 export class CategoryRules {
-  @MaxLength(255, { groups: ["name"] }) // domain validation
+  @MaxLength(255, { groups: ['name'] }) // domain validation
   name: string;
 
   constructor(entity: Category) {
@@ -24,9 +24,10 @@ export class CategoryValidator extends ClassValidatorFields {
   validate(
     notification: Notification,
     data: Category,
-    fields?: string[]
+    fields?: string[],
   ): boolean {
-    const newFields = fields?.length ? fields : ["name"];
+    const newFields = fields?.length ? fields : ['name'];
+    // console.log('new Fields' + newFields);
     return super.validate(notification, new CategoryRules(data), newFields);
   }
 }

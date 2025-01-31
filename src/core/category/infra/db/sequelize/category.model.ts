@@ -4,7 +4,7 @@ import {
   Model,
   PrimaryKey,
   Table,
-} from "sequelize-typescript";
+} from 'sequelize-typescript';
 
 export type CategoryModelProps = {
   category_id: string;
@@ -14,7 +14,7 @@ export type CategoryModelProps = {
   created_at: Date;
 };
 
-@Table({ tableName: "categories", timestamps: false })
+@Table({ tableName: 'categories', timestamps: false })
 export class CategoryModel extends Model<CategoryModelProps> {
   @PrimaryKey
   @Column({ type: DataType.UUID })
@@ -22,6 +22,7 @@ export class CategoryModel extends Model<CategoryModelProps> {
 
   @Column({ allowNull: false, type: DataType.STRING(255) })
   declare name: string;
+
   @Column({ allowNull: true, type: DataType.TEXT })
   declare description: string | null;
 

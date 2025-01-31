@@ -65,33 +65,26 @@ describe('CAtegoriesController (e2e)', () => {
       });
     });
 
-    describe('should a respoonse error with 422 when throw EntityValidationError', () => {
-      const appHelper = startApp();
+    describe('should a response error with 422 when throw EntityValidationError', () => {
+      const app = startApp();
       const validationError =
         UpdateCategoryFixture.arrangeForEntityValidationError();
-
       const arrange = Object.keys(validationError).map((key) => ({
         label: key,
         value: validationError[key],
       }));
-
       let categoryRepo: ICategoryRepository;
 
       beforeEach(() => {
-        categoryRepo = appHelper.app.get<ICategoryRepository>(
+        categoryRepo = app.app.get<ICategoryRepository>(
           CATEGORY_PROVIDERS.REPOSITORIES.CATEGORY_REPOSITORY.provide,
         );
       });
-
       test.each(arrange)('when body is $label', async ({ value }) => {
         const category = Category.fake().aCategory().build();
         await categoryRepo.insert(category);
-
-        return request(appHelper.app.getHttpServer())
+        return request(app.app.getHttpServer())
           .patch(`/categories/${category.category_id.id}`)
-          .send(() => {
-            console.log(value.send_data);
-          })
           .send(value.send_data)
           .expect(422)
           .expect(value.expected);

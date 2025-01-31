@@ -36,43 +36,42 @@ export class CategorySequelizeRepository implements ICategoryRepository {
   }
   async update(entity: Category): Promise<void> {
     const id = entity.category_id.id;
-    const model = await this._get(id);
-
-    if (!model) {
-      throw new NotFoundError(id, this.getEntity());
-    }
 
     const modelProps = CategoryModelMapper.toModel(entity);
 
-    await this.categoryModel.update(modelProps.toJSON(), {
-      where: {
-        category_id: id,
+    const [affectedRows] = await this.categoryModel.update(
+      modelProps.toJSON(),
+      {
+        where: {
+          category_id: entity.category_id.id,
+        },
       },
-    });
+    );
+
+    if (affectedRows !== 1) {
+      throw new NotFoundError(id, this.getEntity());
+    }
   }
   async delete(category_id: Uuid): Promise<void> {
     const id = category_id.id;
-    const model = await this._get(id);
+    // const model = await this._get(id);
 
-    if (!model) {
-      throw new NotFoundError(id, this.getEntity());
-    }
+    // if (!model) {
+    //   throw new NotFoundError(id, this.getEntity());
+    // }
 
     const deleteCount = await this.categoryModel.destroy({
       where: { category_id: id },
     });
 
-    if (deleteCount === 0) {
+    if (deleteCount !== 1) {
       throw new NotFoundError(id, this.getEntity());
     }
   }
   async findById(entity_id: Uuid): Promise<Category | null> {
-    const model = await this._get(entity_id.id);
+    const model = await this.categoryModel.findByPk(entity_id.id);
 
     return model ? CategoryModelMapper.toEntity(model) : null;
-  }
-  private async _get(id: string) {
-    return await this.categoryModel.findByPk(id);
   }
 
   async findAll(): Promise<Category[]> {
