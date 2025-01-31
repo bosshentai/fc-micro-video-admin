@@ -168,7 +168,7 @@ export class CreateCategoryFixture {
 }
 
 export class UpdateCategoryFixture {
-  static keyInResponse = _keyInResponse;
+  static keysInResponse = _keyInResponse;
 
   static arrangeForUpdate() {
     const faker = Category.fake()
@@ -244,16 +244,18 @@ export class UpdateCategoryFixture {
     const faker = Category.fake().aCategory();
     const defaultExpected = {
       statusCode: 422,
-      error: 'Unprocessabel Entity',
+      error: 'Unprocessable Entity',
     };
 
     return {
       NAME_TOO_LONG: {
-        name: faker.withInvalidNameTooLong().name,
-      },
-      expected: {
-        message: ['name must be shorter than or equal to 255 characters'],
-        ...defaultExpected,
+        send_data: {
+          name: faker.withInvalidNameTooLong().name,
+        },
+        expected: {
+          message: ['name must be shorter than or equal to 255 characters'],
+          ...defaultExpected,
+        },
       },
     };
   }

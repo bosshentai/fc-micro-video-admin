@@ -27,7 +27,7 @@ export class CategoryValidator extends ClassValidatorFields {
     fields?: string[],
   ): boolean {
     const newFields = fields?.length ? fields : ['name'];
-    // console.log('new Fields' + newFields);
+
     return super.validate(notification, new CategoryRules(data), newFields);
   }
 }

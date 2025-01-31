@@ -17,7 +17,6 @@ export class UpdateCategoryUseCase
   constructor(private categoryRepo: ICategoryRepository) {}
 
   async execute(input: UpdateCategoryInput): Promise<UpdateCategoryOutput> {
-    // console.log('input data', input);
     const uuid = new Uuid(input.id);
 
     const category = await this.categoryRepo.findById(uuid);
@@ -25,8 +24,6 @@ export class UpdateCategoryUseCase
     if (!category) {
       throw new NotFoundError(input.id, Category);
     }
-
-    // console.log('input name: ' + input.name);
 
     input.name && category.changeName(input.name);
 
@@ -41,7 +38,6 @@ export class UpdateCategoryUseCase
     if (input.is_active === false) {
       category.deactivate();
     }
-    // console.log(category.notification.hasErrors());
 
     if (category.notification.hasErrors()) {
       throw new EntityValidationError(category.notification.toJSON());
