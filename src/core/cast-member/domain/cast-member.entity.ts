@@ -7,13 +7,13 @@ import { CastMemberValidatorFactory } from './cast-member.validator';
 export type CastMemberConstructorProps = {
   cast_member_id?: Uuid;
   name: string;
-  type: CastMemberType;
+  cast_member_type: CastMemberType;
   created_at?: Date;
 };
 
 export type CastMemberCreatedCommand = {
   name: string;
-  type: CastMemberType;
+  cast_member_type: CastMemberType;
 };
 
 export class CastMember extends Entity {
@@ -29,7 +29,7 @@ export class CastMember extends Entity {
     super();
     this.cast_member_id = props.cast_member_id ?? new Uuid();
     this.name = props.name;
-    this.member_type = props.type;
+    this.member_type = props.cast_member_type;
     this.created_at = props.created_at ?? new Date();
   }
 
@@ -45,6 +45,10 @@ export class CastMember extends Entity {
     this.validate(['name']);
   }
 
+  changeType(type: CastMemberType): void {
+    this.member_type = type;
+  }
+
   validate(fields?: string[]) {
     const validator = CastMemberValidatorFactory.create();
     return validator.validate(this.notification, this, fields);
@@ -56,6 +60,7 @@ export class CastMember extends Entity {
   toJSON() {
     return {
       cast_member_id: this.cast_member_id.id,
+      name: this.name,
       type: this.member_type,
       created_at: this.created_at,
     };

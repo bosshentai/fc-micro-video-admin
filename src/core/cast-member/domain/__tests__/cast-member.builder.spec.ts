@@ -2,9 +2,13 @@ import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
 import { CastMemberFakeBuilder } from '../cast-member-fake.builder';
 import { CastMember } from '../cast-member.entity';
 import { Chance } from 'chance';
+import {
+  CastMemberType,
+  CastMemberTypes,
+} from '../value-object/cast-member-type.vo';
 describe('CastMemberFakeBuilder Unit Tests', () => {
   describe('cast_member_id prop', () => {
-    const faker = CastMemberFakeBuilder.aCastMember();
+    const faker = CastMemberFakeBuilder.anActor();
 
     test('should throw error when any with methods has called', () => {
       expect(() => faker.cast_member_id).toThrow(
@@ -59,7 +63,7 @@ describe('CastMemberFakeBuilder Unit Tests', () => {
   });
 
   describe('name prop', () => {
-    const faker = CastMemberFakeBuilder.aCastMember();
+    const faker = CastMemberFakeBuilder.anActor();
 
     test('should be a function', () => {
       expect(typeof faker['_name']).toBe('function');
@@ -106,6 +110,22 @@ describe('CastMemberFakeBuilder Unit Tests', () => {
   });
 
   describe('member_type prop', () => {
-    
+    const faker = CastMemberFakeBuilder.anActor();
+
+    it('should be a CastMemberType', () => {
+      expect(faker['_member_type']).toBeInstanceOf(CastMemberType);
+    });
+
+    test('withMemberType', () => {
+      let member = CastMemberType.createActor();
+      let $this = faker.withMemberType(member);
+      expect($this).toBeInstanceOf(CastMemberFakeBuilder);
+      expect(faker['_member_type']).toBe(member);
+
+      member = CastMemberType.createDirector();
+      $this = faker.withMemberType(member);
+      expect($this).toBeInstanceOf(CastMemberFakeBuilder);
+      expect(faker['_member_type']).toBe(member);
+    });
   });
 });

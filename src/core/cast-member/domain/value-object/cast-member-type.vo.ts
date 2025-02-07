@@ -1,3 +1,4 @@
+import { Either } from '@core/shared/domain/either';
 import { ValueObject } from '@core/shared/domain/value-object';
 
 export enum CastMemberTypes {
@@ -6,11 +7,8 @@ export enum CastMemberTypes {
 }
 
 export class CastMemberType extends ValueObject {
-  readonly type: CastMemberTypes;
-  constructor(castMemberType: CastMemberTypes) {
+  constructor(readonly type: CastMemberTypes) {
     super();
-
-    this.type = castMemberType;
     this.validate();
   }
 
@@ -24,21 +22,23 @@ export class CastMemberType extends ValueObject {
     }
   }
 
-  static create(type: CastMemberTypes): CastMemberType {
-    return new CastMemberType(type);
+  static create(
+    type: CastMemberTypes,
+  ): Either<CastMemberType, InvalidCastMemberTypeError> {
+    return Either.safe(() => new CastMemberType(type));
   }
 
   static createDirector(): CastMemberType {
-    return CastMemberType.create(CastMemberTypes.DIRECTOR);
+    return CastMemberType.create(CastMemberTypes.DIRECTOR).ok;
   }
 
   static createActor(): CastMemberType {
-    return CastMemberType.create(CastMemberTypes.ACTOR);
+    return CastMemberType.create(CastMemberTypes.ACTOR).ok;
   }
 }
 
 export class InvalidCastMemberTypeError extends Error {
-  constructor(invalidType?: unknown) {
+  constructor(invalidType: unknown) {
     super(`Invalid cast member type ${invalidType}`);
     this.name = 'InvalidCastMemberTypeError';
   }

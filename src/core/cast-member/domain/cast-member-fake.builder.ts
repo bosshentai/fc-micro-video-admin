@@ -1,14 +1,11 @@
 import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
 import { CastMember } from './cast-member.entity';
 import { Chance } from 'chance';
-import {
-  CastMemberType,
-  CastMemberTypes,
-} from './value-object/cast-member-type.vo';
+import { CastMemberType } from './value-object/cast-member-type.vo';
 
-type PropOrFactory<T> = T | ((index: number) => T);
+type PropOrFactory<T> = ((index: number) => T) | T;
 
-export class CastMemberFakeBuilder<TBuild extends CastMember | CastMember[]> {
+export class CastMemberFakeBuilder<TBuild = CastMember | CastMember[]> {
   private chance: Chance.Chance;
 
   private _cast_member_id: PropOrFactory<Uuid> | undefined = undefined;
@@ -16,15 +13,34 @@ export class CastMemberFakeBuilder<TBuild extends CastMember | CastMember[]> {
   private _name: PropOrFactory<string> = (_index) => this.chance.word();
 
   private _member_type: PropOrFactory<CastMemberType> = (_index) =>
-    new CastMemberType(
-      this.chance.pickone([CastMemberTypes.DIRECTOR, CastMemberTypes.ACTOR]),
-    );
+    CastMemberType.createActor();
+
   private _created_at: PropOrFactory<Date> | undefined = undefined;
 
   private countObjs: number;
 
-  static aCastMember(): CastMemberFakeBuilder<CastMember> {
-    return new CastMemberFakeBuilder<CastMember>();
+  static aDirector() {
+    return new CastMemberFakeBuilder<CastMember>().withMemberType(
+      CastMemberType.createDirector(),
+    );
+  }
+
+  static anActor() {
+    return new CastMemberFakeBuilder<CastMember>().withMemberType(
+      CastMemberType.createActor(),
+    );
+  }
+
+  static theActors(countObjs: number) {
+    return new CastMemberFakeBuilder<CastMember[]>(countObjs).withMemberType(
+      CastMemberType.createActor(),
+    );
+  }
+
+  static theDirectors(countObjs: number) {
+    return new CastMemberFakeBuilder<CastMember[]>(countObjs).withMemberType(
+      CastMemberType.createDirector(),
+    );
   }
 
   static theCastMembers(
@@ -69,13 +85,13 @@ export class CastMemberFakeBuilder<TBuild extends CastMember | CastMember[]> {
       : factoryOrValue;
   }
 
-  private getValue<T>(prop: unknown): T {
+  private getValue<T>(prop: string): T {
     const optional = ['cast_member_id', 'created_at'];
     const privateProps = `_${prop}` as keyof this;
-    if (!this[privateProps] && optional.includes(prop as string)) {
+    if (!this[privateProps] && optional.includes(prop)) {
       throw new Error(`Property ${prop} not have factory, use 'with' methods`);
     }
-    return this.callFactory(this[privateProps] as PropOrFactory<T>, 0);
+    return this.callFactory(this[privateProps], 0) as T;
   }
 
   get cast_member_id(): Uuid {
@@ -86,15 +102,15 @@ export class CastMemberFakeBuilder<TBuild extends CastMember | CastMember[]> {
     return this.getValue<string>('name');
   }
 
-  get member_type() {
-    return this.getValue('member_type');
+  get member_type(): CastMemberType {
+    return this.getValue<CastMemberType>('member_type');
   }
 
-  get created_at() {
-    return this.getValue('created_at');
+  get created_at(): Date {
+    return this.getValue<Date>('created_at');
   }
 
-  build() {
+  build(): TBuild {
     const castMembers = new Array(this.countObjs)
       .fill(undefined)
       .map((_, index) => {
@@ -103,7 +119,7 @@ export class CastMemberFakeBuilder<TBuild extends CastMember | CastMember[]> {
             ? undefined
             : this.callFactory(this._cast_member_id, index),
           name: this.callFactory(this._name, index),
-          type: this.callFactory(this._member_type, index),
+          cast_member_type: this.callFactory(this._member_type, index),
           ...(this._created_at && {
             created_at: this.callFactory(this._created_at, index),
           }),

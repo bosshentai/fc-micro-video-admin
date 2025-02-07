@@ -50,8 +50,8 @@ export class CategoriesController {
   }
 
   @Get()
-  async search(@Query() serarchPAramsDto: SearchCategoriesDto) {
-    const output = await this.listUseCase.execute(serarchPAramsDto);
+  async search(@Query() searchParamsDto: SearchCategoriesDto) {
+    const output = await this.listUseCase.execute(searchParamsDto);
     return new CategoryCollectionPresenter(output);
   }
 

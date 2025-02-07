@@ -100,7 +100,7 @@ describe('CategoryFakeBuilder Unit Tests', () => {
     });
   });
 
-  describe('desription prop', () => {
+  describe('description prop', () => {
     const faker = CategoryFakeBuilder.aCategory();
 
     test('should be a function', () => {

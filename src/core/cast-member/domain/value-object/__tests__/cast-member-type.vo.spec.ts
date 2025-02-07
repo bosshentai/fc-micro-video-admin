@@ -5,23 +5,35 @@ describe('CastMemberType Unit Test', () => {
 
   test('Throw error when the cast member type is invalid', () => {
     expect(() => {
-      new CastMemberType(3 as any);
-    }).toThrow(new Error('Invalid cast member type 3'));
+      new CastMemberType('1' as any);
+    }).toThrow(new Error('Invalid cast member type 1'));
     expect(validateSpy).toHaveBeenCalled();
     expect(validateSpy).toHaveBeenCalledTimes(1);
   });
 
-  // create actor
-
-  test('it should create a actor cast member type', () => {
-    const actorMember = CastMemberType.create(CastMemberTypes.ACTOR);
+  test('should create a actor cast member type', () => {
+    const actorMember = CastMemberType.createActor();
     expect(actorMember).toBeInstanceOf(CastMemberType);
     expect(actorMember.type).toBe(CastMemberTypes.ACTOR);
+
+    const [actorMember2, error] = CastMemberType.create(
+      CastMemberTypes.ACTOR,
+    ).asArray();
+    expect(error).toBeNull();
+    expect(actorMember2).toBeInstanceOf(CastMemberType);
+    expect(actorMember2.type).toBe(CastMemberTypes.ACTOR);
   });
 
-  test('it should create a director cast member type', () => {
-    const directorMember = CastMemberType.create(CastMemberTypes.DIRECTOR);
+  test('should create a director cast member type', () => {
+    const directorMember = CastMemberType.createDirector();
     expect(directorMember).toBeInstanceOf(CastMemberType);
     expect(directorMember.type).toBe(CastMemberTypes.DIRECTOR);
+
+    const [directorMember2, error] = CastMemberType.create(
+      CastMemberTypes.DIRECTOR,
+    ).asArray();
+    expect(error).toBeNull();
+    expect(directorMember2).toBeInstanceOf(CastMemberType);
+    expect(directorMember2.type).toBe(CastMemberTypes.DIRECTOR);
   });
 });
