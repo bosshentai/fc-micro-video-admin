@@ -6,6 +6,7 @@ import {
   CastMemberType,
   CastMemberTypes,
 } from '../value-object/cast-member-type.vo';
+import { CategoryFakeBuilder } from '@core/category/domain/category-fake.builder';
 describe('CastMemberFakeBuilder Unit Tests', () => {
   describe('cast_member_id prop', () => {
     const faker = CastMemberFakeBuilder.anActor();
@@ -126,6 +127,89 @@ describe('CastMemberFakeBuilder Unit Tests', () => {
       $this = faker.withMemberType(member);
       expect($this).toBeInstanceOf(CastMemberFakeBuilder);
       expect(faker['_member_type']).toBe(member);
+    });
+  });
+
+  describe('create_at prop', () => {
+    const faker = CastMemberFakeBuilder.anActor();
+    test('should throw error when any wuth methods has called', () => {
+      const fakerCastMember = CastMemberFakeBuilder.anActor();
+      expect(() => fakerCastMember.created_at).toThrow(
+        new Error("Property created_at not have factory, use 'with' methods"),
+      );
+    });
+
+    test('should be undefined', () => {
+      expect(faker['_created_at']).toBeUndefined();
+    });
+
+    test('withCreatedAt', () => {
+      const date = new Date();
+      const $this = faker.withCreatedAt(date);
+      expect($this).toBeInstanceOf(CastMemberFakeBuilder);
+      expect(faker['_created_at']).toBe(date);
+
+      faker.withCreatedAt(() => date);
+      if (typeof faker['_created_at'] === 'function') {
+        expect(faker['_created_at'](0)).toBe(date);
+      }
+
+      expect(faker.created_at).toBe(date);
+    });
+  });
+
+  test('should create a cast member', () => {
+    const faker = CastMemberFakeBuilder.anActor();
+    let castMember = faker.build();
+    expect(castMember).toBeInstanceOf(CastMember);
+    expect(castMember.cast_member_id).toBeInstanceOf(Uuid);
+    expect(typeof castMember.name === 'string').toBeTruthy();
+    expect(castMember.created_at).toBeInstanceOf(Date);
+
+    const create_at = new Date();
+    const castMember_id = new Uuid();
+    castMember = faker
+      .withUuid(castMember_id)
+      .withMemberType(CastMemberType.createActor())
+      .withName('name test')
+      .withCreatedAt(create_at)
+      .build();
+
+    expect(castMember.cast_member_id.id).toBe(castMember_id.id);
+    expect(castMember.name).toBe('name test');
+    expect(castMember.member_type.type).toBe(CastMemberTypes.ACTOR);
+    expect(castMember.created_at).toBe(create_at);
+
+    castMember = faker.withMemberType(CastMemberType.createDirector()).build();
+
+    expect(castMember.member_type.type).toBe(CastMemberTypes.DIRECTOR);
+  });
+
+  test('should create many cast members', () => {
+    const faker = CastMemberFakeBuilder.theCastMembers(2);
+    let castMembers = faker.build();
+
+    castMembers.forEach((castMember) => {
+      expect(castMember.cast_member_id).toBeInstanceOf(Uuid);
+      expect(typeof castMember.name === 'string').toBeTruthy();
+      expect(castMember.created_at).toBeInstanceOf(Date);
+    });
+
+    const created_at = new Date();
+    const castMember_id = new Uuid();
+
+    castMembers = faker
+      .withUuid(castMember_id)
+      .withName('name test')
+      .withCreatedAt(created_at)
+      .withMemberType(CastMemberType.createActor())
+      .build();
+
+    castMembers.forEach((castMember) => {
+      expect(castMember.cast_member_id.id).toBe(castMember_id.id);
+      expect(castMember.name).toBe('name test');
+      expect(castMember.member_type.type).toBe(CastMemberTypes.ACTOR);
+      expect(castMember.created_at).toBe(created_at);
     });
   });
 });

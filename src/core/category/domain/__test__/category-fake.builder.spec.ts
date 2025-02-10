@@ -168,7 +168,7 @@ describe('CategoryFakeBuilder Unit Tests', () => {
   describe('created_at prop', () => {
     const faker = CategoryFakeBuilder.aCategory();
 
-    test('should throw error when any whth methods has called', () => {
+    test('should throw error when any with methods has called', () => {
       const fakerCategory = CategoryFakeBuilder.aCategory();
       expect(() => fakerCategory.created_at).toThrow(
         new Error("Property created_at not have factory, use 'with' methods"),
@@ -234,7 +234,7 @@ describe('CategoryFakeBuilder Unit Tests', () => {
     expect(category.created_at).toBe(create_at);
   });
 
-  test('should creae many categories', () => {
+  test('should create many categories', () => {
     const faker = CategoryFakeBuilder.theCategories(2);
     let categories = faker.build();
 
