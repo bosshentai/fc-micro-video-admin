@@ -11,7 +11,7 @@ import { CastMemberModel } from './cast-member.model';
 import { CastMemberModelMapper } from './cast-member.mapper';
 import { NotFoundError } from '@core/shared/domain/errors/not-found.error';
 
-export class classMemberSequelizeRepository implements ICastMemberRepository {
+export class CastMemberSequelizeRepository implements ICastMemberRepository {
   sortableFields: string[] = ['name', 'created_at'];
 
   orderBy = {
@@ -93,7 +93,7 @@ export class classMemberSequelizeRepository implements ICastMemberRepository {
         ? {
             order: this.formatSort(props.sort, props.sort_dir),
           }
-        : { order: [['created_at', 'desc']] }),
+        : { order: [['created_at', 'DESC']] }),
       offset,
       limit,
     });
