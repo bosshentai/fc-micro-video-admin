@@ -66,7 +66,7 @@ export class CastMember extends Entity {
     return {
       cast_member_id: this.cast_member_id.id,
       name: this.name,
-      type: this.member_type,
+      type: this.member_type.type,
       created_at: this.created_at,
     };
   }

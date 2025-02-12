@@ -32,7 +32,6 @@
   "customizations": {
     "vscode": {
       "extensions": [
-        "Orta.vscode-jest",
         "firsttris.vscode-jest-runner",
         "esbenp.prettier-vscode",
         "oderwat.indent-rainbow",

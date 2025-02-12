@@ -39,7 +39,7 @@ export class CastMemberType extends ValueObject {
 
 export class InvalidCastMemberTypeError extends Error {
   constructor(invalidType: unknown) {
-    super(`Invalid cast member type ${invalidType}`);
+    super(`Invalid cast member type: ${invalidType}`);
     this.name = 'InvalidCastMemberTypeError';
   }
 }

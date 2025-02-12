@@ -96,4 +96,18 @@ describe('CastMemberIdInMemoryRepository Unit Tests', () => {
     const itemsSorted = await repository['applySort'](items, null, null);
     expect(itemsSorted).toStrictEqual([items[2], items[1], items[0]]);
   });
+
+  it('should sort by name', async () => {
+    const items = [
+      CastMember.fake().anActor().withName('c').build(),
+      CastMember.fake().anActor().withName('b').build(),
+      CastMember.fake().anActor().withName('a').build(),
+    ];
+
+    let itemsSorted = await repository['applySort'](items, 'name', 'asc');
+    expect(itemsSorted).toStrictEqual([items[2], items[1], items[0]]);
+
+    itemsSorted = await repository['applySort'](items, 'name', 'desc');
+    expect(itemsSorted).toStrictEqual([items[0], items[1], items[2]]);
+  });
 });

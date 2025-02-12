@@ -6,7 +6,7 @@ describe('CastMemberType Unit Test', () => {
   test('Throw error when the cast member type is invalid', () => {
     expect(() => {
       new CastMemberType('1' as any);
-    }).toThrow(new Error('Invalid cast member type 1'));
+    }).toThrow(new Error('Invalid cast member type: 1'));
     expect(validateSpy).toHaveBeenCalled();
     expect(validateSpy).toHaveBeenCalledTimes(1);
   });
