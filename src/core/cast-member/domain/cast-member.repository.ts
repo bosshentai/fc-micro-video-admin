@@ -51,7 +51,7 @@ export class CastMemberSearchParams extends DefaultSearchParams<CastMemberFilter
     return new CastMemberSearchParams({
       ...props,
       filter: {
-        name: props.filter?.name || null,
+        name: props.filter?.name,
         type,
       },
     });

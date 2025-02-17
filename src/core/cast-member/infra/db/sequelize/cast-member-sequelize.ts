@@ -81,7 +81,7 @@ export class CastMemberSequelizeRepository implements ICastMemberRepository {
       }
 
       if (props.filter.type) {
-        where['member_type'] = props.filter.type;
+        where['type'] = props.filter.type.type;
       }
     }
 

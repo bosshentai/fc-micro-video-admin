@@ -4,10 +4,10 @@ type Value<Ok, Error> = Ok | Error;
 export class Either<Ok = unknown, ErrorType = Error>
   implements Iterable<Value<Ok, ErrorType>>
 {
-  private _ok: Ok;
-  private _error: ErrorType;
+  private _ok: Ok | null;
+  private _error: ErrorType | null;
 
-  private constructor(ok: Ok, error: ErrorType) {
+  private constructor(ok: Ok | null, error: ErrorType | null) {
     this._ok = ok;
     this._error = error;
   }
@@ -21,11 +21,11 @@ export class Either<Ok = unknown, ErrorType = Error>
   }
 
   isOk() {
-    return this.ok !== null;
+    return this.ok !== null && this.ok !== undefined;
   }
 
   isFail() {
-    return this.error !== null;
+    return this.error !== null && this.error !== undefined;
   }
 
   static safe<Ok = unknown, ErrorType = Error>(
@@ -98,22 +98,21 @@ export class Either<Ok = unknown, ErrorType = Error>
    */
   chainEach<NewOk, NewError>(
     fn: (value: Flatten<Ok>) => Either<Flatten<NewOk>, Flatten<NewError>>,
-  ): Either<NewOk, ErrorType | NewError> {
+  ): Either<NewOk, NewError | ErrorType> {
     if (this.isOk()) {
       if (!Array.isArray(this.ok)) {
         throw new Error('Method chainEach only work with array');
       }
 
-      const result = this.ok.map((o) => {
-        return fn(o);
-      });
+      const result: Either<Flatten<NewOk>, Flatten<NewError>>[] =
+        this.ok.map(fn);
 
       const errors = result.filter((r) => r.isFail());
 
       if (errors.length > 0) {
-        return Either.fail(errors.map((e) => e.error) as unknown as ErrorType);
+        return Either.fail(errors.map((e) => e.error).flat() as NewError);
       }
-      return Either.ok(result.map((r) => r.ok).flat() as unknown as NewOk);
+      return Either.ok(result.map((r) => r.ok).flat() as NewOk);
     }
 
     return Either.fail(this.error);
