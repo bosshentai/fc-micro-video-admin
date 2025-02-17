@@ -1,11 +1,11 @@
-import { setupSequelize } from "../../../../../shared/infra/testing/helpers";
-import { Category } from "../../../../domain/category.entity";
-import { CategorySequelizeRepository } from "../../../../infra/db/sequelize/category-sequelize.repository";
-import { CategoryModel } from "../../../../infra/db/sequelize/category.model";
-import { CategoryOutputMapper } from "../../common/category-output";
-import { ListCategoriesUseCase } from "../list-category.use-case";
+import { setupSequelize } from '../../../../../shared/infra/testing/helpers';
+import { Category } from '../../../../domain/category.entity';
+import { CategorySequelizeRepository } from '../../../../infra/db/sequelize/category-sequelize.repository';
+import { CategoryModel } from '../../../../infra/db/sequelize/category.model';
+import { CategoryOutputMapper } from '../../common/category-output';
+import { ListCategoriesUseCase } from '../list-category.use-case';
 
-describe("ListCategories Integration Tests", () => {
+describe('ListCategories Integration Tests', () => {
   let useCase: ListCategoriesUseCase;
   let repository: CategorySequelizeRepository;
 
@@ -16,7 +16,7 @@ describe("ListCategories Integration Tests", () => {
     useCase = new ListCategoriesUseCase(repository);
   });
 
-  it("should return out sorted bt created_at when input param is empty", async () => {
+  it('should return out sorted bt created_at when input param is empty', async () => {
     const categories = Category.fake()
       .theCategories(2)
       .withCreatedAt((i) => new Date(new Date().getTime() + 1000 + i))

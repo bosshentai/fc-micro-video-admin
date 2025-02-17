@@ -1,13 +1,13 @@
-import { NotFoundError } from "../../../../../shared/domain/errors/not-found.error";
+import { NotFoundError } from '../../../../../shared/domain/errors/not-found.error';
 import {
   InvalidUuidError,
   Uuid,
-} from "../../../../../shared/domain/value-objects/uuid.vo";
-import { Category } from "../../../../domain/category.entity";
-import { CategoryInMemoryRepository } from "../../../../infra/db/in-memory/category-in-memory.repository";
-import { GetCategoryUseCase } from "../get-category.use-case";
+} from '../../../../../shared/domain/value-objects/uuid.vo';
+import { Category } from '../../../../domain/category.entity';
+import { CategoryInMemoryRepository } from '../../../../infra/db/in-memory/category-in-memory.repository';
+import { GetCategoryUseCase } from '../get-category.use-case';
 
-describe("GetCategoryUseCase unit Tests", () => {
+describe('GetCategoryUseCase unit Tests', () => {
   let useCase: GetCategoryUseCase;
   let repository: CategoryInMemoryRepository;
 
@@ -16,22 +16,22 @@ describe("GetCategoryUseCase unit Tests", () => {
     useCase = new GetCategoryUseCase(repository);
   });
 
-  it("should throws error when entity not found", async () => {
-    await expect(() => useCase.execute({ id: "fake id" })).rejects.toThrow(
-      new InvalidUuidError()
+  it('should throws error when entity not found', async () => {
+    await expect(() => useCase.execute({ id: 'fake id' })).rejects.toThrow(
+      new InvalidUuidError(),
     );
 
     const uuid = new Uuid();
     await expect(() => useCase.execute({ id: uuid.id })).rejects.toThrow(
-      new NotFoundError(uuid.id, Category)
+      new NotFoundError(uuid.id, Category),
     );
   });
 
-  it("should returns a category", async () => {
-    const items = [Category.create({ name: "test" })];
+  it('should returns a category', async () => {
+    const items = [Category.create({ name: 'test' })];
     repository.items = items;
 
-    const spyFindById = jest.spyOn(repository, "findById");
+    const spyFindById = jest.spyOn(repository, 'findById');
     const output = await useCase.execute({ id: items[0].category_id.id });
     expect(spyFindById).toHaveBeenCalledTimes(1);
     expect(output).toStrictEqual({

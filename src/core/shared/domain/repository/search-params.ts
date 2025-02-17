@@ -1,6 +1,6 @@
-import { ValueObject } from "../value-object";
+import { ValueObject } from '../value-object';
 
-export type SortDirection = "asc" | "desc";
+export type SortDirection = 'asc' | 'desc';
 
 export type SearchParamsConstructorProps<Filter = string> = {
   page?: number;
@@ -64,7 +64,7 @@ export class SearchParams<Filter = string> extends ValueObject {
 
   private set sort(value: string | null) {
     this._sort =
-      value === null || value === undefined || value === "" ? null : `${value}`;
+      value === null || value === undefined || value === '' ? null : `${value}`;
   }
 
   get sort_dir(): SortDirection | null {
@@ -77,7 +77,7 @@ export class SearchParams<Filter = string> extends ValueObject {
       return;
     }
     const dir = `${value}`.toLowerCase();
-    this._sort_dir = dir !== "asc" && dir !== "desc" ? "asc" : dir;
+    this._sort_dir = dir !== 'asc' && dir !== 'desc' ? 'asc' : dir;
   }
 
   get filter(): Filter | null {
@@ -86,7 +86,7 @@ export class SearchParams<Filter = string> extends ValueObject {
 
   protected set filter(value: Filter | null) {
     this._filter =
-      value === null || value === undefined || (value as unknown) === ""
+      value === null || value === undefined || (value as unknown) === ''
         ? null
         : (`${value}` as any);
   }

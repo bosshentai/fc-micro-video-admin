@@ -1,5 +1,5 @@
-import { Entity } from "../entity";
-import { ValueObject } from "../value-object";
+import { Entity } from '../entity';
+import { ValueObject } from '../value-object';
 
 class ClassValueObject extends ValueObject {
   constructor(private readonly id: string) {
@@ -29,16 +29,16 @@ class TestEntity extends Entity {
   }
 }
 
-describe("Entity Unit Test", () => {
-  test("should return ValueObject as entity_id", () => {
-    const id = "1";
+describe('Entity Unit Test', () => {
+  test('should return ValueObject as entity_id', () => {
+    const id = '1';
     const entity = new TestEntity(id);
 
     expect(entity.entity_id.toString()).toBe(id);
   });
 
-  it("should return a valid JSON ", () => {
-    const id = "1";
+  it('should return a valid JSON ', () => {
+    const id = '1';
     const entity = new TestEntity(id);
     expect(entity.toJSON()).toStrictEqual({ id });
   });

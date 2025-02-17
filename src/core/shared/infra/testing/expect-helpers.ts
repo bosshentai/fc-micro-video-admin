@@ -1,12 +1,12 @@
-import { Notification } from "../../domain/validator/notification";
+import { Notification } from '../../domain/validator/notification';
 
 expect.extend({
   notificationContainsErrorMessages(
     expected: Notification,
-    received: Array<string | { [key: string]: string[] }>
+    received: Array<string | { [key: string]: string[] }>,
   ) {
     const every = received.every((error) => {
-      if (typeof error === "string") {
+      if (typeof error === 'string') {
         return expected.errors.has(error);
       } else {
         return Object.entries(error).every(([field, messages]) => {
@@ -21,12 +21,12 @@ expect.extend({
       }
     });
     return every
-      ? { pass: true, message: () => "" }
+      ? { pass: true, message: () => '' }
       : {
           pass: false,
           message: () =>
             `The validation errors not contains ${JSON.stringify(
-              received
+              received,
             )}. Current: ${JSON.stringify(expected.toJSON())}`,
         };
   },

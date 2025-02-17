@@ -1,7 +1,7 @@
-import { Chance } from "chance";
-import { Uuid } from "../../shared/domain/value-objects/uuid.vo";
-import { Category } from "./category.entity";
-import _ from "lodash";
+import { Chance } from 'chance';
+import { Uuid } from '../../shared/domain/value-objects/uuid.vo';
+import { Category } from './category.entity';
+import _ from 'lodash';
 
 type PropOrFactory<T> = T | ((index: number) => T);
 export class CategoryFakeBuilder<TBuild extends Category | Category[]> {
@@ -69,13 +69,13 @@ export class CategoryFakeBuilder<TBuild extends Category | Category[]> {
   }
 
   private callFactory(factoryOrValue: PropOrFactory<any>, index: number) {
-    return typeof factoryOrValue === "function"
+    return typeof factoryOrValue === 'function'
       ? factoryOrValue(index)
       : factoryOrValue;
   }
 
   private getValue(prop: any) {
-    const optional = ["category_id", "created_at"];
+    const optional = ['category_id', 'created_at'];
     const privateProp = `_${prop}` as keyof this;
     if (!this[privateProp] && optional.includes(prop)) {
       throw new Error(`Property ${prop} not have factory, use 'with' methods`);
@@ -84,23 +84,23 @@ export class CategoryFakeBuilder<TBuild extends Category | Category[]> {
   }
 
   get category_id() {
-    return this.getValue("category_id");
+    return this.getValue('category_id');
   }
 
   get name() {
-    return this.getValue("name");
+    return this.getValue('name');
   }
 
   get description() {
-    return this.getValue("description");
+    return this.getValue('description');
   }
 
   get is_active() {
-    return this.getValue("is_active");
+    return this.getValue('is_active');
   }
 
   get created_at() {
-    return this.getValue("created_at");
+    return this.getValue('created_at');
   }
 
   build(): TBuild {
