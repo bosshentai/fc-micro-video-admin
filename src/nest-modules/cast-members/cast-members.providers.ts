@@ -8,6 +8,7 @@ import { ICastMemberRepository } from '@core/cast-member/domain/cast-member.repo
 import { UpdateCastMemberUseCase } from '@core/cast-member/application/use-cases/update-cast-member/update-cast-member.use-case';
 import { GetCastMemberUseCase } from '@core/cast-member/application/use-cases/get-cast-member/get-cast-member.use-case';
 import { DeleteCastMemberUseCase } from '@core/cast-member/application/use-cases/delete-cast-member/delete-cast-member.use-case';
+import { ListCastMembersUseCase } from '@core/cast-member/application/use-cases/list-cast-members/list-cast-member.use-case';
 
 export const REPOSITORIES = {
   CAST_MEMBER_REPOSITORY: {
@@ -45,9 +46,9 @@ export const USE_CASES = {
   },
 
   LIST_CAST_MEMBER_USE_CASE: {
-    provide: UpdateCastMemberUseCase,
+    provide: ListCastMembersUseCase,
     useFactory: (castMemberRepo: ICastMemberRepository) => {
-      return new UpdateCastMemberUseCase(castMemberRepo);
+      return new ListCastMembersUseCase(castMemberRepo);
     },
     inject: [REPOSITORIES.CAST_MEMBER_REPOSITORY.provide],
   },
