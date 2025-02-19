@@ -57,7 +57,7 @@ describe('CategoriesController Unit Tests', () => {
       description: 'Movie description',
       is_active: true,
     };
-    444;
+
     const presenter = await controller.create(input);
     expect(mockCreateUseCase.execute).toHaveBeenCalledWith(input);
     expect(presenter).toBeInstanceOf(CategoryPresenter);
