@@ -20,11 +20,11 @@ export class UpdateCastMemberInput {
 
   @IsString()
   @IsOptional()
-  name: string;
+  name?: string;
 
   @IsInt()
   @IsOptional()
-  type: CastMemberTypes;
+  type?: CastMemberTypes;
 
   constructor(props: UpdateCastMemberUseCaseConstructorProps) {
     if (!props) return;
