@@ -13,7 +13,7 @@ import { DeleteCastMemberUseCase } from '@core/cast-member/application/use-cases
 import {
   CreateCastMemberFixture,
   ListCastMembersFixture,
-  updateCastMemberFixture,
+  UpdateCastMemberFixture,
 } from '../testing/cast-member-fixture';
 import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
 import { CastMemberOutputMapper } from '@core/cast-member/application/use-cases/common/cast-member-output';
@@ -68,7 +68,7 @@ describe('CastMembers Integration Tests', () => {
   });
 
   describe('should update a cast member', () => {
-    const arrange = updateCastMemberFixture.arrangeForupdate();
+    const arrange = UpdateCastMemberFixture.arrangeForupdate();
 
     const castMember = CastMember.fake().aDirector().build();
 
@@ -122,7 +122,7 @@ describe('CastMembers Integration Tests', () => {
   describe('search method', () => {
     describe('should sorted cast member by created_at', () => {
       const { entitiesMap, arrange } =
-        ListCastMembersFixture.arrangeIncrementWithCreatedAt();
+        ListCastMembersFixture.arrangeIncrementedWithCreatedAt();
 
       beforeEach(async () => {
         await repository.bulkInsert(Object.values(entitiesMap));

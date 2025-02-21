@@ -36,9 +36,140 @@ export class CreateCastMemberFixture {
       },
     ];
   }
+
+  static arrangeInvalidRequest() {
+    const faker = CastMember.fake().anActor().withName('Member');
+    const defaultExpected = {
+      statusCode: 422,
+      error: 'Unprocessable Entity',
+    };
+
+    return {
+      EMPTY: {
+        send_data: {},
+        expected: {
+          message: [
+            'name should not be empty',
+            'name must be a string',
+            'type should not be empty',
+            'type must be an integer number',
+          ],
+          ...defaultExpected,
+        },
+      },
+      TYPE_UNDEFINED: {
+        send_data: {
+          name: faker.name,
+          type: undefined,
+        },
+        expected: {
+          message: [
+            'type should not be empty',
+            'type must be an integer number',
+          ],
+          ...defaultExpected,
+        },
+      },
+      TYPE_NULL: {
+        send_data: {
+          name: faker.name,
+          type: null,
+        },
+        expected: {
+          message: [
+            'type should not be empty',
+            'type must be an integer number',
+          ],
+          ...defaultExpected,
+        },
+      },
+      TYPE_EMPTY: {
+        send_data: {
+          name: faker.name,
+          type: '',
+        },
+        expected: {
+          message: [
+            'type should not be empty',
+            'type must be an integer number',
+          ],
+          ...defaultExpected,
+        },
+      },
+      TYPE_NOT_NUMBER: {
+        send_data: {
+          name: faker.name,
+          type: 'a',
+        },
+        expected: {
+          message: ['type must be an integer number'],
+          ...defaultExpected,
+        },
+      },
+      NAME_UNDEFINED: {
+        send_data: {
+          name: undefined,
+          type: CastMemberTypes.ACTOR,
+        },
+        expected: {
+          message: ['name should not be empty', 'name must be a string'],
+          ...defaultExpected,
+        },
+      },
+      NAME_NULL: {
+        send_data: {
+          name: null,
+          type: CastMemberTypes.ACTOR,
+        },
+        expected: {
+          message: ['name should not be empty', 'name must be a string'],
+          ...defaultExpected,
+        },
+      },
+      NAME_EMPTY: {
+        send_data: { name: '', type: CastMemberTypes.ACTOR },
+        expected: {
+          message: ['name should not be empty'],
+          ...defaultExpected,
+        },
+      },
+    };
+  }
+
+  static arrangeForEntityValidationError() {
+    const faker = CastMember.fake().anActor().withName('Member');
+
+    const defaultExpected = {
+      statusCode: 422,
+      error: 'Unprocessable Entity',
+    };
+
+    return {
+      NAME_TOO_LONG: {
+        send_data: {
+          name: faker.withInvalidNameTooLong().name,
+          type: CastMemberTypes.ACTOR,
+        },
+        expected: {
+          message: ['name must be shorter than or equal to 255 characters'],
+          ...defaultExpected,
+        },
+      },
+      TYPE_INVALID: {
+        send_data: {
+          name: faker.withName('Member').name,
+          type: 10,
+        },
+        expected: {
+          message: ['Invalid cast member type: 10'],
+          ...defaultExpected,
+        },
+      },
+    };
+  }
 }
 
-export class updateCastMemberFixture {
+export class UpdateCastMemberFixture {
   static keyInResponse = _keyInResponse;
 
   static arrangeForupdate() {
@@ -73,10 +204,42 @@ export class updateCastMemberFixture {
       },
     ];
   }
+
+  static arrangeForEntityValidationError() {
+    const faker = CastMember.fake().anActor().withName('Member');
+
+    const defaultExpected = {
+      statusCode: 422,
+      error: 'Unprocessable Entity',
+    };
+
+    return {
+      NAME_TOO_LONG: {
+        send_data: {
+          name: faker.withInvalidNameTooLong().name,
+          type: CastMemberTypes.ACTOR,
+        },
+        expected: {
+          message: ['name must be shorter than or equal to 255 characters'],
+          ...defaultExpected,
+        },
+      },
+      TYPE_INVALID: {
+        send_data: {
+          name: faker.withName('Member').name,
+          type: 10,
+        },
+        expected: {
+          message: ['Invalid cast member type: 10'],
+          ...defaultExpected,
+        },
+      },
+    };
+  }
 }
 
 export class ListCastMembersFixture {
-  static arrangeIncrementWithCreatedAt() {
+  static arrangeIncrementedWithCreatedAt() {
     const _entities = CastMember.fake()
       .theActors(4)
       .withName((i) => i + '')
@@ -137,10 +300,10 @@ export class ListCastMembersFixture {
         expected: {
           entities: [entitiesMap.AAA, entitiesMap.AaA],
           meta: {
+            total: 3,
             current_page: 1,
             last_page: 2,
             per_page: 2,
-            total: 3,
           },
         },
       },
@@ -156,10 +319,10 @@ export class ListCastMembersFixture {
         expected: {
           entities: [entitiesMap.a],
           meta: {
+            total: 3,
             current_page: 2,
             last_page: 2,
             per_page: 2,
-            total: 3,
           },
         },
       },

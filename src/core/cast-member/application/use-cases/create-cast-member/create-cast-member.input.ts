@@ -14,7 +14,7 @@ export type CreateCastMemberInputConstructorProps = {
 
 export class CreateCastMemberInput {
   @IsString()
-  @IsOptional()
+  @IsNotEmpty()
   name: string;
 
   @IsInt()
