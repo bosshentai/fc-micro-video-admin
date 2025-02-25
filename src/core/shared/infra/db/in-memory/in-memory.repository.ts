@@ -1,19 +1,19 @@
-import { Entity } from "../../../domain/entity";
+import { Entity } from '../../../domain/entity';
 import {
   IRepository,
   ISearchableRepository,
-} from "../../../domain/repository/repository-interface";
-import { ValueObject } from "../../../domain/value-object";
-import { NotFoundError } from "../../../domain/errors/not-found.error";
+} from '../../../domain/repository/repository-interface';
+import { ValueObject } from '../../../domain/value-object';
+import { NotFoundError } from '../../../domain/errors/not-found.error';
 import {
   SearchParams,
   SortDirection,
-} from "../../../domain/repository/search-params";
-import { SearchResult } from "../../../domain/repository/search-result";
+} from '../../../domain/repository/search-params';
+import { SearchResult } from '../../../domain/repository/search-result';
 
 export abstract class InMemoryRepository<
   E extends Entity,
-  EntityId extends ValueObject
+  EntityId extends ValueObject,
 > implements IRepository<E, EntityId>
 {
   items: E[] = [];
@@ -25,7 +25,7 @@ export abstract class InMemoryRepository<
   }
   async update(entity: E): Promise<void> {
     const indexFound = this.items.findIndex((item) =>
-      item.entity_id.equals(entity.entity_id)
+      item.entity_id.equals(entity.entity_id),
     );
 
     if (indexFound === -1) {
@@ -35,7 +35,7 @@ export abstract class InMemoryRepository<
   }
   async delete(entity_id: EntityId): Promise<void> {
     const indexFound = this.items.findIndex((item) =>
-      item.entity_id.equals(entity_id)
+      item.entity_id.equals(entity_id),
     );
 
     if (indexFound === -1) {
@@ -51,7 +51,7 @@ export abstract class InMemoryRepository<
   protected _get(entity_id: EntityId) {
     const item = this.items.find((item) => item.entity_id.equals(entity_id));
 
-    return typeof item === "undefined" ? null : item;
+    return typeof item === 'undefined' ? null : item;
   }
 
   async findAll(): Promise<any[]> {
@@ -63,7 +63,7 @@ export abstract class InMemoryRepository<
 export abstract class InMemorySearchableRepository<
     E extends Entity,
     EntityId extends ValueObject,
-    Filter = string
+    Filter = string,
   >
   extends InMemoryRepository<E, EntityId>
   implements ISearchableRepository<E, EntityId, Filter>
@@ -76,12 +76,12 @@ export abstract class InMemorySearchableRepository<
     const itemsSorted = this.applySort(
       itemsFiltered,
       props.sort as keyof E,
-      props.sort_dir
+      props.sort_dir,
     );
     const itemsPaginated = this.applyPaginate(
       itemsSorted,
       props.page,
-      props.per_page
+      props.per_page,
     );
 
     return new SearchResult({
@@ -95,13 +95,13 @@ export abstract class InMemorySearchableRepository<
 
   protected abstract applyFilter(
     items: E[],
-    filter: Filter | null
+    filter: Filter | null,
   ): Promise<E[]>;
 
   protected applyPaginate(
     items: E[],
-    page: SearchParams["page"],
-    per_page: SearchParams["per_page"]
+    page: SearchParams['page'],
+    per_page: SearchParams['per_page'],
   ) {
     const start = (page - 1) * per_page;
     const limit = start + per_page;
@@ -112,27 +112,27 @@ export abstract class InMemorySearchableRepository<
     items: E[],
     sort: keyof E | null,
     sort_dir: SortDirection | null,
-    custom_getter?: (sort: keyof E, item: E) => any
+    custom_getter?: (sort: keyof E, item: E) => any,
   ) {
     if (!sort || !this.sortableFields.includes(sort as string)) {
       return items;
     }
 
     return [...items].sort((a, b) => {
-      const aValue = custom_getter ? custom_getter(sort, a) : a[sort] ?? null;
+      const aValue = custom_getter ? custom_getter(sort, a) : (a[sort] ?? null);
 
-      const bValue = custom_getter ? custom_getter(sort, b) : b[sort] ?? null;
+      const bValue = custom_getter ? custom_getter(sort, b) : (b[sort] ?? null);
 
       if (aValue === null || bValue === null) {
         return aValue === bValue ? 0 : aValue === null ? 1 : -1;
       }
 
       if (aValue < bValue) {
-        return sort_dir === "asc" ? -1 : 1;
+        return sort_dir === 'asc' ? -1 : 1;
       }
 
       if (aValue > bValue) {
-        return sort_dir === "asc" ? 1 : -1;
+        return sort_dir === 'asc' ? 1 : -1;
       }
 
       return 0;

@@ -1,8 +1,8 @@
-import { CategoryModel } from '@core/category/infra/db/sequelize/category.model';
 import { Module } from '@nestjs/common/decorators/modules';
 import { ConfigService } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize/dist';
 import { CONFIG_SCHEMA_TYPE } from 'src/nest-modules/config-module/config.module';
+import { CategoryModel } from '../../core/category/infra/db/sequelize/category.model';
 
 const models = [CategoryModel];
 
@@ -23,7 +23,6 @@ const models = [CategoryModel];
         }
 
         if (dbVendor === 'mysql') {
-          console.log(`Sequelize module ${JSON.stringify(configService)}`);
           return {
             dialect: 'mysql',
             host: configService.get('DB_HOST'),

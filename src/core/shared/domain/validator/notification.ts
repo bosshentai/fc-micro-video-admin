@@ -19,7 +19,6 @@ export class Notification {
         error.forEach((value) => {
           this.errors.set(value, value);
         });
-
         return;
       }
       this.errors.set(error, error);
@@ -30,17 +29,16 @@ export class Notification {
     return this.errors.size > 0;
   }
 
-  copyErrors(notifcation: Notification) {
-    notifcation.errors.forEach((value, field) => {
+  copyErrors(notification: Notification) {
+    notification.errors.forEach((value, field) => {
       this.setError(value, field);
     });
   }
 
   toJSON() {
     const errors: Array<string | { [key: string]: string[] }> = [];
-
     this.errors.forEach((value, key) => {
-      if (typeof value === "string") {
+      if (typeof value === 'string') {
         errors.push(value);
       } else {
         errors.push({ [key]: value });

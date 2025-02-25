@@ -50,7 +50,6 @@ describe('DatabaseModule Unit Tests', () => {
     };
 
     it('should be a mysql connection', async () => {
-      console.log(connOptions);
       const module = await Test.createTestingModule({
         imports: [
           DatabaseModule,
