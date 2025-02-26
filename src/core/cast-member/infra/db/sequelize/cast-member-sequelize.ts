@@ -31,7 +31,7 @@ export class CastMemberSequelizeRepository implements ICastMemberRepository {
     );
   }
 
-  async findById(entity_id: Uuid): Promise<CastMember> {
+  async findById(entity_id: Uuid): Promise<CastMember | null> {
     const model = await this._get(entity_id.id);
 
     return model ? CastMemberModelMapper.toEntity(model) : null;
@@ -91,7 +91,7 @@ export class CastMemberSequelizeRepository implements ICastMemberRepository {
       }),
       ...(props.sort && this.sortableFields.includes(props.sort)
         ? {
-            order: this.formatSort(props.sort, props.sort_dir),
+            order: this.formatSort(props.sort, props.sort_dir!),
           }
         : { order: [['created_at', 'DESC']] }),
       offset,

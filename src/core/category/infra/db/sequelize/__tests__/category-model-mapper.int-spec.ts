@@ -17,6 +17,9 @@ describe('CategoryModelMapper Integration Tests', () => {
     const model = CategoryModel.build({
       category_id: 'd5b0f725-5c47-4b39-8af5-2c6c8d2824f3',
       name: 'a'.repeat(256),
+      description: 'Movie description',
+      is_active: true,
+      created_at: new Date(),
     });
 
     try {

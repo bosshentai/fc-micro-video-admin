@@ -50,7 +50,7 @@ export class Category extends Entity {
     this.validate(['name']);
   }
 
-  changeDescription(description: string): void {
+  changeDescription(description: string | null): void {
     this.description = description;
   }
 

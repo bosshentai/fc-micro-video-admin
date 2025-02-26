@@ -44,7 +44,7 @@ export abstract class InMemoryRepository<
 
     this.items.splice(indexFound, 1);
   }
-  async findById(entity_id: any): Promise<E> {
+  async findById(entity_id: any): Promise<E | null> {
     return this._get(entity_id);
   }
 

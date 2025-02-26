@@ -92,7 +92,7 @@ describe('UpdateCastMemberUseCase Integration Tests', () => {
         created_at: entity.created_at,
       });
 
-      expect(entityUpdated.toJSON()).toStrictEqual({
+      expect(entityUpdated!.toJSON()).toStrictEqual({
         cast_member_id: entity.cast_member_id.id,
         name: item.expected.name,
         type: item.expected.type,

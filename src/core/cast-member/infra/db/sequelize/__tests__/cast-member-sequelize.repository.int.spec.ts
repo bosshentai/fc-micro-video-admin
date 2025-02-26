@@ -37,7 +37,7 @@ describe('CastMemberSequelizeRepository Integration Tests', () => {
     const entity = CastMember.fake().anActor().build();
     await repository.insert(entity);
     entityFound = await repository.findById(entity.cast_member_id);
-    expect(entity.toJSON()).toStrictEqual(entityFound.toJSON());
+    expect(entity.toJSON()).toStrictEqual(entityFound!.toJSON());
   });
 
   it('should return all cast members', async () => {
@@ -62,7 +62,7 @@ describe('CastMemberSequelizeRepository Integration Tests', () => {
     entity.changeName('Movie updated');
     await repository.update(entity);
     const entityFound = await repository.findById(entity.cast_member_id);
-    expect(entityFound.toJSON()).toStrictEqual(entity.toJSON());
+    expect(entityFound!.toJSON()).toStrictEqual(entity.toJSON());
   });
 
   it('should throw error on delete when a entity not found', async () => {

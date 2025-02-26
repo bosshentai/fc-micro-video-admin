@@ -82,17 +82,17 @@ describe('UpdateCastMemberUseCase Unit Tests', () => {
 
       const entityUpdated = await repository.findById(new Uuid(item.input.id));
       expect(output).toStrictEqual({
-        id: entityUpdated.cast_member_id.id,
+        id: entityUpdated!.cast_member_id.id,
         name: item.expected.name,
         type: item.expected.type,
-        created_at: entityUpdated.created_at,
+        created_at: entityUpdated!.created_at,
       });
 
-      expect(entityUpdated.toJSON()).toStrictEqual({
-        cast_member_id: entityUpdated.cast_member_id.id,
+      expect(entityUpdated!.toJSON()).toStrictEqual({
+        cast_member_id: entityUpdated!.cast_member_id.id,
         name: item.expected.name,
         type: item.expected.type,
-        created_at: entityUpdated.created_at,
+        created_at: entityUpdated!.created_at,
       });
     }
   });
