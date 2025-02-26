@@ -4,10 +4,10 @@ type Value<Ok, Error> = Ok | Error;
 export class Either<Ok = unknown, ErrorType = Error>
   implements Iterable<Value<Ok, ErrorType>>
 {
-  private _ok: Ok | null;
-  private _error: ErrorType | null;
+  private _ok: Ok;
+  private _error: ErrorType;
 
-  private constructor(ok: Ok | null, error: ErrorType | null) {
+  private constructor(ok: Ok, error: ErrorType) {
     this._ok = ok;
     this._error = error;
   }

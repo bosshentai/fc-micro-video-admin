@@ -11,6 +11,8 @@ import {
 import { CategoryModel } from './category.model';
 import { CategoryModelMapper } from './category-model-mapper';
 import { SortDirection } from '@core/shared/domain/repository/search-params';
+import { CategoryId } from '@core/category/domain/category.aggregate';
+import { InvalidArgumentError } from '@core/shared/domain/errors/invalid-argument.error';
 
 @Injectable()
 export class CategorySequelizeRepository implements ICategoryRepository {
@@ -81,6 +83,36 @@ export class CategorySequelizeRepository implements ICategoryRepository {
       return CategoryModelMapper.toEntity(model);
     });
   }
+
+  async existsById(ids: CategoryId[]) {
+    if (!ids.length) {
+      throw new InvalidArgumentError(
+        'ids must be an array with at least one elements',
+      );
+    }
+
+    const existsCategoryModels = await this.categoryModel.findAll({
+      attributes: ['category_id'],
+      where: {
+        category_id: {
+          [Op.in]: ids.map((id) => id.id),
+        },
+      },
+    });
+    const exitsCategoryIds = existsCategoryModels.map(
+      (model) => new CategoryId(model.category_id),
+    );
+
+    const notExistsCategoryIds = ids.filter(
+      (id) => !exitsCategoryIds.some((e) => e.equals(id)),
+    );
+
+    return {
+      exists: exitsCategoryIds,
+      not_exists: notExistsCategoryIds,
+    };
+  }
+
   getEntity(): new (...args: any[]) => Category {
     return Category;
   }
