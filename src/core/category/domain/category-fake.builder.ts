@@ -1,13 +1,13 @@
 import { Chance } from 'chance';
-import { Uuid } from '../../shared/domain/value-objects/uuid.vo';
 import { Category } from './category.entity';
 import _ from 'lodash';
+import { CategoryId } from './category.aggregate';
 
 type PropOrFactory<T> = T | ((index: number) => T);
 export class CategoryFakeBuilder<TBuild extends Category | Category[]> {
   private chance: Chance.Chance;
 
-  private _category_id: PropOrFactory<Uuid> | undefined = undefined;
+  private _category_id: PropOrFactory<CategoryId> | undefined = undefined;
 
   private _name: PropOrFactory<string> = (_index) => this.chance.word();
 
@@ -18,7 +18,7 @@ export class CategoryFakeBuilder<TBuild extends Category | Category[]> {
 
   private _created_at: PropOrFactory<Date> | undefined = undefined;
 
-  private countObjs;
+  private countObjs: number;
 
   static aCategory(): CategoryFakeBuilder<Category> {
     return new CategoryFakeBuilder<Category>();
@@ -33,7 +33,7 @@ export class CategoryFakeBuilder<TBuild extends Category | Category[]> {
     this.chance = new Chance();
   }
 
-  withUuid(valueOrFactory: PropOrFactory<Uuid>) {
+  withUuid(valueOrFactory: PropOrFactory<CategoryId>) {
     this._category_id = valueOrFactory;
     return this;
   }
