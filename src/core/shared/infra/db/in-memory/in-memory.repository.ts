@@ -75,7 +75,7 @@ export abstract class InMemorySearchableRepository<
 
     const itemsSorted = this.applySort(
       itemsFiltered,
-      props.sort as keyof E,
+      props.sort,
       props.sort_dir,
     );
     const itemsPaginated = this.applyPaginate(
@@ -110,9 +110,9 @@ export abstract class InMemorySearchableRepository<
 
   protected applySort(
     items: E[],
-    sort: keyof E | null,
+    sort: string | null,
     sort_dir: SortDirection | null,
-    custom_getter?: (sort: keyof E, item: E) => any,
+    custom_getter?: (sort: string, item: E) => any,
   ) {
     if (!sort || !this.sortableFields.includes(sort as string)) {
       return items;
