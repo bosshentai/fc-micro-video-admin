@@ -43,7 +43,7 @@ export class GenreFakeBuilder<TBuild extends Genre | Genre[]> {
     return this;
   }
 
-  addCategoyId(valueOrFactory: PropOrFactory<CategoryId>) {
+  addCategoryId(valueOrFactory: PropOrFactory<CategoryId>) {
     this._categories_id.push(valueOrFactory);
     return this;
   }

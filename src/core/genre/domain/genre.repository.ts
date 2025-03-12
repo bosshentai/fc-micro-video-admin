@@ -64,7 +64,7 @@ export class GenreSearchParams extends SearchParams<GenreFilter> {
   }
 }
 
-export class GerenSearchResult extends SearchResult<Genre> {}
+export class GenreSearchResult extends SearchResult<Genre> {}
 
 export interface IGenreRepository
   extends ISearchableRepository<
@@ -72,5 +72,5 @@ export interface IGenreRepository
     GenreId,
     GenreFilter,
     GenreSearchParams,
-    GerenSearchResult
+    GenreSearchResult
   > {}
