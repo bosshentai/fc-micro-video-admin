@@ -46,13 +46,13 @@ describe('GenreInMemoryRepository', () => {
     const items = [
       Genre.fake()
         .aGenre()
-        .addCategoyId(categoryId1)
-        .addCategoyId(categoryId2)
+        .addCategoryId(categoryId1)
+        .addCategoryId(categoryId2)
         .build(),
       Genre.fake()
         .aGenre()
-        .addCategoyId(categoryId3)
-        .addCategoyId(categoryId4)
+        .addCategoryId(categoryId3)
+        .addCategoryId(categoryId4)
         .build(),
     ];
 
@@ -104,19 +104,19 @@ describe('GenreInMemoryRepository', () => {
       Genre.fake()
         .aGenre()
         .withName('test')
-        .addCategoyId(categoryId1)
-        .addCategoyId(categoryId2)
+        .addCategoryId(categoryId1)
+        .addCategoryId(categoryId2)
         .build(),
       Genre.fake()
         .aGenre()
         .withName('fake')
-        .addCategoyId(categoryId3)
-        .addCategoyId(categoryId4)
+        .addCategoryId(categoryId3)
+        .addCategoryId(categoryId4)
         .build(),
       Genre.fake()
         .aGenre()
         .withName('test fake')
-        .addCategoyId(categoryId1)
+        .addCategoryId(categoryId1)
         .build(),
     ];
 
