@@ -1,7 +1,6 @@
 import { Chance } from 'chance';
-import { Category } from './category.entity';
 import _ from 'lodash';
-import { CategoryId } from './category.aggregate';
+import { Category, CategoryId } from './category.aggregate';
 
 type PropOrFactory<T> = T | ((index: number) => T);
 export class CategoryFakeBuilder<TBuild extends Category | Category[]> {

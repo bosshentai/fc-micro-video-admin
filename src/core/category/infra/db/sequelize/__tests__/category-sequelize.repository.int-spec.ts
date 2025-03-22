@@ -1,8 +1,5 @@
-import { Sequelize } from 'sequelize-typescript';
 import { CategoryModel } from '../category.model';
 import { CategorySequelizeRepository } from '../category-sequelize.repository';
-import { Category } from '../../../../domain/category.entity';
-import { Uuid } from '../../../../../shared/domain/value-objects/uuid.vo';
 import { NotFoundError } from '../../../../../shared/domain/errors/not-found.error';
 import { CategoryModelMapper } from '../category-model-mapper';
 import {
@@ -10,6 +7,7 @@ import {
   CategorySearchResult,
 } from '../../../../domain/category.repository';
 import { setupSequelize } from '../../../../../shared/infra/testing/helpers';
+import { Category, CategoryId } from '@core/category/domain/category.aggregate';
 
 describe('CategorySequelizeRepository Integration Tests', () => {
   setupSequelize({ models: [CategoryModel] });
@@ -35,7 +33,7 @@ describe('CategorySequelizeRepository Integration Tests', () => {
   });
 
   test('should find a entity by id', async () => {
-    let entityFound = await repository.findById(new Uuid());
+    let entityFound = await repository.findById(new CategoryId());
     expect(entityFound).toBeNull();
 
     const entity = Category.fake().aCategory().build();
@@ -71,7 +69,7 @@ describe('CategorySequelizeRepository Integration Tests', () => {
   });
 
   test('should throw error on delete when a entity not found', async () => {
-    const categoryId = new Uuid();
+    const categoryId = new CategoryId();
     await expect(repository.delete(categoryId)).rejects.toThrow(
       new NotFoundError(categoryId.id, Category),
     );

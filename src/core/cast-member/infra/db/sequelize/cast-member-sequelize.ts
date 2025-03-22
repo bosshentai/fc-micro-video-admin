@@ -10,6 +10,8 @@ import { literal, Op } from 'sequelize';
 import { CastMemberModel } from './cast-member.model';
 import { CastMemberModelMapper } from './cast-member.mapper';
 import { NotFoundError } from '@core/shared/domain/errors/not-found.error';
+import { CastMemberId } from '@core/cast-member/domain/cast-member.aggregate';
+import { InvalidArgumentError } from '@core/shared/domain/errors/invalid-argument.error';
 
 export class CastMemberSequelizeRepository implements ICastMemberRepository {
   sortableFields: string[] = ['name', 'created_at'];
@@ -41,6 +43,50 @@ export class CastMemberSequelizeRepository implements ICastMemberRepository {
     const models = await this.castMemberModel.findAll();
 
     return models.map((model) => CastMemberModelMapper.toEntity(model));
+  }
+
+  async findByIds(ids: CastMemberId[]): Promise<CastMember[]> {
+    const models = await this.castMemberModel.findAll({
+      where: {
+        cast_member_id: {
+          [Op.in]: ids.map((id) => id.id),
+        },
+      },
+    });
+    return models.map((model) => CastMemberModelMapper.toEntity(model));
+  }
+
+  async existsById(
+    ids: CastMemberId[],
+  ): Promise<{ exists: CastMemberId[]; not_exists: CastMemberId[] }> {
+    if (!ids.length) {
+      throw new InvalidArgumentError(
+        'ids must be an array with at least one element',
+      );
+    }
+
+    const existsCastMemberModels = await this.castMemberModel.findAll({
+      attributes: ['cast_member_id'],
+      where: {
+        cast_member_id: {
+          [Op.in]: ids.map((id) => id.id),
+        },
+      },
+    });
+
+    const existsCastMemberIds = existsCastMemberModels.map(
+      (model) => new CastMemberId(model.cast_member_id),
+    );
+
+    const notExistsCastMemberIds = ids.filter(
+      (id) =>
+        !existsCastMemberIds.some((castMemberId) => castMemberId.equals(id)),
+    );
+
+    return {
+      exists: existsCastMemberIds,
+      not_exists: notExistsCastMemberIds,
+    };
   }
 
   async delete(cast_member_id: Uuid): Promise<void> {

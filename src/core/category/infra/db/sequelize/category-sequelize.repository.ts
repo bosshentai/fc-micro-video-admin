@@ -1,8 +1,6 @@
 import { Injectable } from '@nestjs/common/decorators';
 import { literal, Op } from 'sequelize';
 import { NotFoundError } from '../../../../shared/domain/errors/not-found.error';
-import { Uuid } from '../../../../shared/domain/value-objects/uuid.vo';
-import { Category } from '../../../domain/category.entity';
 import {
   CategorySearchParams,
   CategorySearchResult,
@@ -11,7 +9,7 @@ import {
 import { CategoryModel } from './category.model';
 import { CategoryModelMapper } from './category-model-mapper';
 import { SortDirection } from '@core/shared/domain/repository/search-params';
-import { CategoryId } from '@core/category/domain/category.aggregate';
+import { Category, CategoryId } from '@core/category/domain/category.aggregate';
 import { InvalidArgumentError } from '@core/shared/domain/errors/invalid-argument.error';
 
 @Injectable()
@@ -54,7 +52,7 @@ export class CategorySequelizeRepository implements ICategoryRepository {
       throw new NotFoundError(id, this.getEntity());
     }
   }
-  async delete(category_id: Uuid): Promise<void> {
+  async delete(category_id: CategoryId): Promise<void> {
     const id = category_id.id;
     // const model = await this._get(id);
 
@@ -70,10 +68,22 @@ export class CategorySequelizeRepository implements ICategoryRepository {
       throw new NotFoundError(id, this.getEntity());
     }
   }
-  async findById(entity_id: Uuid): Promise<Category | null> {
+  async findById(entity_id: CategoryId): Promise<Category | null> {
     const model = await this.categoryModel.findByPk(entity_id.id);
 
     return model ? CategoryModelMapper.toEntity(model) : null;
+  }
+
+  async findByIds(ids: CategoryId[]): Promise<Category[]> {
+    const models = await this.categoryModel.findAll({
+      where: {
+        category_id: {
+          [Op.in]: ids.map((id) => id.id),
+        },
+      },
+    });
+
+    return models.map((model) => CategoryModelMapper.toEntity(model));
   }
 
   async findAll(): Promise<Category[]> {

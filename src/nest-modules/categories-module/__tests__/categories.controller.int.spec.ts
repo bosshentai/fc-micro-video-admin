@@ -22,7 +22,7 @@ import {
   CategoryCollectionPresenter,
   CategoryPresenter,
 } from '../categories.presenter';
-import { Category } from '@core/category/domain/category.entity';
+import { Category } from '@core/category/domain/category.aggregate';
 
 describe('Categories Integration Tests', () => {
   let controller: CategoriesController;

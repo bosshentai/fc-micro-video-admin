@@ -1,6 +1,6 @@
+import { Category } from '@core/category/domain/category.aggregate';
 import { IUseCase } from '../../../../shared/application/use-case.interface';
 import { EntityValidationError } from '../../../../shared/domain/validator/validation.error';
-import { Category } from '../../../domain/category.entity';
 import { ICategoryRepository } from '../../../domain/category.repository';
 import {
   CategoryOutput,

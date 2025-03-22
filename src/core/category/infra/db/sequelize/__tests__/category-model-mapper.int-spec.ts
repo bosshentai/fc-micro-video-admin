@@ -1,14 +1,8 @@
-// import * as CategorySequelize from "../category-sequelize.repository";
-
-import { Sequelize } from 'sequelize-typescript';
 import { CategoryModel } from '../category.model';
 import { EntityValidationError } from '../../../../../shared/domain/validator/validation.error';
 import { CategoryModelMapper } from '../category-model-mapper';
-import { Category } from '../../../../domain/category.entity';
-import { Uuid } from '../../../../../shared/domain/value-objects/uuid.vo';
 import { setupSequelize } from '../../../../../shared/infra/testing/helpers';
-
-// const { CategoryModel, CategotyModelMapper } = CategorySequelize;
+import { Category, CategoryId } from '@core/category/domain/category.aggregate';
 
 describe('CategoryModelMapper Integration Tests', () => {
   setupSequelize({ models: [CategoryModel] });
@@ -51,7 +45,7 @@ describe('CategoryModelMapper Integration Tests', () => {
 
     expect(entity.toJSON()).toStrictEqual(
       new Category({
-        category_id: new Uuid('d5b0f725-5c47-4b39-8af5-2c6c8d2824f3'),
+        category_id: new CategoryId('d5b0f725-5c47-4b39-8af5-2c6c8d2824f3'),
         name: 'Movie',
         description: 'Movie description',
         is_active: true,
@@ -63,7 +57,7 @@ describe('CategoryModelMapper Integration Tests', () => {
   it('shoudl convert  category entity to a category model', () => {
     const created_at = new Date();
     const entity = new Category({
-      category_id: new Uuid('d5b0f725-5c47-4b39-8af5-2c6c8d2824f3'),
+      category_id: new CategoryId('d5b0f725-5c47-4b39-8af5-2c6c8d2824f3'),
       name: 'Movie',
       description: 'Movie description',
       is_active: true,
