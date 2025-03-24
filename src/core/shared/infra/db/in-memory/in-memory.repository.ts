@@ -84,13 +84,9 @@ export abstract class InMemoryRepository<
     const existsId = new Set<EntityId>();
     const notExistsId = new Set<EntityId>();
 
-    console.log(ids);
-
     ids.forEach((id) => {
-      console.log(this.items);
-
       const item = this.items.find((entity) => entity.entity_id.equals(id));
-      console.log(item);
+
       item ? existsId.add(id) : notExistsId.add(id);
     });
 

@@ -6,7 +6,7 @@ import { IUnitOfWork } from '@core/shared/domain/repository/unit-of-work.interfa
 import { ICategoryRepository } from '@core/category/domain/category.repository';
 import { Genre } from '@core/genre/domain/genre.aggregate';
 import { EntityValidationError } from '@core/shared/domain/validator/validation.error';
-import { CateggoriesIdExistisInDatabaseValidator } from '@core/category/application/validations/categories-ids-exists-in-database.validator';
+import { CategoriesIdExistisInDatabaseValidator } from '@core/category/application/validations/categories-ids-exists-in-database.validator';
 
 export class CreateGenreUseCase
   implements IUseCase<CreateGenreInput, CreateGenreOutput>
@@ -15,7 +15,7 @@ export class CreateGenreUseCase
     private uow: IUnitOfWork,
     private genreRepo: IGenreRepository,
     private categoryRepo: ICategoryRepository,
-    private categoriesIdExistsInDb: CateggoriesIdExistisInDatabaseValidator,
+    private categoriesIdExistsInDb: CategoriesIdExistisInDatabaseValidator,
   ) {}
 
   async execute(input: CreateGenreInput): Promise<GenreOutput> {

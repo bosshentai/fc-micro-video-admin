@@ -1,15 +1,15 @@
 import { Category, CategoryId } from '@core/category/domain/category.aggregate';
 import { CategoryInMemoryRepository } from '@core/category/infra/db/in-memory/category-in-memory.repository';
-import { CateggoriesIdExistisInDatabaseValidator } from './categories-ids-exists-in-database.validator';
+import { CategoriesIdExistisInDatabaseValidator } from './categories-ids-exists-in-database.validator';
 import { NotFoundError } from '@core/shared/domain/errors/not-found.error';
 
 describe('CategoriesIdExistsInDatabaseValidator', () => {
   let categoryRepo: CategoryInMemoryRepository;
-  let validator: CateggoriesIdExistisInDatabaseValidator;
+  let validator: CategoriesIdExistisInDatabaseValidator;
 
   beforeEach(() => {
     categoryRepo = new CategoryInMemoryRepository();
-    validator = new CateggoriesIdExistisInDatabaseValidator(categoryRepo);
+    validator = new CategoriesIdExistisInDatabaseValidator(categoryRepo);
   });
 
   it('should throw an entity validation error when categories id is not found', async () => {
@@ -31,8 +31,6 @@ describe('CategoriesIdExistsInDatabaseValidator', () => {
 
     const category1 = Category.fake().aCategory().build();
 
-    // console.log(category1);
-
     await categoryRepo.insert(category1);
 
     [categoriesId, errorsCategoriesId] = await validator.validate([
@@ -40,12 +38,27 @@ describe('CategoriesIdExistsInDatabaseValidator', () => {
       categoryId2.id,
     ]);
 
-    // console.log(errorsCategoriesId);
-
     expect(categoriesId).toStrictEqual(undefined);
     expect(spyExistsById).toHaveBeenCalledTimes(2);
     expect(errorsCategoriesId).toStrictEqual([
       new NotFoundError(categoryId2.id, Category),
     ]);
+  });
+
+  it('should return a list of categories id', async () => {
+    const category1 = Category.fake().aCategory().build();
+    const category2 = Category.fake().aCategory().build();
+
+    await categoryRepo.bulkInsert([category1, category2]);
+
+    const [categoriesId, errorsCategoriesId] = await validator.validate([
+      category1.category_id.id,
+      category2.category_id.id,
+    ]);
+
+    expect(categoriesId).toHaveLength(2);
+    expect(errorsCategoriesId).toStrictEqual(undefined);
+    expect(categoriesId[0]).toBeValueObject(category1.category_id);
+    expect(categoriesId[1]).toBeValueObject(category2.category_id);
   });
 });
