@@ -4,6 +4,7 @@ import { DatabaseModule } from './nest-modules/database-module/database.module';
 import { ConfigModule } from './nest-modules/config-module/config.module';
 import { SharedModule } from './nest-modules/shared-module/shared.module';
 import { CastMembersModule } from './nest-modules/cast-members/cast-members.module';
+import { GenresModuleModule } from './nest-modules/genres-module/genres.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { CastMembersModule } from './nest-modules/cast-members/cast-members.modu
     CategoriesModule,
     SharedModule,
     CastMembersModule,
+    GenresModuleModule,
   ],
   controllers: [],
   providers: [],

@@ -11,7 +11,7 @@ export class DeleteGenreUseCase
     private genreRepo: IGenreRepository,
   ) {}
 
-  async execute(input: DeleteGenreInput): Promise<void> {
+  async execute(input: DeleteGenreInput): Promise<DeleteGenreOutput> {
     const genreId = new GenreId(input.id);
     return this.uow.do(async () => {
       return this.genreRepo.delete(genreId);
