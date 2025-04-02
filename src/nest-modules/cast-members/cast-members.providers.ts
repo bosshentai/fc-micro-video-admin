@@ -1,14 +1,14 @@
+import { getModelToken } from '@nestjs/sequelize';
 import { CreateCastMemberUseCase } from '@core/cast-member/application/use-cases/create-cast-member/create-cast-member.use-case';
 import { CastMemberModel } from './../../core/cast-member/infra/db/sequelize/cast-member.model';
-import { CastMemberInMemoryRepository } from '@core/cast-member/infra/db/in-memory/cast-member-in-memory.repository';
-import { CastMemberSequelizeRepository } from '@core/cast-member/infra/db/sequelize/cast-member-sequelize';
-import { CategorySequelizeRepository } from '@core/category/infra/db/sequelize/category-sequelize.repository';
-import { getModelToken } from '@nestjs/sequelize/dist/common';
-import { ICastMemberRepository } from '@core/cast-member/domain/cast-member.repository';
-import { UpdateCastMemberUseCase } from '@core/cast-member/application/use-cases/update-cast-member/update-cast-member.use-case';
-import { GetCastMemberUseCase } from '@core/cast-member/application/use-cases/get-cast-member/get-cast-member.use-case';
-import { DeleteCastMemberUseCase } from '@core/cast-member/application/use-cases/delete-cast-member/delete-cast-member.use-case';
-import { ListCastMembersUseCase } from '@core/cast-member/application/use-cases/list-cast-members/list-cast-member.use-case';
+import { CastMemberInMemoryRepository } from '../../core/cast-member/infra/db/in-memory/cast-member-in-memory.repository';
+import { CastMemberSequelizeRepository } from '../../core/cast-member/infra/db/sequelize/cast-member-sequelize';
+import { CategorySequelizeRepository } from '../../core/category/infra/db/sequelize/category-sequelize.repository';
+import { ICastMemberRepository } from '../../core/cast-member/domain/cast-member.repository';
+import { UpdateCastMemberUseCase } from '../../core/cast-member/application/use-cases/update-cast-member/update-cast-member.use-case';
+import { GetCastMemberUseCase } from '../../core/cast-member/application/use-cases/get-cast-member/get-cast-member.use-case';
+import { DeleteCastMemberUseCase } from '../../core/cast-member/application/use-cases/delete-cast-member/delete-cast-member.use-case';
+import { ListCastMembersUseCase } from '../../core/cast-member/application/use-cases/list-cast-members/list-cast-member.use-case';
 
 export const REPOSITORIES = {
   CAST_MEMBER_REPOSITORY: {

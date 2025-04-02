@@ -23,6 +23,7 @@ import { UpdateGenreUseCase } from '@core/genre/application/use=cases/update-gen
 import { GenreCollectionPresenter, GenrePresenter } from './genres.presenter';
 import { CreateGenreDto } from './dto/create-genre.dto';
 import { SearchGenreDto } from './dto/search-gernre.dto';
+import { UpdateGenreDto } from './dto/update-genre.dto';
 
 @Controller('genres')
 export class GenresController {
@@ -77,7 +78,7 @@ export class GenresController {
       }),
     )
     id: string,
-    @Body() updateGenreDto: CreateGenreDto,
+    @Body() updateGenreDto: UpdateGenreDto,
   ) {
     const output = await this.updateUseCase.execute({ id, ...updateGenreDto });
     return GenresController.serialize(output);

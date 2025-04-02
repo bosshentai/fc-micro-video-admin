@@ -12,7 +12,6 @@ import { literal, Op } from 'sequelize';
 import { InvalidArgumentError } from '@core/shared/domain/errors/invalid-argument.error';
 import { NotFoundError } from '@core/shared/domain/errors/not-found.error';
 
-import { CategoryModel } from '@core/category/infra/db/sequelize/category.model';
 import { UnitOfWorkSequelize } from '@core/shared/infra/db/sequelize/unit-of-work-sequelize';
 
 type WhereConditions = {
@@ -158,6 +157,7 @@ export class GenreSequelizeRepository implements IGenreRepository {
 
     const affectedRows = await this.genreModel.destroy({
       where: { genre_id: entity_id.id },
+      transaction: this.uow.getTransaction(),
     });
 
     if (affectedRows !== 1) {

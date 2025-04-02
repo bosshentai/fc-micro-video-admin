@@ -10,7 +10,7 @@ import {
   HttpCode,
   Query,
 } from '@nestjs/common/decorators';
-import { ParseUUIDPipe } from '@nestjs/common/pipes';
+import { ParseUUIDPipe } from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { CreateCategoryUseCase } from '@core/category/application/use-cases/create-category/create-category.use-case';

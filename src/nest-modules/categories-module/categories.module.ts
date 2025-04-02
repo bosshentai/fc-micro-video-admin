@@ -1,5 +1,5 @@
-import { Module } from '@nestjs/common/decorators';
-import { SequelizeModule } from '@nestjs/sequelize/dist';
+import { Module } from '@nestjs/common';
+import { SequelizeModule } from '@nestjs/sequelize';
 import { CategoriesController } from './categories.controller';
 import { CategoryModel } from '@core/category/infra/db/sequelize/category.model';
 import { CATEGORY_PROVIDERS } from './categories.providers';

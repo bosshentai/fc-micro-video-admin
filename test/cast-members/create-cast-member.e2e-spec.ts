@@ -1,3 +1,4 @@
+import request from 'supertest';
 import { CastMemberOutputMapper } from '@core/cast-member/application/use-cases/common/cast-member-output';
 import { CastMemberId } from '@core/cast-member/domain/cast-member.aggregate';
 import { ICastMemberRepository } from '@core/cast-member/domain/cast-member.repository';
@@ -6,8 +7,6 @@ import { CastMembersController } from 'src/nest-modules/cast-members/cast-member
 import { CAST_MEMBER_PROVIDERS } from 'src/nest-modules/cast-members/cast-members.providers';
 import { CreateCastMemberFixture } from 'src/nest-modules/cast-members/testing/cast-member-fixture';
 import { startApp } from 'src/nest-modules/shared-module/testing/helpers';
-
-import request from 'supertest';
 
 describe('CastMemberController (e2e)', () => {
   const appHelper = startApp();

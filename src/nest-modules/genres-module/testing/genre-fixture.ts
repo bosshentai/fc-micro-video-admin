@@ -384,11 +384,11 @@ export class UpdateGenreFixture {
       CATEGORY_ID_NOT_EXISTS: {
         send_data: {
           name: faker.withName('action').name,
-          categories_id: ['d3e5f7a9b-1c3d-4e5f-6a7b-8c9d0e1f2a3b'],
+          categories_id: ['d8952775-5f69-42d5-9e94-00f097e1b98c'],
         },
         expected: {
           message: [
-            'Category Not Found using Id d3e5f7a9b-1c3d-4e5f-6a7b-8c9d0e1f2a3b',
+            'Category Not Found using Id d8952775-5f69-42d5-9e94-00f097e1b98c',
           ],
           ...defaultExpected,
         },
