@@ -1,5 +1,4 @@
 import request from 'supertest';
-import { Category } from '@core/category/domain/category.entity';
 import { startApp } from 'src/nest-modules/shared-module/testing/helpers';
 import { UpdateCategoryFixture } from 'src/nest-modules/categories-module/testing/category-fixture';
 import { ICategoryRepository } from '@core/category/domain/category.repository';
@@ -8,6 +7,7 @@ import { CategoriesController } from 'src/nest-modules/categories-module/categor
 import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
 import { instanceToPlain } from 'class-transformer';
 import { CategoryOutputMapper } from '@core/category/application/use-cases/common/category-output';
+import { Category } from '@core/category/domain/category.aggregate';
 
 describe('CAtegoriesController (e2e)', () => {
   const uuid = '98b1c5e6-3c4d-4a7b-8e9f-0e1d2f3c4d5e';

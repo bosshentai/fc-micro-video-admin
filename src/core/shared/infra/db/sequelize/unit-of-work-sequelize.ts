@@ -1,5 +1,5 @@
-import { IUnitOfWork } from '@core/shared/domain/repository/unit-of-work.interface';
 import { Sequelize, Transaction } from 'sequelize';
+import { IUnitOfWork } from '../../../../shared/domain/repository/unit-of-work.interface';
 
 export class UnitOfWorkSequelize implements IUnitOfWork {
   private transaction: Transaction | null;

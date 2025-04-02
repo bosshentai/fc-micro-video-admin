@@ -1,4 +1,3 @@
-import { CategoryModel } from '@core/category/infra/db/sequelize/category.model';
 import {
   Column,
   DataType,
@@ -8,7 +7,7 @@ import {
   Table,
 } from 'sequelize-typescript';
 import { GenreModel } from './genre-model';
-
+import { CategoryModel } from '../../../../category/infra/db/sequelize/category.model';
 export type GenreCategoryModelProps = {
   genre_id: string;
   category_id: string;

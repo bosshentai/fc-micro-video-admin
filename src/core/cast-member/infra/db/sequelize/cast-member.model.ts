@@ -1,4 +1,3 @@
-import { CastMemberTypes } from '@core/cast-member/domain/value-object/cast-member-type.vo';
 import {
   Column,
   DataType,
@@ -6,6 +5,8 @@ import {
   PrimaryKey,
   Table,
 } from 'sequelize-typescript';
+
+import { CastMemberTypes } from '../../../../cast-member/domain/value-object/cast-member-type.vo';
 
 export type CastMemberSequelize = {
   cast_member_id: string;

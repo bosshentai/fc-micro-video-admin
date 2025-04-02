@@ -18,4 +18,4 @@ import { GenresController } from './genres.controller';
   ],
   exports: [GENRES_PROVIDERS.REPOSITORIES.GENRE_REPOSITORY.provide],
 })
-export class GenresModuleModule {}
+export class GenresModule {}

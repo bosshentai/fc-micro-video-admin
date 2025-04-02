@@ -85,7 +85,7 @@ export class GenresController {
 
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
-  remove(
+  async remove(
     @Param(
       'id',
       new ParseUUIDPipe({
@@ -94,7 +94,7 @@ export class GenresController {
     )
     id: string,
   ) {
-    return this.deleteUseCase.execute({ id });
+    return await this.deleteUseCase.execute({ id });
   }
 
   static serialize(output: GenreOutput) {

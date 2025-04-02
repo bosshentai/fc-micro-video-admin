@@ -1,6 +1,6 @@
 import { CastMemberOutputMapper } from '@core/cast-member/application/use-cases/common/cast-member-output';
+import { CastMemberId } from '@core/cast-member/domain/cast-member.aggregate';
 import { ICastMemberRepository } from '@core/cast-member/domain/cast-member.repository';
-import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
 import { instanceToPlain } from 'class-transformer';
 import { CastMembersController } from 'src/nest-modules/cast-members/cast-members.controller';
 import { CAST_MEMBER_PROVIDERS } from 'src/nest-modules/cast-members/cast-members.providers';
@@ -72,7 +72,9 @@ describe('CastMemberController (e2e)', () => {
           expect(Object.keys(res.body.data)).toStrictEqual(keysInResponse);
 
           const id = res.body.data.id;
-          const castMemberCreated = await castMemberRepo.findById(new Uuid(id));
+          const castMemberCreated = await castMemberRepo.findById(
+            new CastMemberId(id),
+          );
           const presenter = CastMembersController.serialize(
             CastMemberOutputMapper.toOutput(castMemberCreated!),
           );

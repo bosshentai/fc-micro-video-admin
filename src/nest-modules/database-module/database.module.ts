@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common/decorators/modules';
 import { ConfigService } from '@nestjs/config';
+import { Global, Scope } from '@nestjs/common';
 import { getConnectionToken, SequelizeModule } from '@nestjs/sequelize/dist';
 import { CONFIG_SCHEMA_TYPE } from 'src/nest-modules/config-module/config.module';
 import { CategoryModel } from '../../core/category/infra/db/sequelize/category.model';
-import { UnitOfWorkSequelize } from '@core/shared/infra/db/sequelize/unit-of-work-sequelize';
+import { UnitOfWorkSequelize } from '../../core/shared/infra/db/sequelize/unit-of-work-sequelize';
 import { Sequelize } from 'sequelize';
-import { Global, Scope } from '@nestjs/common';
-import { GenreModel } from '@core/genre/infra/db/sequelize/genre-model';
-import { GenreCategoryModel } from '@core/genre/infra/db/sequelize/genre-category-model';
-import { CastMemberModel } from '@core/cast-member/infra/db/sequelize/cast-member.model';
+import { GenreModel } from '../../core/genre/infra/db/sequelize/genre-model';
+import { GenreCategoryModel } from '../../core/genre/infra/db/sequelize/genre-category-model';
+import { CastMemberModel } from '../../core/cast-member/infra/db/sequelize/cast-member.model';
 
 const models = [CategoryModel, GenreModel, GenreCategoryModel, CastMemberModel];
 

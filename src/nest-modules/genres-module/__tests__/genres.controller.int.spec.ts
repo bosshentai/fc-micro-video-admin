@@ -4,7 +4,7 @@ import { IGenreRepository } from '@core/genre/domain/genre.repository';
 import { GenresController } from '../genres.controller';
 import { ICategoryRepository } from '@core/category/domain/category.repository';
 import { DatabaseModule } from 'src/nest-modules/database-module/database.module';
-import { GenresModuleModule } from '../genres.module';
+import { GenresModule } from '../genres.module';
 import { Sequelize } from 'sequelize-typescript';
 import { UnitOfWorkSequelize } from '@core/shared/infra/db/sequelize/unit-of-work-sequelize';
 import { ConfigModule } from 'src/nest-modules/config-module/config.module';
@@ -33,7 +33,7 @@ describe('GenresController Integration Tests', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [ConfigModule.forRoot(), DatabaseModule, GenresModuleModule],
+      imports: [ConfigModule.forRoot(), DatabaseModule, GenresModule],
     })
       .overrideProvider('UnitOfWork')
       .useFactory({

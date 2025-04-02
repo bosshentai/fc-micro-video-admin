@@ -225,12 +225,12 @@ export class CreateGenreFixture {
       NAME_TOO_LONG: {
         send_data: {
           name: faker.withInvalidNameTooLong().name,
-          categories_id: ['d3e5f7a9b-1c3d-4e5f-6a7b-8c9d0e1f2a3b'],
+          categories_id: ['d8952775-5f69-42d5-9e94-00f097e1b98c'],
         },
         expected: {
           message: [
             'name must be shorter than or equal to 255 characters',
-            'Category Not Found using Id d3e5f7a9b-1c3d-4e5f-6a7b-8c9d0e1f2a3b',
+            'Category Not Found using Id d8952775-5f69-42d5-9e94-00f097e1b98c',
           ],
           ...defaultExpected,
         },
@@ -238,11 +238,11 @@ export class CreateGenreFixture {
       CATEGORIES_ID_NOT_EXISTS: {
         send_data: {
           name: faker.withName('action').name,
-          categories_id: ['d3e5f7a9b-1c3d-4e5f-6a7b-8c9d0e1f2a3b'],
+          categories_id: ['d8952775-5f69-42d5-9e94-00f097e1b98c'],
         },
         expected: {
           message: [
-            'Category Not Found using Id d3e5f7a9b-1c3d-4e5f-6a7b-8c9d0e1f2a3b',
+            'Category Not Found using Id d8952775-5f69-42d5-9e94-00f097e1b98c',
           ],
           ...defaultExpected,
         },
@@ -526,13 +526,13 @@ export class ListGenresFixture {
           page: 1,
           per_page: 2,
           sort: 'name',
-          filter: { name: 'test' },
+          filter: { name: 'TEST' },
         },
         get label() {
           return JSON.stringify(this.send_data);
         },
         expected: {
-          entities: [entitiesMap.TEST, entitiesMap.a],
+          entities: [entitiesMap.TEST, entitiesMap.TeSt],
           meta: {
             total: 3,
             current_page: 1,

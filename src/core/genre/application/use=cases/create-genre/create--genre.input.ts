@@ -21,6 +21,7 @@ export class CreateGenreInput {
 
   @IsUUID('4', { each: true })
   @IsArray()
+  @IsNotEmpty()
   categories_id: string[];
 
   @IsBoolean()

@@ -1,9 +1,9 @@
+import request from 'supertest';
 import { CastMember } from '@core/cast-member/domain/cast-member.entity';
 import { ICastMemberRepository } from '@core/cast-member/domain/cast-member.repository';
 import { CAST_MEMBER_PROVIDERS } from 'src/nest-modules/cast-members/cast-members.providers';
 import { GetCastMemberFixture } from 'src/nest-modules/cast-members/testing/cast-member-fixture';
 import { startApp } from 'src/nest-modules/shared-module/testing/helpers';
-import request from 'supertest';
 
 describe('CastMemberController (e2e)', () => {
   const appHelper = startApp();
