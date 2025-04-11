@@ -13,7 +13,7 @@ import _ from 'lodash';
 import { ImageMedia } from '@core/shared/domain/value-objects/image-media.vo';
 type PropsOrFactory<T> = T | ((index: number) => T);
 
-export class VideoFakeBuilder<TBuilb extends Video | Video[]> {
+export class VideoFakeBuilder<TBuild extends Video | Video[]> {
   private _video_id: PropsOrFactory<VideoId> | undefined = undefined;
 
   private _title: PropsOrFactory<string> = (_index) => this.chance.word();
@@ -213,12 +213,17 @@ export class VideoFakeBuilder<TBuilb extends Video | Video[]> {
     return this;
   }
 
+  addGenreId(valueOrFactory: PropsOrFactory<GenreId>) {
+    this._genres_id.push(valueOrFactory);
+    return this;
+  }
+
   addCastMemberId(valueOrFactory: PropsOrFactory<CastMemberId>) {
     this._cast_members_id.push(valueOrFactory);
     return this;
   }
 
-  withInvalidTitleTooLoing(value?: string) {
+  withInvalidTitleTooLong(value?: string) {
     this._title = value ?? this.chance.word({ length: 256 });
     return this;
   }
@@ -228,7 +233,7 @@ export class VideoFakeBuilder<TBuilb extends Video | Video[]> {
     return this;
   }
 
-  build() {
+  build(): TBuild {
     const videos = new Array(this.countObjs).fill(undefined).map((_, index) => {
       const categoryId = new CategoryId();
       const categoriesId = this._categories_id.length
@@ -280,7 +285,7 @@ export class VideoFakeBuilder<TBuilb extends Video | Video[]> {
       return video;
     });
 
-    return this.countObjs === 1 ? videos[0] : videos;
+    return this.countObjs === 1 ? (videos[0] as TBuild) : (videos as TBuild);
   }
 
   get video_id() {
@@ -398,13 +403,24 @@ export class VideoFakeBuilder<TBuilb extends Video | Video[]> {
   }
 
   private callFactory<T>(factoryOrValue: PropsOrFactory<T>, index: number): T {
-    return typeof factoryOrValue === 'function'
-      ? (factoryOrValue as (index: number) => T)(index)
-      : factoryOrValue;
+    if (typeof factoryOrValue === 'function') {
+      return (factoryOrValue as (index: number) => T)(index);
+    }
+
+    if (factoryOrValue instanceof Array) {
+      if (Array.isArray(factoryOrValue)) {
+        return factoryOrValue.map((value) =>
+          this.callFactory(value, index),
+        ) as unknown as T;
+      }
+      return factoryOrValue;
+    }
+
+    return factoryOrValue;
   }
 
   private getValue<T>(prop: string): T {
-    const optional = ['genre_id', 'created_at'];
+    const optional = ['video_id', 'created_at'];
     const privateProps = `_${prop}` as keyof this;
     if (!this[privateProps] && optional.includes(prop)) {
       throw new Error(`Property ${prop} not have factory, use 'with' methods`);
