@@ -8,7 +8,7 @@ import {
 
 import { CastMemberTypes } from '../../../../cast-member/domain/value-object/cast-member-type.vo';
 
-export type CastMemberSequelize = {
+export type CastMemberModelProps = {
   cast_member_id: string;
   name: string;
   type: CastMemberTypes;
@@ -16,7 +16,7 @@ export type CastMemberSequelize = {
 };
 
 @Table({ tableName: 'cast_members', timestamps: false })
-export class CastMemberModel extends Model<CastMemberSequelize> {
+export class CastMemberModel extends Model<CastMemberModelProps> {
   @PrimaryKey
   @Column({ type: DataType.UUID })
   declare cast_member_id: string;
