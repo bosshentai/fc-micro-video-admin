@@ -84,12 +84,12 @@ export class Video extends AggregateRoot {
 
   categories_id: Map<string, CategoryId>;
   genres_id: Map<string, GenreId>;
-  cast_members_id: Map<string, VideoId>;
+  cast_members_id: Map<string, CastMemberId>;
   created_at: Date;
 
   constructor(props: VideoConstructorProps) {
     super();
-    this.video_id = props.vide_id ?? new VideoId();
+    this.video_id = props.video_id ?? new VideoId();
     this.title = props.title;
     this.description = props.description;
     this.year_launched = props.year_launched;
