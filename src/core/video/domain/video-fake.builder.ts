@@ -71,7 +71,7 @@ export class VideoFakeBuilder<TBuild extends Video | Video[]> {
 
   private chance: Chance.Chance;
 
-  static aVideoWithouMedias() {
+  static aVideoWithoutMedias() {
     return new VideoFakeBuilder<Video>()
       .withoutBanner()
       .withoutThumbnail()

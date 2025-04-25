@@ -13,7 +13,7 @@ import { VideoMedia } from '../value-object/video-media.vo';
 
 describe('VideoFakeBuilder Unit Tests', () => {
   describe('video_id prop', () => {
-    const faker = VideoFakeBuilder.aVideoWithouMedias();
+    const faker = VideoFakeBuilder.aVideoWithoutMedias();
 
     test('should throw error when any with methods has called', () => {
       expect(() => faker.video_id).toThrow(
@@ -56,7 +56,7 @@ describe('VideoFakeBuilder Unit Tests', () => {
   });
 
   describe('title prop', () => {
-    const faker = VideoFakeBuilder.aVideoWithouMedias();
+    const faker = VideoFakeBuilder.aVideoWithoutMedias();
 
     test('should be a function', () => {
       expect(typeof faker['_title']).toBe('function');
@@ -108,7 +108,7 @@ describe('VideoFakeBuilder Unit Tests', () => {
   });
 
   describe('categories_id prop', () => {
-    const faker = VideoFakeBuilder.aVideoWithouMedias();
+    const faker = VideoFakeBuilder.aVideoWithoutMedias();
 
     it('should be a empty', () => {
       expect(faker['_categories_id']).toBeInstanceOf(Array);
@@ -150,10 +150,10 @@ describe('VideoFakeBuilder Unit Tests', () => {
   });
 
   describe('created_at prop', () => {
-    const faker = VideoFakeBuilder.aVideoWithouMedias();
+    const faker = VideoFakeBuilder.aVideoWithoutMedias();
 
     test('should throw error when any with methods has called', () => {
-      const fakerVideo = VideoFakeBuilder.aVideoWithouMedias();
+      const fakerVideo = VideoFakeBuilder.aVideoWithoutMedias();
       expect(() => fakerVideo.created_at).toThrow(
         new Error("Property created_at not have factory, use 'with' methods"),
       );
@@ -190,7 +190,7 @@ describe('VideoFakeBuilder Unit Tests', () => {
   });
 
   it('should create a video without medias', () => {
-    let video = VideoFakeBuilder.aVideoWithouMedias().build();
+    let video = VideoFakeBuilder.aVideoWithoutMedias().build();
 
     expect(video.video_id).toBeInstanceOf(VideoId);
     expect(typeof video.title === 'string').toBeTruthy();
@@ -228,7 +228,7 @@ describe('VideoFakeBuilder Unit Tests', () => {
     const castMemberId1 = new CastMemberId();
     const castMemberId2 = new CastMemberId();
 
-    video = VideoFakeBuilder.aVideoWithouMedias()
+    video = VideoFakeBuilder.aVideoWithoutMedias()
       .withVideoId(videoId)
       .withTitle('name test')
       .withDescription('description test')

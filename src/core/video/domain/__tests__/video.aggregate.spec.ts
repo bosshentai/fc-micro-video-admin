@@ -272,7 +272,7 @@ describe('Video Unit Tests', () => {
 
   describe('changeTitle method', () => {
     test('should change title', () => {
-      const video = Video.fake().aVideoWithouMedias().build();
+      const video = Video.fake().aVideoWithoutMedias().build();
       video.changeTitle('test title');
       expect(video.title).toBe('test title');
       expect(Video.prototype.validate).toHaveBeenCalledTimes(3);
@@ -281,7 +281,7 @@ describe('Video Unit Tests', () => {
 
   describe('changeDescription method', () => {
     test('should change description', () => {
-      const video = Video.fake().aVideoWithouMedias().build();
+      const video = Video.fake().aVideoWithoutMedias().build();
       video.changeDescription('test description');
       expect(video.description).toBe('test description');
     });
@@ -295,7 +295,7 @@ describe('Video Unit Tests', () => {
 
   describe('changeDuration method', () => {
     test('should change duration', () => {
-      const video = Video.fake().aVideoWithouMedias().build();
+      const video = Video.fake().aVideoWithoutMedias().build();
       video.changeDuration(90);
       expect(video.duration).toBe(90);
     });
@@ -303,7 +303,7 @@ describe('Video Unit Tests', () => {
 
   describe('changeRating method', () => {
     test('should change rating', () => {
-      const video = Video.fake().aVideoWithouMedias().build();
+      const video = Video.fake().aVideoWithoutMedias().build();
       const rating = Rating.createRL();
       video.changeRating(rating);
       expect(video.rating).toBe(rating);
@@ -312,7 +312,7 @@ describe('Video Unit Tests', () => {
 
   describe('markAsOpened method', () => {
     test('should mark as opened', () => {
-      const video = Video.fake().aVideoWithouMedias().build();
+      const video = Video.fake().aVideoWithoutMedias().build();
       video.markAsOpened();
       expect(video.is_opened).toBeTruthy();
     });
@@ -320,7 +320,7 @@ describe('Video Unit Tests', () => {
 
   describe('markAsNotOpened method', () => {
     test('should mark as not opened', () => {
-      const video = Video.fake().aVideoWithouMedias().build();
+      const video = Video.fake().aVideoWithoutMedias().build();
       video.markAsNotOpened();
       expect(video.is_opened).toBeFalsy();
     });
@@ -328,7 +328,7 @@ describe('Video Unit Tests', () => {
 
   describe('replaceBanner method', () => {
     test('should replace banner', () => {
-      const video = Video.fake().aVideoWithouMedias().build();
+      const video = Video.fake().aVideoWithoutMedias().build();
       const banner = new Banner({
         name: 'test name banner',
         location: 'test location banner',
@@ -340,7 +340,7 @@ describe('Video Unit Tests', () => {
 
   describe('replaceThumbnail method', () => {
     test('should replace thumbnail', () => {
-      const video = Video.fake().aVideoWithouMedias().build();
+      const video = Video.fake().aVideoWithoutMedias().build();
       const thumbnail = new Thumbnail({
         name: 'test name thumbnail',
         location: 'test location thumbnail',
@@ -351,7 +351,7 @@ describe('Video Unit Tests', () => {
   });
   describe('replaceThumbnailHalf method', () => {
     test('should replace thumbnail half', () => {
-      const video = Video.fake().aVideoWithouMedias().build();
+      const video = Video.fake().aVideoWithoutMedias().build();
       const thumbnailHalf = new ThumbnailHalf({
         name: 'test name thumbnail half',
         location: 'test location thumbnail half',
@@ -363,7 +363,7 @@ describe('Video Unit Tests', () => {
 
   describe('replaceTrailer method', () => {
     test('should replace trailer', () => {
-      const video = Video.fake().aVideoWithouMedias().build();
+      const video = Video.fake().aVideoWithoutMedias().build();
       const trailer = Trailer.create({
         name: 'test name trailer',
         raw_location: 'test raw location trailer',
@@ -375,7 +375,7 @@ describe('Video Unit Tests', () => {
 
   describe('replaceVideo method', () => {
     test('should replace video', () => {
-      const video = Video.fake().aVideoWithouMedias().build();
+      const video = Video.fake().aVideoWithoutMedias().build();
       const videoMedia = VideoMedia.create({
         name: 'test name video',
         raw_location: 'test raw location video',
@@ -394,11 +394,11 @@ describe('Video Unit Tests', () => {
   // });
 
   test('tryMarkAsPublished method', () => {
-    let video = Video.fake().aVideoWithouMedias().build();
+    let video = Video.fake().aVideoWithoutMedias().build();
     video['tryMarkAsPublished']();
     expect(video.is_published).toBeFalsy();
 
-    video = Video.fake().aVideoWithouMedias().build();
+    video = Video.fake().aVideoWithoutMedias().build();
     const trailer = Trailer.create({
       name: 'test name trailer',
       raw_location: 'test raw location trailer',

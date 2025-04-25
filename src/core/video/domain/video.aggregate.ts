@@ -229,6 +229,62 @@ export class Video extends AggregateRoot {
     );
   }
 
+  addCategoryId(category_id: CategoryId): void {
+    this.categories_id.set(category_id.id, category_id);
+  }
+
+  removeCategoryId(category_id: CategoryId): void {
+    this.categories_id.delete(category_id.id);
+  }
+
+  syncCategoriesId(categories_id: CategoryId[]) {
+    if (!categories_id.length) {
+      throw new Error('Categories id is empty');
+    }
+
+    this.categories_id = new Map(
+      categories_id.map((category_id) => [category_id.id, category_id]),
+    );
+  }
+
+  addGenreId(genre_id: GenreId): void {
+    this.genres_id.set(genre_id.id, genre_id);
+  }
+
+  removeGenreId(genre_id: GenreId): void {
+    this.genres_id.delete(genre_id.id);
+  }
+
+  syncGenresId(genres_id: GenreId[]) {
+    if (!genres_id.length) {
+      throw new Error('Genres id is empty');
+    }
+
+    this.genres_id = new Map(
+      genres_id.map((genre_id) => [genre_id.id, genre_id]),
+    );
+  }
+
+  addCastMemberId(cast_member_id: CastMemberId): void {
+    this.cast_members_id.set(cast_member_id.id, cast_member_id);
+  }
+
+  removeCastMemberId(cast_member_id: CastMemberId): void {
+    this.cast_members_id.delete(cast_member_id.id);
+  }
+
+  syncCastMembersId(cast_members_id: CastMemberId[]) {
+    if (!cast_members_id.length) {
+      throw new Error('Cast members id is empty');
+    }
+    this.cast_members_id = new Map(
+      cast_members_id.map((cast_member_id) => [
+        cast_member_id.id,
+        cast_member_id,
+      ]),
+    );
+  }
+
   onVideoCreated(_event: VideoCreatedEvent) {
     if (this.is_published) {
       return;
