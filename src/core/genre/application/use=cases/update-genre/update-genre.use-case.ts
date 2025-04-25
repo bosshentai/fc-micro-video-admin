@@ -4,7 +4,7 @@ import { GenreOutput, GenreOutputMapper } from '../common/genre-output';
 import { IUnitOfWork } from '@core/shared/domain/repository/unit-of-work.interface';
 import { IGenreRepository } from '@core/genre/domain/genre.repository';
 import { ICategoryRepository } from '@core/category/domain/category.repository';
-import { CategoriesIdExistisInDatabaseValidator } from '@core/category/application/validations/categories-ids-exists-in-database.validator';
+import { CategoriesIdExistsInDatabaseValidator } from '@core/category/application/validations/categories-ids-exists-in-database.validator';
 import { Genre, GenreId } from '@core/genre/domain/genre.aggregate';
 import { NotFoundError } from '@core/shared/domain/errors/not-found.error';
 import { EntityValidationError } from '@core/shared/domain/validator/validation.error';
@@ -16,7 +16,7 @@ export class UpdateGenreUseCase
     private uow: IUnitOfWork,
     private genreRepo: IGenreRepository,
     private categoryRepo: ICategoryRepository,
-    private categoriesIdExistsInStorageValidator: CategoriesIdExistisInDatabaseValidator,
+    private categoriesIdExistsInStorageValidator: CategoriesIdExistsInDatabaseValidator,
   ) {}
   async execute(input: UpdateGenreInput): Promise<UpdateGenreOutput> {
     const genreId = new GenreId(input.id);

@@ -5,7 +5,6 @@ import {
 import { SearchResult } from '@core/shared/domain/repository/search-result';
 import { CastMember } from './cast-member.entity';
 import { ISearchableRepository } from '@core/shared/domain/repository/repository-interface';
-import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
 import {
   CastMemberType,
   CastMemberTypes,
@@ -13,6 +12,7 @@ import {
 } from './value-object/cast-member-type.vo';
 import { Either } from '@core/shared/domain/either';
 import { SearchValidationError } from '@core/shared/domain/validator/validation.error';
+import { CastMemberId } from './cast-member.aggregate';
 
 export type CastMemberFilter = {
   name?: string | null;
@@ -81,7 +81,7 @@ export class CastMemberSearchResult extends SearchResult<CastMember> {}
 export interface ICastMemberRepository
   extends ISearchableRepository<
     CastMember,
-    Uuid,
+    CastMemberId,
     CastMemberFilter,
     CastMemberSearchParams,
     CastMemberSearchResult

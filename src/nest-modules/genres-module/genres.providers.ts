@@ -1,6 +1,6 @@
 import { getModelToken } from '@nestjs/sequelize';
 
-import { CategoriesIdExistisInDatabaseValidator } from '../../core/category/application/validations/categories-ids-exists-in-database.validator';
+import { CategoriesIdExistsInDatabaseValidator } from '../../core/category/application/validations/categories-ids-exists-in-database.validator';
 import { ICategoryRepository } from '../../core/category/domain/category.repository';
 import { CreateGenreUseCase } from '../../core/genre/application/use=cases/create-genre/create-genre.use-case';
 import { IGenreRepository } from '../../core/genre/domain/genre.repository';
@@ -40,7 +40,7 @@ export const USE_CASES = {
       uow: IUnitOfWork,
       genreRepo: IGenreRepository,
       categoryRepo: ICategoryRepository,
-      categoriesIdValidator: CategoriesIdExistisInDatabaseValidator,
+      categoriesIdValidator: CategoriesIdExistsInDatabaseValidator,
     ) => {
       return new CreateGenreUseCase(
         uow,
@@ -63,7 +63,7 @@ export const USE_CASES = {
       uow: IUnitOfWork,
       genreRepo: IGenreRepository,
       categoryRepo: ICategoryRepository,
-      categoriesIdValidator: CategoriesIdExistisInDatabaseValidator,
+      categoriesIdValidator: CategoriesIdExistsInDatabaseValidator,
     ) => {
       return new UpdateGenreUseCase(
         uow,

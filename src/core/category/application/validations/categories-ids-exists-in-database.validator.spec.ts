@@ -1,15 +1,15 @@
 import { Category, CategoryId } from '@core/category/domain/category.aggregate';
 import { CategoryInMemoryRepository } from '@core/category/infra/db/in-memory/category-in-memory.repository';
-import { CategoriesIdExistisInDatabaseValidator } from './categories-ids-exists-in-database.validator';
+import { CategoriesIdExistsInDatabaseValidator } from './categories-ids-exists-in-database.validator';
 import { NotFoundError } from '@core/shared/domain/errors/not-found.error';
 
 describe('CategoriesIdExistsInDatabaseValidator', () => {
   let categoryRepo: CategoryInMemoryRepository;
-  let validator: CategoriesIdExistisInDatabaseValidator;
+  let validator: CategoriesIdExistsInDatabaseValidator;
 
   beforeEach(() => {
     categoryRepo = new CategoryInMemoryRepository();
-    validator = new CategoriesIdExistisInDatabaseValidator(categoryRepo);
+    validator = new CategoriesIdExistsInDatabaseValidator(categoryRepo);
   });
 
   it('should throw an entity validation error when categories id is not found', async () => {
