@@ -1,10 +1,10 @@
 import { CastMemberInMemoryRepository } from '@core/cast-member/infra/db/in-memory/cast-member-in-memory.repository';
 import { UpdateCastMemberUseCase } from '../update-cast-member.use-case';
-import { CastMember } from '@core/cast-member/domain/cast-member.entity';
 import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
 import { UpdateCastMemberInput } from '../update-cast-member.input';
 import { NotFoundError } from '@core/shared/domain/errors/not-found.error';
 import { CastMemberTypes } from '@core/cast-member/domain/value-object/cast-member-type.vo';
+import { CastMember } from '@core/cast-member/domain/cast-member.aggregate';
 
 describe('UpdateCastMemberUseCase Unit Tests', () => {
   let useCase: UpdateCastMemberUseCase;

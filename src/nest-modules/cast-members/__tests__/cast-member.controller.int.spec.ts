@@ -21,7 +21,7 @@ import {
   CastMemberCollectionPresenter,
   CastMemberPresenter,
 } from '../cast-members.presenter';
-import { CastMember } from '@core/cast-member/domain/cast-member.entity';
+import { CastMember } from '@core/cast-member/domain/cast-member.aggregate';
 
 describe('CastMembers Integration Tests', () => {
   let controller: CastMembersController;

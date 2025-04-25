@@ -5,8 +5,8 @@ import {
   Uuid,
 } from '@core/shared/domain/value-objects/uuid.vo';
 import { NotFoundError } from '@core/shared/domain/errors/not-found.error';
-import { CastMember } from '@core/cast-member/domain/cast-member.entity';
 import { CastMemberType } from '@core/cast-member/domain/value-object/cast-member-type.vo';
+import { CastMember } from '@core/cast-member/domain/cast-member.aggregate';
 
 describe('DeleteCastMemberUseCase Unit Tests', () => {
   let useCase: DeleteCastMemberUseCase;

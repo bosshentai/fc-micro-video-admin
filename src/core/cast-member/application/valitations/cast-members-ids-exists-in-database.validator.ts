@@ -1,5 +1,7 @@
-import { CastMemberId } from '@core/cast-member/domain/cast-member.aggregate';
-import { CastMember } from '@core/cast-member/domain/cast-member.entity';
+import {
+  CastMember,
+  CastMemberId,
+} from '@core/cast-member/domain/cast-member.aggregate';
 import { ICastMemberRepository } from '@core/cast-member/domain/cast-member.repository';
 import { Either } from '@core/shared/domain/either';
 import { NotFoundError } from '@core/shared/domain/errors/not-found.error';

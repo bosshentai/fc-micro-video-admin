@@ -1,8 +1,7 @@
 import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
-import { CastMember } from './cast-member.entity';
 import { Chance } from 'chance';
 import { CastMemberType } from './value-object/cast-member-type.vo';
-import { CastMemberId } from './cast-member.aggregate';
+import { CastMember, CastMemberId } from './cast-member.aggregate';
 
 type PropOrFactory<T> = ((index: number) => T) | T;
 

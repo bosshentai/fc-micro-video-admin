@@ -1,8 +1,10 @@
 import { CastMemberInMemoryRepository } from '@core/cast-member/infra/db/in-memory/cast-member-in-memory.repository';
 import { CastMembersIdExistsInDatabaseValidator } from './cast-members-ids-exists-in-database.validator';
-import { CastMemberId } from '@core/cast-member/domain/cast-member.aggregate';
+import {
+  CastMember,
+  CastMemberId,
+} from '@core/cast-member/domain/cast-member.aggregate';
 import { NotFoundError } from '@core/shared/domain/errors/not-found.error';
-import { CastMember } from '@core/cast-member/domain/cast-member.entity';
 
 describe('CastMembersIdExistsInDatabaseValidator', () => {
   let castMemberRepo: CastMemberInMemoryRepository;

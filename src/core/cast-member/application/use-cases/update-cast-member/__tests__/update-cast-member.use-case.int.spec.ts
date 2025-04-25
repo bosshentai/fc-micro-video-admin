@@ -5,8 +5,8 @@ import { CastMemberModel } from '@core/cast-member/infra/db/sequelize/cast-membe
 import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
 import { UpdateCastMemberInput } from '../update-cast-member.input';
 import { NotFoundError } from '@core/shared/domain/errors/not-found.error';
-import { CastMember } from '@core/cast-member/domain/cast-member.entity';
 import { CastMemberTypes } from '@core/cast-member/domain/value-object/cast-member-type.vo';
+import { CastMember } from '@core/cast-member/domain/cast-member.aggregate';
 
 describe('UpdateCastMemberUseCase Integration Tests', () => {
   let useCase: UpdateCastMemberUseCase;

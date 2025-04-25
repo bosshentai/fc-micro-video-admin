@@ -3,7 +3,6 @@ import {
   SearchParamsConstructorProps,
 } from '@core/shared/domain/repository/search-params';
 import { SearchResult } from '@core/shared/domain/repository/search-result';
-import { CastMember } from './cast-member.entity';
 import { ISearchableRepository } from '@core/shared/domain/repository/repository-interface';
 import {
   CastMemberType,
@@ -12,7 +11,7 @@ import {
 } from './value-object/cast-member-type.vo';
 import { Either } from '@core/shared/domain/either';
 import { SearchValidationError } from '@core/shared/domain/validator/validation.error';
-import { CastMemberId } from './cast-member.aggregate';
+import { CastMember, CastMemberId } from './cast-member.aggregate';
 
 export type CastMemberFilter = {
   name?: string | null;

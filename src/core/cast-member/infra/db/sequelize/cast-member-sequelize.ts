@@ -1,5 +1,3 @@
-import { CastMember } from '@core/cast-member/domain/cast-member.entity';
-import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
 import {
   CastMemberSearchParams,
   CastMemberSearchResult,
@@ -10,7 +8,10 @@ import { literal, Op } from 'sequelize';
 import { CastMemberModel } from './cast-member.model';
 import { CastMemberModelMapper } from './cast-member.mapper';
 import { NotFoundError } from '@core/shared/domain/errors/not-found.error';
-import { CastMemberId } from '@core/cast-member/domain/cast-member.aggregate';
+import {
+  CastMember,
+  CastMemberId,
+} from '@core/cast-member/domain/cast-member.aggregate';
 import { InvalidArgumentError } from '@core/shared/domain/errors/invalid-argument.error';
 
 export class CastMemberSequelizeRepository implements ICastMemberRepository {
@@ -33,7 +34,7 @@ export class CastMemberSequelizeRepository implements ICastMemberRepository {
     );
   }
 
-  async findById(entity_id: Uuid): Promise<CastMember | null> {
+  async findById(entity_id: CastMemberId): Promise<CastMember | null> {
     const model = await this._get(entity_id.id);
 
     return model ? CastMemberModelMapper.toEntity(model) : null;
@@ -89,7 +90,7 @@ export class CastMemberSequelizeRepository implements ICastMemberRepository {
     };
   }
 
-  async delete(cast_member_id: Uuid): Promise<void> {
+  async delete(cast_member_id: CastMemberId): Promise<void> {
     const id = cast_member_id.id;
     const affectedRows = await this.castMemberModel.destroy({
       where: { cast_member_id: id },

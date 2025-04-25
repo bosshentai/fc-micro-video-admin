@@ -10,7 +10,7 @@ import {
   CastMemberTypes,
 } from '@core/cast-member/domain/value-object/cast-member-type.vo';
 import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
-import { CastMember } from '@core/cast-member/domain/cast-member.entity';
+import { CastMember } from '@core/cast-member/domain/cast-member.aggregate';
 
 describe('CastMemberMapper Integration Tests', () => {
   setupSequelize({ models: [CastMemberModel] });

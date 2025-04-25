@@ -7,9 +7,9 @@ import { UpdateCastMemberInput } from './update-cast-member.input';
 import { ICastMemberRepository } from '@core/cast-member/domain/cast-member.repository';
 import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
 import { NotFoundError } from '@core/shared/domain/errors/not-found.error';
-import { CastMember } from '@core/cast-member/domain/cast-member.entity';
 import { CastMemberType } from '@core/cast-member/domain/value-object/cast-member-type.vo';
 import { EntityValidationError } from '@core/shared/domain/validator/validation.error';
+import { CastMember } from '@core/cast-member/domain/cast-member.aggregate';
 
 export class UpdateCastMemberUseCase
   implements IUseCase<UpdateCastMemberInput, UpdateCastMemberOutput>

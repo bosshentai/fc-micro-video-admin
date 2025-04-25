@@ -1,7 +1,6 @@
 import { setupSequelize } from '@core/shared/infra/testing/helpers';
 import { CastMemberModel } from '../cast-member.model';
 import { CastMemberSequelizeRepository } from '../cast-member-sequelize';
-import { CastMember } from '@core/cast-member/domain/cast-member.entity';
 import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
 import { NotFoundError } from '@core/shared/domain/errors/not-found.error';
 import { CastMemberModelMapper } from '../cast-member.mapper';
@@ -11,6 +10,7 @@ import {
 } from '@core/cast-member/domain/cast-member.repository';
 import { CastMemberTypes } from '@core/cast-member/domain/value-object/cast-member-type.vo';
 import orderBy from 'lodash/orderBy';
+import { CastMember } from '@core/cast-member/domain/cast-member.aggregate';
 
 describe('CastMemberSequelizeRepository Integration Tests', () => {
   setupSequelize({ models: [CastMemberModel] });

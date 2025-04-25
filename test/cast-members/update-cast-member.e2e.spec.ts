@@ -1,5 +1,5 @@
 import { CastMemberOutputMapper } from '@core/cast-member/application/use-cases/common/cast-member-output';
-import { CastMember } from '@core/cast-member/domain/cast-member.entity';
+import { CastMember } from '@core/cast-member/domain/cast-member.aggregate';
 import { ICastMemberRepository } from '@core/cast-member/domain/cast-member.repository';
 import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
 import { instanceToPlain } from 'class-transformer';

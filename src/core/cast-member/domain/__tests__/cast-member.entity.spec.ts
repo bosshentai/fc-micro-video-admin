@@ -1,5 +1,5 @@
 import { Uuid } from '../../../shared/domain/value-objects/uuid.vo';
-import { CastMember } from '../cast-member.entity';
+import { CastMember } from '../cast-member.aggregate';
 import {
   CastMemberType,
   CastMemberTypes,

@@ -1,7 +1,7 @@
 import { CastMemberInMemoryRepository } from '@core/cast-member/infra/db/in-memory/cast-member-in-memory.repository';
 import { GetCastMemberUseCase } from '../get-cast-member.use-case';
 import { InvalidUuidError } from '@core/shared/domain/value-objects/uuid.vo';
-import { CastMember } from '@core/cast-member/domain/cast-member.entity';
+import { CastMember } from '@core/cast-member/domain/cast-member.aggregate';
 
 describe('GetCastMemberUseCase unit Tests', () => {
   let useCase: GetCastMemberUseCase;
