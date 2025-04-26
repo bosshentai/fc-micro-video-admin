@@ -1,7 +1,6 @@
 import { setupSequelize } from '@core/shared/infra/testing/helpers';
 import { CastMemberModel } from '../cast-member.model';
 import { CastMemberSequelizeRepository } from '../cast-member-sequelize';
-import { CastMember } from '@core/cast-member/domain/cast-member.entity';
 import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
 import { NotFoundError } from '@core/shared/domain/errors/not-found.error';
 import { CastMemberModelMapper } from '../cast-member.mapper';
@@ -11,6 +10,7 @@ import {
 } from '@core/cast-member/domain/cast-member.repository';
 import { CastMemberTypes } from '@core/cast-member/domain/value-object/cast-member-type.vo';
 import orderBy from 'lodash/orderBy';
+import { CastMember } from '@core/cast-member/domain/cast-member.aggregate';
 
 describe('CastMemberSequelizeRepository Integration Tests', () => {
   setupSequelize({ models: [CastMemberModel] });
@@ -37,7 +37,7 @@ describe('CastMemberSequelizeRepository Integration Tests', () => {
     const entity = CastMember.fake().anActor().build();
     await repository.insert(entity);
     entityFound = await repository.findById(entity.cast_member_id);
-    expect(entity.toJSON()).toStrictEqual(entityFound.toJSON());
+    expect(entity.toJSON()).toStrictEqual(entityFound!.toJSON());
   });
 
   it('should return all cast members', async () => {
@@ -62,7 +62,7 @@ describe('CastMemberSequelizeRepository Integration Tests', () => {
     entity.changeName('Movie updated');
     await repository.update(entity);
     const entityFound = await repository.findById(entity.cast_member_id);
-    expect(entityFound.toJSON()).toStrictEqual(entity.toJSON());
+    expect(entityFound!.toJSON()).toStrictEqual(entity.toJSON());
   });
 
   it('should throw error on delete when a entity not found', async () => {

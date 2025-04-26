@@ -5,7 +5,7 @@ import Joi from 'joi';
 import { join } from 'path';
 
 function expectValidate(schema: Joi.ObjectSchema, value: any) {
-  return expect(schema.validate(value, { abortEarly: false }).error.message);
+  return expect(schema.validate(value, { abortEarly: false }).error!.message);
 }
 
 describe('Schema Unit Tests', () => {

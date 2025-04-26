@@ -32,7 +32,7 @@ describe('CastMemberController (e2e)', () => {
           const queryParams = new URLSearchParams(
             Object.entries(send_data).map(([key, value]) => [
               key,
-              value.toString(),
+              value!.toString(),
             ]),
           ).toString();
 

@@ -6,8 +6,8 @@ import {
 } from '../common/cast-member-output';
 import { ICastMemberRepository } from '@core/cast-member/domain/cast-member.repository';
 import { CastMemberType } from '@core/cast-member/domain/value-object/cast-member-type.vo';
-import { CastMember } from '@core/cast-member/domain/cast-member.entity';
 import { EntityValidationError } from '@core/shared/domain/validator/validation.error';
+import { CastMember } from '@core/cast-member/domain/cast-member.aggregate';
 export class CreateCastMemberUseCase
   implements IUseCase<CreateCastMemberInput, CreateCastMemberOutput>
 {

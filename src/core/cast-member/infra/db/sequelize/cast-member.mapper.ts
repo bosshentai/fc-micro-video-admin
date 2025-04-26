@@ -1,8 +1,8 @@
-import { CastMember } from '@core/cast-member/domain/cast-member.entity';
 import { CastMemberModel } from './cast-member.model';
 import { CastMemberType } from '@core/cast-member/domain/value-object/cast-member-type.vo';
 import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
-import { EntityValidationError } from '@core/shared/domain/validator/validation.error';
+import { LoadEntityError } from '@core/shared/domain/validator/validation.error';
+import { CastMember } from '@core/cast-member/domain/cast-member.aggregate';
 
 export class CastMemberModelMapper {
   static toEntity(model: CastMemberModel): CastMember {
@@ -26,7 +26,7 @@ export class CastMemberModelMapper {
     }
 
     if (notification.hasErrors()) {
-      throw new EntityValidationError(notification.toJSON());
+      throw new LoadEntityError(notification.toJSON());
     }
 
     return castMember;

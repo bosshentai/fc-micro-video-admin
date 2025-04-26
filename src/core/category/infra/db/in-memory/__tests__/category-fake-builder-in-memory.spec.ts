@@ -1,4 +1,4 @@
-import { Category } from '../../../../domain/category.entity';
+import { Category } from '@core/category/domain/category.aggregate';
 import { CategoryInMemoryRepository } from '../category-in-memory.repository';
 
 describe('CategoryFakeBuilderInMemory Unit Tests', () => {

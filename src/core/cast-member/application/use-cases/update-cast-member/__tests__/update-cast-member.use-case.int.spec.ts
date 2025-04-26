@@ -5,8 +5,8 @@ import { CastMemberModel } from '@core/cast-member/infra/db/sequelize/cast-membe
 import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
 import { UpdateCastMemberInput } from '../update-cast-member.input';
 import { NotFoundError } from '@core/shared/domain/errors/not-found.error';
-import { CastMember } from '@core/cast-member/domain/cast-member.entity';
 import { CastMemberTypes } from '@core/cast-member/domain/value-object/cast-member-type.vo';
+import { CastMember } from '@core/cast-member/domain/cast-member.aggregate';
 
 describe('UpdateCastMemberUseCase Integration Tests', () => {
   let useCase: UpdateCastMemberUseCase;
@@ -92,7 +92,7 @@ describe('UpdateCastMemberUseCase Integration Tests', () => {
         created_at: entity.created_at,
       });
 
-      expect(entityUpdated.toJSON()).toStrictEqual({
+      expect(entityUpdated!.toJSON()).toStrictEqual({
         cast_member_id: entity.cast_member_id.id,
         name: item.expected.name,
         type: item.expected.type,

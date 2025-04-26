@@ -1,12 +1,12 @@
 import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
 import { CastMemberFakeBuilder } from '../cast-member-fake.builder';
-import { CastMember } from '../cast-member.entity';
 import { Chance } from 'chance';
 import {
   CastMemberType,
   CastMemberTypes,
 } from '../value-object/cast-member-type.vo';
 import { CategoryFakeBuilder } from '@core/category/domain/category-fake.builder';
+import { CastMember } from '../cast-member.aggregate';
 describe('CastMemberFakeBuilder Unit Tests', () => {
   describe('cast_member_id prop', () => {
     const faker = CastMemberFakeBuilder.anActor();

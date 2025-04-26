@@ -1,5 +1,3 @@
-import { CastMember } from '@core/cast-member/domain/cast-member.entity';
-import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
 import {
   CastMemberSearchParams,
   CastMemberSearchResult,
@@ -10,6 +8,11 @@ import { literal, Op } from 'sequelize';
 import { CastMemberModel } from './cast-member.model';
 import { CastMemberModelMapper } from './cast-member.mapper';
 import { NotFoundError } from '@core/shared/domain/errors/not-found.error';
+import {
+  CastMember,
+  CastMemberId,
+} from '@core/cast-member/domain/cast-member.aggregate';
+import { InvalidArgumentError } from '@core/shared/domain/errors/invalid-argument.error';
 
 export class CastMemberSequelizeRepository implements ICastMemberRepository {
   sortableFields: string[] = ['name', 'created_at'];
@@ -31,7 +34,7 @@ export class CastMemberSequelizeRepository implements ICastMemberRepository {
     );
   }
 
-  async findById(entity_id: Uuid): Promise<CastMember> {
+  async findById(entity_id: CastMemberId): Promise<CastMember | null> {
     const model = await this._get(entity_id.id);
 
     return model ? CastMemberModelMapper.toEntity(model) : null;
@@ -43,7 +46,51 @@ export class CastMemberSequelizeRepository implements ICastMemberRepository {
     return models.map((model) => CastMemberModelMapper.toEntity(model));
   }
 
-  async delete(cast_member_id: Uuid): Promise<void> {
+  async findByIds(ids: CastMemberId[]): Promise<CastMember[]> {
+    const models = await this.castMemberModel.findAll({
+      where: {
+        cast_member_id: {
+          [Op.in]: ids.map((id) => id.id),
+        },
+      },
+    });
+    return models.map((model) => CastMemberModelMapper.toEntity(model));
+  }
+
+  async existsById(
+    ids: CastMemberId[],
+  ): Promise<{ exists: CastMemberId[]; not_exists: CastMemberId[] }> {
+    if (!ids.length) {
+      throw new InvalidArgumentError(
+        'ids must be an array with at least one element',
+      );
+    }
+
+    const existsCastMemberModels = await this.castMemberModel.findAll({
+      attributes: ['cast_member_id'],
+      where: {
+        cast_member_id: {
+          [Op.in]: ids.map((id) => id.id),
+        },
+      },
+    });
+
+    const existsCastMemberIds = existsCastMemberModels.map(
+      (model) => new CastMemberId(model.cast_member_id),
+    );
+
+    const notExistsCastMemberIds = ids.filter(
+      (id) =>
+        !existsCastMemberIds.some((castMemberId) => castMemberId.equals(id)),
+    );
+
+    return {
+      exists: existsCastMemberIds,
+      not_exists: notExistsCastMemberIds,
+    };
+  }
+
+  async delete(cast_member_id: CastMemberId): Promise<void> {
     const id = cast_member_id.id;
     const affectedRows = await this.castMemberModel.destroy({
       where: { cast_member_id: id },
@@ -91,7 +138,7 @@ export class CastMemberSequelizeRepository implements ICastMemberRepository {
       }),
       ...(props.sort && this.sortableFields.includes(props.sort)
         ? {
-            order: this.formatSort(props.sort, props.sort_dir),
+            order: this.formatSort(props.sort, props.sort_dir!),
           }
         : { order: [['created_at', 'DESC']] }),
       offset,

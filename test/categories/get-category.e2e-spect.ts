@@ -1,4 +1,4 @@
-import { Category } from '@core/category/domain/category.entity';
+import { Category } from '@core/category/domain/category.aggregate';
 import { ICategoryRepository } from '@core/category/domain/category.repository';
 import { CATEGORY_PROVIDERS } from 'src/nest-modules/categories-module/categories.providers';
 import { GetCategoryFixture } from 'src/nest-modules/categories-module/testing/category-fixture';

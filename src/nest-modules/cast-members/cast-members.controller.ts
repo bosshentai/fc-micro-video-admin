@@ -1,4 +1,3 @@
-import { CreateCastMemberUseCase } from '@core/cast-member/application/use-cases/create-cast-member/create-cast-member.use-case';
 import {
   Body,
   Controller,
@@ -11,6 +10,8 @@ import {
   Post,
   Query,
 } from '@nestjs/common/decorators';
+import { HttpStatus } from '@nestjs/common/enums/http-status.enum';
+import { ParseUUIDPipe } from '@nestjs/common';
 import { CreateCastMemberDto } from './dto/create-cast-member.dto';
 import { CastMemberOutput } from '@core/cast-member/application/use-cases/common/cast-member-output';
 import {
@@ -18,13 +19,12 @@ import {
   CastMemberPresenter,
 } from './cast-members.presenter';
 import { GetCastMemberUseCase } from '@core/cast-member/application/use-cases/get-cast-member/get-cast-member.use-case';
-import { ParseUUIDPipe } from '@nestjs/common/pipes';
 import { ListCastMembersUseCase } from '@core/cast-member/application/use-cases/list-cast-members/list-cast-member.use-case';
 import { SearchCastMembersDto } from './dto/search-cast-members.dto';
 import { UpdateCastMemberDto } from './dto/update-cast-member.dto';
 import { UpdateCastMemberUseCase } from '@core/cast-member/application/use-cases/update-cast-member/update-cast-member.use-case';
-import { HttpStatus } from '@nestjs/common/enums/http-status.enum';
 import { DeleteCastMemberUseCase } from '@core/cast-member/application/use-cases/delete-cast-member/delete-cast-member.use-case';
+import { CreateCastMemberUseCase } from '@core/cast-member/application/use-cases/create-cast-member/create-cast-member.use-case';
 
 @Controller('cast-members')
 export class CastMembersController {

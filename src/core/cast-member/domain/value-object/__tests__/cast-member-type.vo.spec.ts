@@ -19,7 +19,7 @@ describe('CastMemberType Unit Test', () => {
     const [actorMember2, error] = CastMemberType.create(
       CastMemberTypes.ACTOR,
     ).asArray();
-    expect(error).toBeNull();
+    expect(error).toBeUndefined();
     expect(actorMember2).toBeInstanceOf(CastMemberType);
     expect(actorMember2.type).toBe(CastMemberTypes.ACTOR);
   });
@@ -32,7 +32,7 @@ describe('CastMemberType Unit Test', () => {
     const [directorMember2, error] = CastMemberType.create(
       CastMemberTypes.DIRECTOR,
     ).asArray();
-    expect(error).toBeNull();
+    expect(error).toBeUndefined();
     expect(directorMember2).toBeInstanceOf(CastMemberType);
     expect(directorMember2.type).toBe(CastMemberTypes.DIRECTOR);
   });

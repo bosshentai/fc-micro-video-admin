@@ -1,12 +1,11 @@
 import { Uuid } from '../../shared/domain/value-objects/uuid.vo';
-import { ValidatorRules } from '../../shared/domain/validator/validator-rules';
 import { CategoryValidatorFactory } from './category.validator';
 import { ValueObject } from '../../shared/domain/value-object';
-import { Entity } from '../../shared/domain/entity';
 import { CategoryFakeBuilder } from './category-fake.builder';
+import { AggregateRoot } from '@core/shared/domain/aggregate-root';
 
 export type CategoryConstructorProps = {
-  category_id?: Uuid;
+  category_id?: CategoryId;
   name: string;
   description?: string | null;
   is_active?: boolean;
@@ -19,8 +18,10 @@ export type CategoryCreatedCommand = {
   is_active?: boolean;
 };
 
-export class Category extends Entity {
-  category_id: Uuid;
+export class CategoryId extends Uuid {}
+
+export class Category extends AggregateRoot {
+  category_id: CategoryId;
   name: string;
 
   description: string | null;
@@ -31,7 +32,7 @@ export class Category extends Entity {
 
   constructor(props: CategoryConstructorProps) {
     super();
-    this.category_id = props.category_id ?? new Uuid();
+    this.category_id = props.category_id ?? new CategoryId();
     this.name = props.name;
     this.description = props.description ?? null;
     this.is_active = props.is_active ?? true;
@@ -51,7 +52,7 @@ export class Category extends Entity {
     this.validate(['name']);
   }
 
-  changeDescription(description: string): void {
+  changeDescription(description: string | null): void {
     this.description = description;
   }
 

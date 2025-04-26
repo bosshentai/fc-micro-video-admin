@@ -1,14 +1,14 @@
 import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
-import { CastMember } from './cast-member.entity';
 import { Chance } from 'chance';
 import { CastMemberType } from './value-object/cast-member-type.vo';
+import { CastMember, CastMemberId } from './cast-member.aggregate';
 
 type PropOrFactory<T> = ((index: number) => T) | T;
 
 export class CastMemberFakeBuilder<TBuild = CastMember | CastMember[]> {
   private chance: Chance.Chance;
 
-  private _cast_member_id: PropOrFactory<Uuid> | undefined = undefined;
+  private _cast_member_id: PropOrFactory<CastMemberId> | undefined = undefined;
 
   private _name: PropOrFactory<string> = (_index) => this.chance.word();
 
@@ -94,7 +94,7 @@ export class CastMemberFakeBuilder<TBuild = CastMember | CastMember[]> {
     return this.callFactory(this[privateProps], 0) as T;
   }
 
-  get cast_member_id(): Uuid {
+  get cast_member_id(): CastMemberId {
     return this.getValue<Uuid>('cast_member_id');
   }
 

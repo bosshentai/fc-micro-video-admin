@@ -1,5 +1,5 @@
-import { Module } from '@nestjs/common/decorators';
-import { SequelizeModule } from '@nestjs/sequelize/dist';
+import { Module } from '@nestjs/common';
+import { SequelizeModule } from '@nestjs/sequelize';
 import { CategoriesController } from './categories.controller';
 import { CategoryModel } from '@core/category/infra/db/sequelize/category.model';
 import { CATEGORY_PROVIDERS } from './categories.providers';
@@ -10,6 +10,12 @@ import { CATEGORY_PROVIDERS } from './categories.providers';
   providers: [
     ...Object.values(CATEGORY_PROVIDERS.REPOSITORIES),
     ...Object.values(CATEGORY_PROVIDERS.USE_CASES),
+    ...Object.values(CATEGORY_PROVIDERS.VALIDATIONS),
+  ],
+  exports: [
+    CATEGORY_PROVIDERS.REPOSITORIES.CATEGORY_REPOSITORY.provide,
+    CATEGORY_PROVIDERS.VALIDATIONS.CATEGORIES_ID_EXISTS_IN_DATABASE_VALIDATOR
+      .provide,
   ],
 })
 export class CategoriesModule {}

@@ -20,11 +20,11 @@ describe('CreateCatoryUseCase Integration Tests', () => {
     let entity = await repository.findById(new Uuid(output.id));
 
     expect(output).toStrictEqual({
-      id: entity.category_id.id,
+      id: entity!.category_id.id,
       name: 'test',
       description: null,
       is_active: true,
-      created_at: entity.created_at,
+      created_at: entity!.created_at,
     });
 
     output = await useCase.execute({
@@ -34,11 +34,11 @@ describe('CreateCatoryUseCase Integration Tests', () => {
 
     entity = await repository.findById(new Uuid(output.id));
     expect(output).toStrictEqual({
-      id: entity.category_id.id,
+      id: entity!.category_id.id,
       name: 'test',
       description: 'test description',
       is_active: true,
-      created_at: entity.created_at,
+      created_at: entity!.created_at,
     });
   });
 });

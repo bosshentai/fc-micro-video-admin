@@ -1,8 +1,5 @@
-import { Sequelize } from 'sequelize-typescript';
 import { CategoryModel } from '../category.model';
 import { CategorySequelizeRepository } from '../category-sequelize.repository';
-import { Category } from '../../../../domain/category.entity';
-import { Uuid } from '../../../../../shared/domain/value-objects/uuid.vo';
 import { NotFoundError } from '../../../../../shared/domain/errors/not-found.error';
 import { CategoryModelMapper } from '../category-model-mapper';
 import {
@@ -10,6 +7,7 @@ import {
   CategorySearchResult,
 } from '../../../../domain/category.repository';
 import { setupSequelize } from '../../../../../shared/infra/testing/helpers';
+import { Category, CategoryId } from '@core/category/domain/category.aggregate';
 
 describe('CategorySequelizeRepository Integration Tests', () => {
   setupSequelize({ models: [CategoryModel] });
@@ -25,7 +23,7 @@ describe('CategorySequelizeRepository Integration Tests', () => {
     await repository.insert(category);
 
     const model = await CategoryModel.findByPk(category.category_id.id);
-    expect(model.toJSON()).toStrictEqual({
+    expect(model!.toJSON()).toStrictEqual({
       category_id: category.category_id.id,
       name: category.name,
       description: category.description,
@@ -35,13 +33,13 @@ describe('CategorySequelizeRepository Integration Tests', () => {
   });
 
   test('should find a entity by id', async () => {
-    let entityFound = await repository.findById(new Uuid());
+    let entityFound = await repository.findById(new CategoryId());
     expect(entityFound).toBeNull();
 
     const entity = Category.fake().aCategory().build();
     await repository.insert(entity);
     entityFound = await repository.findById(entity.category_id);
-    expect(entityFound.toJSON()).toStrictEqual(entity.toJSON());
+    expect(entityFound!.toJSON()).toStrictEqual(entity.toJSON());
   });
 
   test('should find all entities', async () => {
@@ -67,11 +65,11 @@ describe('CategorySequelizeRepository Integration Tests', () => {
     await repository.update(entity);
 
     const entityFound = await repository.findById(entity.category_id);
-    expect(entityFound.toJSON()).toStrictEqual(entityFound.toJSON());
+    expect(entityFound!.toJSON()).toStrictEqual(entityFound!.toJSON());
   });
 
   test('should throw error on delete when a entity not found', async () => {
-    const categoryId = new Uuid();
+    const categoryId = new CategoryId();
     await expect(repository.delete(categoryId)).rejects.toThrow(
       new NotFoundError(categoryId.id, Category),
     );

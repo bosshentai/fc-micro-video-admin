@@ -1,9 +1,9 @@
 import { CastMemberInMemoryRepository } from '@core/cast-member/infra/db/in-memory/cast-member-in-memory.repository';
 import { ListCastMembersUseCase } from '../list-cast-member.use-case';
 import { CastMemberSearchResult } from '@core/cast-member/domain/cast-member.repository';
-import { CastMember } from '@core/cast-member/domain/cast-member.entity';
 import { CastMemberType } from '@core/cast-member/domain/value-object/cast-member-type.vo';
 import { CastMemberOutputMapper } from '../../common/cast-member-output';
+import { CastMember } from '@core/cast-member/domain/cast-member.aggregate';
 
 describe('ListCastMembers Unit Tests', () => {
   let useCase: ListCastMembersUseCase;

@@ -2,8 +2,8 @@ import { CastMemberModel } from '@core/cast-member/infra/db/sequelize/cast-membe
 import { ListCastMembersUseCase } from '../list-cast-member.use-case';
 import { CastMemberSequelizeRepository } from '@core/cast-member/infra/db/sequelize/cast-member-sequelize';
 import { setupSequelize } from '@core/shared/infra/testing/helpers';
-import { CastMember } from '@core/cast-member/domain/cast-member.entity';
 import { CastMemberOutputMapper } from '../../common/cast-member-output';
+import { CastMember } from '@core/cast-member/domain/cast-member.aggregate';
 
 describe('ListCastMembers Integration Tests', () => {
   let useCase: ListCastMembersUseCase;

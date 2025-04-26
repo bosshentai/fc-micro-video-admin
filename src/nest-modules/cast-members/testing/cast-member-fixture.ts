@@ -1,4 +1,4 @@
-import { CastMember } from '@core/cast-member/domain/cast-member.entity';
+import { CastMember } from '@core/cast-member/domain/cast-member.aggregate';
 import { CastMemberTypes } from '@core/cast-member/domain/value-object/cast-member-type.vo';
 
 const _keyInResponse = ['id', 'name', 'type', 'created_at'];

@@ -1,12 +1,12 @@
 import { ValueObject } from '../../shared/domain/value-object';
-import { Entity } from '../..//shared/domain/entity';
+import { Entity } from '../../shared/domain/entity';
 import { Uuid } from '../../shared/domain/value-objects/uuid.vo';
 import { CastMemberType } from './value-object/cast-member-type.vo';
 import { CastMemberValidatorFactory } from './cast-member.validator';
 import { CastMemberFakeBuilder } from './cast-member-fake.builder';
 
 export type CastMemberConstructorProps = {
-  cast_member_id?: Uuid;
+  cast_member_id?: CastMemberId;
   name: string;
   cast_member_type: CastMemberType;
   created_at?: Date;
@@ -17,8 +17,10 @@ export type CastMemberCreatedCommand = {
   cast_member_type: CastMemberType;
 };
 
+export class CastMemberId extends Uuid {}
+
 export class CastMember extends Entity {
-  cast_member_id: Uuid;
+  cast_member_id: CastMemberId;
 
   name: string;
 
@@ -28,7 +30,7 @@ export class CastMember extends Entity {
 
   constructor(props: CastMemberConstructorProps) {
     super();
-    this.cast_member_id = props.cast_member_id ?? new Uuid();
+    this.cast_member_id = props.cast_member_id ?? new CastMemberId();
     this.name = props.name;
     this.member_type = props.cast_member_type;
     this.created_at = props.created_at ?? new Date();
