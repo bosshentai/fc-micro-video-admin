@@ -22,4 +22,11 @@ export class UnitOfWorkFakeInMemory implements IUnitOfWork {
   do<T>(workFn: (uow: IUnitOfWork) => Promise<T>): Promise<T> {
     return workFn(this);
   }
+
+  addAggregateRoot(aggregateRoot: AggregateRoot): void {
+    this.aggregateRoots.add(aggregateRoot);
+  }
+  getAggregateRoots(): AggregateRoot[] {
+    return [...this.aggregateRoots];
+  }
 }
