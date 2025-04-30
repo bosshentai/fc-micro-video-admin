@@ -13,7 +13,7 @@ import { IUnitOfWork } from '@core/shared/domain/repository/unit-of-work.interfa
     {
       provide: 'IStorage',
       useFactory: (configService: ConfigService) => {
-        const credentials = configService.get('STORAGE_CREDENTIALS');
+        const credentials = configService.get('GOOGLE_CLOUD_CREDENTIALS');
         const bucketName = configService.get(
           'GOOGLE_CLOUD_STORAGE_BUCKET_NAME',
         );
