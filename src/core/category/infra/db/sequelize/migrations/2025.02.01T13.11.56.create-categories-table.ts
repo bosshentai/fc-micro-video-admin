@@ -21,9 +21,9 @@ export const up: MigrationFn<Sequelize> = async ({ context: sequelize }) => {
       type: DataTypes.BOOLEAN,
       allowNull: false,
     },
-    create_at: {
+    created_at: {
       type: DataTypes.DATE(3),
-      field: 'create_at',
+      field: 'created_at',
     },
   });
 };

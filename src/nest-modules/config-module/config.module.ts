@@ -6,6 +6,27 @@ import {
 import Joi from 'joi';
 import { join } from 'path';
 
+const joinJson = Joi.extend((joi) => ({
+  type: 'object',
+  base: joi.object(),
+  coerce: {
+    from: 'string',
+    method(value, _helpers) {
+      if (typeof value !== 'string') return { value };
+
+      const isJsonString = value.trim().startsWith('{');
+      if (!isJsonString) return { value };
+
+      try {
+        return { value: JSON.parse(value) };
+      } catch (err) {
+        console.error(err);
+        return { value };
+      }
+    },
+  },
+}));
+
 type DB_SCHEMA_TYPE = {
   DB_VENDOR: 'mysql' | 'sqlite';
   DB_HOST: string;
@@ -41,7 +62,16 @@ export const CONFIG_BD_SCHEMA: Joi.StrictSchemaMap<DB_SCHEMA_TYPE> = {
 };
 
 export type CONFIG_SCHEMA_TYPE = DB_SCHEMA_TYPE;
+export type CONFIG_GOOGLE_SCHEMA_TYPE = {
+  GOOGLE_CLOUD_CREDENTIALS: object;
+  GOOGLE_CLOUD_STORAGE_BUCKET_NAME: string;
+};
 
+export const CONFIG_GOOGLE_SCHEMA: Joi.StrictSchemaMap<CONFIG_GOOGLE_SCHEMA_TYPE> =
+  {
+    GOOGLE_CLOUD_CREDENTIALS: joinJson.object().required(),
+    GOOGLE_CLOUD_STORAGE_BUCKET_NAME: Joi.string().required(),
+  };
 @Module({})
 export class ConfigModule extends NestConfigModule {
   static forRoot(options: ConfigModuleOptions = {}) {
@@ -56,6 +86,7 @@ export class ConfigModule extends NestConfigModule {
       ],
       validationSchema: Joi.object({
         ...CONFIG_BD_SCHEMA,
+        ...CONFIG_GOOGLE_SCHEMA,
       }),
       ...otherOptions,
     });

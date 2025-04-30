@@ -10,6 +10,12 @@ import { CastMembersController } from './cast-members.controller';
   providers: [
     ...Object.values(CAST_MEMBER_PROVIDERS.REPOSITORIES),
     ...Object.values(CAST_MEMBER_PROVIDERS.USE_CASES),
+    ...Object.values(CAST_MEMBER_PROVIDERS.VALIDATIONS),
+  ],
+  exports: [
+    CAST_MEMBER_PROVIDERS.REPOSITORIES.CAST_MEMBER_REPOSITORY.provide,
+    CAST_MEMBER_PROVIDERS.VALIDATIONS
+      .CAST_MEMBERS_IDS_EXISTS_IN_DATABASE_VALIDATOR,
   ],
 })
 export class CastMembersModule {}

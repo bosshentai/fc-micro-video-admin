@@ -1,4 +1,4 @@
-import { IGenreRepository } from './../../../domain/genre.repository';
+import { IGenreRepository } from '../../../domain/genre.repository';
 import { IUseCase } from '@core/shared/application/use-case.interface';
 import { CreateGenreInput } from './create--genre.input';
 import { GenreOutput, GenreOutputMapper } from '../common/genre-output';

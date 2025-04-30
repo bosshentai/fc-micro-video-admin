@@ -18,7 +18,6 @@ import {
 import { VideoCategoryModel } from './video-category.model';
 import { VideoGenreModel } from './video-genre.model';
 import { VideoCastMemberModel } from './video-cast-member.model';
-import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
 
 export class VideoModelMapper {
   static toEntity(model: VideoModel) {

@@ -1,5 +1,4 @@
 import {
-  BelongsTo,
   BelongsToMany,
   Column,
   DataType,
@@ -13,7 +12,7 @@ import { CategoryModel } from '../../../../category/infra/db/sequelize/category.
 import { VideoGenreModel } from './video-genre.model';
 import { RatingValues } from '../../../domain/value-object/rating.vo';
 import { GenreModel } from '../../../../genre/infra/db/sequelize/genre-model';
-import { CastMemberModel } from '@core/cast-member/infra/db/sequelize/cast-member.model';
+import { CastMemberModel } from '../../../../cast-member/infra/db/sequelize/cast-member.model';
 import { VideoCastMemberModel } from './video-cast-member.model';
 import { ImageMediaModel } from './image-media.model';
 import { AudioVideoMediaModel } from './audio-video-media.model';

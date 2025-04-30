@@ -10,18 +10,18 @@ import { UnitOfWorkSequelize } from '@core/shared/infra/db/sequelize/unit-of-wor
 import { ConfigModule } from 'src/nest-modules/config-module/config.module';
 import { GENRES_PROVIDERS } from '../genres.providers';
 import { CATEGORY_PROVIDERS } from 'src/nest-modules/categories-module/categories.providers';
-import { CreateGenreUseCase } from '@core/genre/application/use=cases/create-genre/create-genre.use-case';
-import { UpdateGenreUseCase } from '@core/genre/application/use=cases/update-genre/update-genre.use-case';
-import { ListGenresUseCase } from '@core/genre/application/use=cases/list-genres/list-genres.use-case';
-import { GetGenreUseCase } from '@core/genre/application/use=cases/get-genre/get-genre.use-case';
-import { DeleteGenreUseCase } from '@core/genre/application/use=cases/delete-genre/delete-genre.use-case';
+import { CreateGenreUseCase } from '@core/genre/application/use-cases/create-genre/create-genre.use-case';
+import { UpdateGenreUseCase } from '@core/genre/application/use-cases/update-genre/update-genre.use-case';
+import { ListGenresUseCase } from '@core/genre/application/use-cases/list-genres/list-genres.use-case';
+import { GetGenreUseCase } from '@core/genre/application/use-cases/get-genre/get-genre.use-case';
+import { DeleteGenreUseCase } from '@core/genre/application/use-cases/delete-genre/delete-genre.use-case';
 import {
   CreateGenreFixture,
   ListGenresFixture,
   UpdateGenreFixture,
 } from '../testing/genre-fixture';
 import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
-import { GenreOutputMapper } from '@core/genre/application/use=cases/common/genre-output';
+import { GenreOutputMapper } from '@core/genre/application/use-cases/common/genre-output';
 import { Genre, GenreId } from '@core/genre/domain/genre.aggregate';
 import { Category } from '@core/category/domain/category.aggregate';
 import { GenreCollectionPresenter } from '../genres.presenter';

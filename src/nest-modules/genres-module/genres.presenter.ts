@@ -1,8 +1,8 @@
 import { Transform, Type } from 'class-transformer';
 import { GenreCategoryPresenter } from './genre-category.presenter';
-import { GenreOutput } from '@core/genre/application/use=cases/common/genre-output';
+import { GenreOutput } from '@core/genre/application/use-cases/common/genre-output';
 import { CollectionPresenter } from '../shared-module/collection.presenter';
-import { ListGenresOutput } from '@core/genre/application/use=cases/list-genres/list-genres.use-case';
+import { ListGenresOutput } from '@core/genre/application/use-cases/list-genres/list-genres.use-case';
 
 export class GenrePresenter {
   id: string;
