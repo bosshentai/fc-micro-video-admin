@@ -186,3 +186,6 @@ Content-type: video/mp4
 
 
 ###
+
+
+GET http://localhost:3000/fake-event

@@ -31,6 +31,7 @@ import { VideoController } from './videos.controller';
   providers: [
     ...Object.values(VIDEO_PROVIDERS.REPOSITORIES),
     ...Object.values(VIDEO_PROVIDERS.USE_CASES),
+    ...Object.values(VIDEO_PROVIDERS.HANDLERS),
   ],
 })
 export class VideosModuleModule {}
