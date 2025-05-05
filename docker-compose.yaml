@@ -24,7 +24,7 @@ services:
     security_opt:
       - seccomp:unconfined
 
-  rabbittmq:
+  rabbitmq:
     image: rabbitmq:4.1-management-alpine
     ports:
       - 15672:15672

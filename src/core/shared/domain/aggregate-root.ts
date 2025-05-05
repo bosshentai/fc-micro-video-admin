@@ -1,5 +1,5 @@
 import { Entity } from './entity';
-import { IDomainEvent } from './events/domain-event.internface';
+import { IDomainEvent } from './events/domain-event.interface';
 import EventEmitter2 from 'eventemitter2';
 
 export abstract class AggregateRoot extends Entity {

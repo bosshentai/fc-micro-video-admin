@@ -20,9 +20,12 @@ services:
       - .docker/dbdata:/var/lib/mysql:delegated
     security_opt:
       - seccomp:unconfined
+    ports:
+      - 3306:3306
 
-  rabbittmq:
+  rabbitmq:
     image: rabbitmq:4.1-management-alpine
+    container_name: micro-videos-admin-rabbitmq
     ports:
       - 15672:15672
     environment:

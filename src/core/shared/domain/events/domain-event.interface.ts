@@ -9,9 +9,8 @@ export interface IDomainEvent {
 }
 
 export interface IIntegrationEvent<T = any> {
-  aggregate_id: ValueObject;
-  occurred_on: Date;
-
-  payload: T;
   event_version: number;
+  occurred_on: Date;
+  payload: T;
+  event_name: string;
 }

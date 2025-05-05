@@ -54,7 +54,7 @@ export class CastMemberFakeBuilder<TBuild = CastMember | CastMember[]> {
     this.chance = new Chance();
   }
 
-  withUuid(valueOrFactory: PropOrFactory<Uuid>) {
+  withUuid(valueOrFactory: PropOrFactory<CastMemberId>) {
     this._cast_member_id = valueOrFactory;
     return this;
   }

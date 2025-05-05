@@ -5,10 +5,12 @@ import { ConfigModule } from './nest-modules/config-module/config.module';
 import { SharedModule } from './nest-modules/shared-module/shared.module';
 import { CastMembersModule } from './nest-modules/cast-members/cast-members.module';
 import { GenresModule } from './nest-modules/genres-module/genres.module';
-import { VideosModuleModule } from './nest-modules/videos-module/videos.module';
+import { VideosModule } from './nest-modules/videos-module/videos.module';
 import { EventModule } from './nest-modules/event-module/event.module';
 import { UseCaseModule } from './nest-modules/use-case-module/use-case.module';
-import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
+import { RabbitMQFakeConsumer } from './rabbitmq-fake.consumer';
+import { RabbitmqController } from './nest-modules/rabbitmq-fake/rabbitmq.controller';
+import { RabbitmqModule } from './nest-modules/rabbitmq-module/rabbitmq.module';
 
 @Module({
   imports: [
@@ -17,14 +19,13 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
     SharedModule,
     EventModule,
     UseCaseModule,
+    RabbitmqModule.forRoot(),
     CategoriesModule,
     CastMembersModule,
     GenresModule,
-    VideosModuleModule,
-    RabbitMQModule.forRoot({
-      uri: 'amqp://admin:admint@rabbitmq:5672',
-      // connectionInitOptions: { wait: false },
-    }),
+    VideosModule,
   ],
+  providers: [RabbitMQFakeConsumer],
+  controllers: [RabbitmqController],
 })
 export class AppModule {}

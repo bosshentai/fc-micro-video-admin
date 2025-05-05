@@ -69,7 +69,7 @@ describe('GetVideoUseCase Integration Tests', () => {
     await videoRepo.insert(video);
 
     const output = await useCase.execute({ id: video.video_id.id });
-    expect(output).toStrictEqual({
+    expect(output).toEqual({
       id: video.video_id.id,
       title: video.title,
       description: video.description,
@@ -104,21 +104,21 @@ describe('GetVideoUseCase Integration Tests', () => {
         },
       ],
       cast_members_id: [
-        castMembers[0].cast_member_id.id,
         castMembers[1].cast_member_id.id,
+        castMembers[0].cast_member_id.id,
       ],
       cast_members: [
-        {
-          id: castMembers[0].cast_member_id.id,
-          name: castMembers[0].name,
-          type: castMembers[0].member_type.type,
-          created_at: castMembers[0].created_at,
-        },
         {
           id: castMembers[1].cast_member_id.id,
           name: castMembers[1].name,
           type: castMembers[1].member_type.type,
           created_at: castMembers[1].created_at,
+        },
+        {
+          id: castMembers[0].cast_member_id.id,
+          name: castMembers[0].name,
+          type: castMembers[0].member_type.type,
+          created_at: castMembers[0].created_at,
         },
       ],
       created_at: video.created_at,

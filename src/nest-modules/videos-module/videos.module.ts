@@ -12,6 +12,8 @@ import { GenresModule } from '../genres-module/genres.module';
 import { CastMembersModule } from '../cast-members/cast-members.module';
 import { VIDEO_PROVIDERS } from './videos.providers';
 import { VideoController } from './videos.controller';
+import { RabbitmqModule } from '../rabbitmq-module/rabbitmq.module';
+import { VideosConsumers } from './videos.consumers';
 
 @Module({
   imports: [
@@ -23,6 +25,7 @@ import { VideoController } from './videos.controller';
       ImageMediaModel,
       AudioVideoMediaModel,
     ]),
+    RabbitmqModule.forFeature(),
     CategoriesModule,
     GenresModule,
     CastMembersModule,
@@ -32,6 +35,7 @@ import { VideoController } from './videos.controller';
     ...Object.values(VIDEO_PROVIDERS.REPOSITORIES),
     ...Object.values(VIDEO_PROVIDERS.USE_CASES),
     ...Object.values(VIDEO_PROVIDERS.HANDLERS),
+    VideosConsumers,
   ],
 })
-export class VideosModuleModule {}
+export class VideosModule {}

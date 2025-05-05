@@ -26,9 +26,8 @@
     // "ghcr.io/nils-geistmann/devcontainers-features/zsh:0": {
     //   "theme": "spaceship",
     //   "plugins": "git git-flow F-Sy-H zsh-autosuggestions zsh-completions"
-    // },
+    //
   },
-
   "customizations": {
     "vscode": {
       "extensions": [
