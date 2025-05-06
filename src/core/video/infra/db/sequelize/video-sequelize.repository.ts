@@ -8,7 +8,6 @@ import {
 import { VideoModel } from './video.model';
 import { UnitOfWorkSequelize } from '@core/shared/infra/db/sequelize/unit-of-work-sequelize';
 import { VideoModelMapper } from './video-model.mapper';
-import { identity } from 'lodash';
 import { literal, Op } from 'sequelize';
 import { InvalidArgumentError } from '@core/shared/domain/errors/invalid-argument.error';
 import { NotFoundError } from '@core/shared/domain/errors/not-found.error';

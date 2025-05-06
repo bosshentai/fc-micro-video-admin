@@ -9,8 +9,10 @@ import {
   CastMemberType,
   CastMemberTypes,
 } from '@core/cast-member/domain/value-object/cast-member-type.vo';
-import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
-import { CastMember } from '@core/cast-member/domain/cast-member.aggregate';
+import {
+  CastMember,
+  CastMemberId,
+} from '@core/cast-member/domain/cast-member.aggregate';
 
 describe('CastMemberMapper Integration Tests', () => {
   setupSequelize({ models: [CastMemberModel] });
@@ -49,7 +51,9 @@ describe('CastMemberMapper Integration Tests', () => {
     const castMember = CastMemberModelMapper.toEntity(model);
     expect(castMember.toJSON()).toStrictEqual(
       new CastMember({
-        cast_member_id: new Uuid('43452c0a-2d71-4799-b91c-c64adb205104'),
+        cast_member_id: new CastMemberId(
+          '43452c0a-2d71-4799-b91c-c64adb205104',
+        ),
         name: 'name test',
         cast_member_type: CastMemberType.createActor(),
         created_at: create_at,

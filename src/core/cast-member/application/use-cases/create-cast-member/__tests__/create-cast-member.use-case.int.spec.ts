@@ -3,7 +3,7 @@ import { CreateCastMemberUseCase } from '../create-cast-member.use-case';
 import { setupSequelize } from '@core/shared/infra/testing/helpers';
 import { CastMemberModel } from '@core/cast-member/infra/db/sequelize/cast-member.model';
 import { CastMemberTypes } from '@core/cast-member/domain/value-object/cast-member-type.vo';
-import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
+import { CastMemberId } from '@core/cast-member/domain/cast-member.aggregate';
 
 describe('CreateCastMemberUseCase Integration Tests', () => {
   let useCase: CreateCastMemberUseCase;
@@ -22,7 +22,7 @@ describe('CreateCastMemberUseCase Integration Tests', () => {
       type: CastMemberTypes.ACTOR,
     });
 
-    let entity = await repository.findById(new Uuid(output.id));
+    let entity = await repository.findById(new CastMemberId(output.id));
     expect(output).toStrictEqual({
       id: entity!.cast_member_id.id,
       name: 'test',
@@ -35,7 +35,7 @@ describe('CreateCastMemberUseCase Integration Tests', () => {
       type: CastMemberTypes.DIRECTOR,
     });
 
-    entity = await repository.findById(new Uuid(output.id));
+    entity = await repository.findById(new CastMemberId(output.id));
     expect(output).toStrictEqual({
       id: entity!.cast_member_id.id,
       name: 'test',
