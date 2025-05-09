@@ -1,12 +1,14 @@
+import { Injectable, Logger, UseFilters, ValidationPipe } from '@nestjs/common';
 import { ProcessAudioVideoMediasUseCase } from '@core/video/application/use-cases/process-audio-video-medias/process-audio-video-medias.use-case';
 import { AudioVideoMediaStatus } from '@core/shared/domain/value-objects/audio-video-media.vo';
 import { ProcessAudioVideoMediasInput } from '@core/video/application/use-cases/process-audio-video-medias/process-audio-video-medias.input';
 import { RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
-import { Injectable, Logger, ValidationPipe } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
+import { RabbitmqConsumeErrorFilter } from '../rabbitmq-module/rabbitmq-consume-error/rabbitmq-consume-error.filter';
 
 // scope - request
 
+@UseFilters(RabbitmqConsumeErrorFilter)
 @Injectable()
 export class VideosConsumers {
   private readonly logger = new Logger(VideosConsumers.name, {
@@ -18,10 +20,15 @@ export class VideosConsumers {
   }
 
   @RabbitSubscribe({
-    exchange: 'amq.direct',
+    exchange: 'direct.delayed',
     routingKey: 'videos.convert',
     queue: 'micro-videos/admin',
     allowNonJsonMessages: true,
+    queueOptions: {
+      deadLetterExchange: 'dlx.exchange',
+      deadLetterRoutingKey: 'videos.convert',
+      // messageTtl: 30000, // 30 seconds tempo de vida da messsagem na fila para ser republicada
+    },
   })
   async onProcessVideo(msg: {
     video: {
@@ -39,20 +46,16 @@ export class VideosConsumers {
       status: msg.video?.status as AudioVideoMediaStatus,
     });
 
-    try {
-      new ValidationPipe({
-        errorHttpStatusCode: 422,
-      }).transform(input, {
-        metatype: ProcessAudioVideoMediasInput,
-        type: 'body',
-      });
+    await new ValidationPipe({
+      errorHttpStatusCode: 422,
+    }).transform(input, {
+      metatype: ProcessAudioVideoMediasInput,
+      type: 'body',
+    });
 
-      const useCase = await this.moduleRef.resolve(
-        ProcessAudioVideoMediasUseCase,
-      );
-      await useCase.execute(input);
-    } catch (error) {
-      console.error(error);
-    }
+    const useCase = await this.moduleRef.resolve(
+      ProcessAudioVideoMediasUseCase,
+    );
+    await useCase.execute(input);
   }
 }

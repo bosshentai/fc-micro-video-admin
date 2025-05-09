@@ -1,8 +1,11 @@
-import { INestApplication } from '@nestjs/common/interfaces';
+import {
+  ClassSerializerInterceptor,
+  INestApplication,
+  ValidationPipe,
+} from '@nestjs/common';
 import { WrapperDataInterceptor } from './shared-module/interceptors/wrapper-data/wrapper-data.interceptor';
 import { Reflector } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common/pipes';
-import { ClassSerializerInterceptor } from '@nestjs/common/serializer';
+
 import { EntityValidationErrorFilter } from './shared-module/filters/entity-validation-error.filter';
 import { NotFoundErrorFilter } from './shared-module/filters/not-found-error.filter';
 

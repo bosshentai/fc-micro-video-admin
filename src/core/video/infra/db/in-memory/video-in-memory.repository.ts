@@ -1,14 +1,9 @@
 import { SortDirection } from '@core/shared/domain/repository/search-params';
-import {
-  InMemoryRepository,
-  InMemorySearchableRepository,
-} from '@core/shared/infra/db/in-memory/in-memory.repository';
+import { InMemorySearchableRepository } from '@core/shared/infra/db/in-memory/in-memory.repository';
 import { Video, VideoId } from '@core/video/domain/video.aggregate';
 import {
   IVideoRepository,
   VideoFilter,
-  VideoSearchParams,
-  VideoSearchResult,
 } from '@core/video/domain/video.repository';
 
 export class VideoInMemoryRepository

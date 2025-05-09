@@ -17,14 +17,14 @@ services:
       - MYSQL_DATABASE=micro_videos
       - MYSQL_ROOT_PASSWORD=root
     volumes:
-      - .docker/dbdata:/var/lib/mysql:delegated
+      - ./.docker/dbdata:/var/lib/mysql:delegated
     security_opt:
       - seccomp:unconfined
     ports:
       - 3306:3306
 
   rabbitmq:
-    image: rabbitmq:4.1-management-alpine
+    build: ./.docker/rabbitmq
     container_name: micro-videos-admin-rabbitmq
     ports:
       - 15672:15672

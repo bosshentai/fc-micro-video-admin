@@ -33,8 +33,8 @@ export class ProcessAudioVideoMediasUseCase
 
       video.trailer =
         input.status === AudioVideoMediaStatus.COMPLETED
-          ? video.trailer?.complete(input.encoded_location)
-          : video.trailer?.fail();
+          ? video.trailer.complete(input.encoded_location)
+          : video.trailer.fail();
     }
 
     if (input.field === 'video') {
@@ -43,8 +43,8 @@ export class ProcessAudioVideoMediasUseCase
       }
       video.video =
         input.status === AudioVideoMediaStatus.COMPLETED
-          ? video.video?.complete(input.encoded_location)
-          : video.video?.fail();
+          ? video.video.complete(input.encoded_location)
+          : video.video.fail();
     }
 
     this.uow.do(async () => {
