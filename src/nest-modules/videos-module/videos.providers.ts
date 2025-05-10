@@ -11,7 +11,6 @@ import { VideoModel } from '@core/video/infra/db/sequelize/video.model';
 import { getModelToken } from '@nestjs/sequelize';
 import { CATEGORY_PROVIDERS } from '../categories-module/categories.providers';
 import { GENRES_PROVIDERS } from '../genres-module/genres.providers';
-import { CAST_MEMBER_PROVIDERS } from '../cast-members/cast-members.providers';
 import { ApplicationService } from '@core/shared/application/application.service';
 import { IStorage } from '@core/shared/application/storage.interface';
 import { UpdateVideoUseCase } from '@core/video/application/use-cases/update-video/update-video.use-case';
@@ -22,6 +21,7 @@ import { ICastMemberRepository } from '@core/cast-member/domain/cast-member.repo
 import { ProcessAudioVideoMediasUseCase } from '@core/video/application/use-cases/process-audio-video-medias/process-audio-video-medias.use-case';
 import { PublishVideoMediaReplacedInQueueHandler } from '@core/video/application/handlers/publish-video-media-replaced-in-queue.handler';
 import { IMessageBroker } from '@core/shared/application/message-broker.interface';
+import { CAST_MEMBER_PROVIDERS } from '../cast-members-module/cast-members.providers';
 
 export const REPOSITORIES = {
   VIDEO_REPOSITORY: {
