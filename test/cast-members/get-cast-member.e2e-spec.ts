@@ -1,9 +1,10 @@
 import request from 'supertest';
 import { ICastMemberRepository } from '@core/cast-member/domain/cast-member.repository';
-import { CAST_MEMBER_PROVIDERS } from 'src/nest-modules/cast-members/cast-members.providers';
-import { GetCastMemberFixture } from 'src/nest-modules/cast-members/testing/cast-member-fixture';
+
 import { startApp } from 'src/nest-modules/shared-module/testing/helpers';
 import { CastMember } from '@core/cast-member/domain/cast-member.aggregate';
+import { CAST_MEMBER_PROVIDERS } from 'src/nest-modules/cast-members-module/cast-members.providers';
+import { GetCastMemberFixture } from 'src/nest-modules/cast-members-module/testing/cast-member-fixture';
 
 describe('CastMemberController (e2e)', () => {
   const appHelper = startApp();

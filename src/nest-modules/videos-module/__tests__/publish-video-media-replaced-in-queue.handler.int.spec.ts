@@ -25,8 +25,10 @@ import { UploadAudioVideoMediasUseCase } from '@core/video/application/use-cases
 import { IVideoRepository } from '@core/video/domain/video.repository';
 import { CATEGORY_PROVIDERS } from 'src/nest-modules/categories-module/categories.providers';
 import { GENRES_PROVIDERS } from 'src/nest-modules/genres-module/genres.providers';
-import { CAST_MEMBER_PROVIDERS } from 'src/nest-modules/cast-members/cast-members.providers';
+
 import { VIDEO_PROVIDERS } from '../videos.providers';
+import { CAST_MEMBER_PROVIDERS } from 'src/nest-modules/cast-members-module/cast-members.providers';
+import { AuthModule } from 'src/nest-modules/auth-module/auth.module';
 
 describe('PublishVideoMediaReplacedInQueueHandler Integration Tests', () => {
   let module: TestingModule;
@@ -40,6 +42,7 @@ describe('PublishVideoMediaReplacedInQueueHandler Integration Tests', () => {
         DatabaseModule,
         EventModule,
         UseCaseModule,
+        AuthModule,
         RabbitmqModule.forRoot(),
         VideosModule,
       ],

@@ -219,6 +219,18 @@ Content-Type: application/json
 
 ###
 
+
+### configuração do openid connect server
+GET http://host.docker.internal:8080/realms/codeflix/.well-known/openid-configuration
+
+### certificados
+GET http://host.docker.internal:8080/realms/codeflix/protocol/openid-connect/certs
+###
+
+
+@jwtToken = eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiYWRtaW4tY2F0YWxvZyJdfSwiaWF0IjoxNzQ3MTM1OTY2LCJleHAiOjE3NDcyMjIzNjZ9.Vb5GMDfzeMGOW-qtAzuUlVOV_8u1ehZbqaDug9cPdYReH319xIr8jRjwoWGUyzqp5stZpKM4MwsgqW5PNX7zHDV5ppFjjLlFQ7YEoiE5T_PVYWd5YTd3PCwmA6SilE9S8iOIni4-zm697ID-NZl1zpXn2CbnGeMPuZI1s0HV2iMtyCWWX3nRGzUNAmf0dwTfZG3CL8r-arE1mKwS7QnNrzYyFehJaSBA1nZsffeQG88hnl6h-mZyJG3ufFUsGu8_pBo6w9tC7K1D1ZdexpBwrW4BufUpJCNOL2cC0IJQ5hIFNJFayr34xgEqiK35AJmfJyfTYizHighatyCk4XXHUg
+
+###
 GET http://localhost:3000/auth
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQHVzZXIuY29tIiwibmFtZSI6InRlc3QiLCJpYXQiOjE3NDY4Nzc2MzksImV4cCI6MTc0Njg3NzY5OX0.uwW_RiSkiUuZsD3npIpxKkBBgb_oBPL2FGG71vUTqVE
+Authorization: Bearer {{jwtToken}}

@@ -10,6 +10,7 @@ import { SharedModule } from 'src/nest-modules/shared-module/shared.module';
 import { UseCaseModule } from 'src/nest-modules/use-case-module/use-case.module';
 import { VideosModule } from '../videos.module';
 import { VideoAudioMediaUploadedIntegrationEvent } from '@core/video/domain/domain-events/video-audio.media-replaced.event';
+import { AuthModule } from 'src/nest-modules/auth-module/auth.module';
 
 class RabbitmqModuleFake {
   static forRoot(): DynamicModule {
@@ -39,7 +40,7 @@ describe('VideosModule Unit Tests', () => {
         EventModule,
         UseCaseModule,
         DatabaseModule,
-        // AuthModule,
+        AuthModule,
         RabbitmqModuleFake.forRoot(),
         VideosModule,
       ],

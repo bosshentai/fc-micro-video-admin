@@ -6,13 +6,20 @@ import { getModelToken } from '@nestjs/sequelize/dist';
 import { CategoryInMemoryRepository } from '@core/category/infra/db/in-memory/category-in-memory.repository';
 import { CategoriesController } from '../categories.controller';
 import { CategoriesModule } from '../categories.module';
+import { AuthModule } from 'src/nest-modules/auth-module/auth.module';
+import { DatabaseModule } from 'src/nest-modules/database-module/database.module';
 
 describe('CategoriesController', () => {
   let controller: CategoriesController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [ConfigModule.forRoot({}), CategoriesModule],
+      imports: [
+        ConfigModule.forRoot({}),
+        DatabaseModule,
+        AuthModule,
+        CategoriesModule,
+      ],
     })
       .overrideProvider(getModelToken(CategoryModel))
       .useValue({})

@@ -1,8 +1,9 @@
 import request from 'supertest';
 import { ICastMemberRepository } from '../../src/core/cast-member/domain/cast-member.repository';
-import { CAST_MEMBER_PROVIDERS } from 'src/nest-modules/cast-members/cast-members.providers';
+
 import { startApp } from 'src/nest-modules/shared-module/testing/helpers';
 import { CastMember } from '@core/cast-member/domain/cast-member.aggregate';
+import { CAST_MEMBER_PROVIDERS } from 'src/nest-modules/cast-members-module/cast-members.providers';
 
 describe('CastMemberController (e2e)', () => {
   describe('/delete/:id (DELETE)', () => {
