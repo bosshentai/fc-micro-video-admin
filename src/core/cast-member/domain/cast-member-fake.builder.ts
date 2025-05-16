@@ -1,4 +1,3 @@
-import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
 import { Chance } from 'chance';
 import { CastMemberType } from './value-object/cast-member-type.vo';
 import { CastMember, CastMemberId } from './cast-member.aggregate';
@@ -54,7 +53,7 @@ export class CastMemberFakeBuilder<TBuild = CastMember | CastMember[]> {
     this.chance = new Chance();
   }
 
-  withUuid(valueOrFactory: PropOrFactory<Uuid>) {
+  withUuid(valueOrFactory: PropOrFactory<CastMemberId>) {
     this._cast_member_id = valueOrFactory;
     return this;
   }
@@ -95,7 +94,7 @@ export class CastMemberFakeBuilder<TBuild = CastMember | CastMember[]> {
   }
 
   get cast_member_id(): CastMemberId {
-    return this.getValue<Uuid>('cast_member_id');
+    return this.getValue<CastMemberId>('cast_member_id');
   }
 
   get name(): string {

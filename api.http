@@ -1,7 +1,8 @@
 ### Create Category
-
+# @name createCategory
 POST http://localhost:3000/categories
 Content-Type: application/json
+Authorization: Bearer {{jwtToken}}
 
 
 {
@@ -10,14 +11,227 @@ Content-Type: application/json
 }
 
 
+###
+
+@categoryId = {{createCategory.response.body.data.id}}
+
 
 ###
 
 GET http://localhost:3000/categories
+Authorization: Bearer {{jwtToken}}
 
 
-
-### valid uuid =
+### 
 
 
 GET http://localhost:3000/categories/54eb2e15-b075-4c6d-b60d-e4196abaffb1
+
+
+
+###
+
+# @name createGenre
+
+
+POST http://localhost:3000/genres
+Content-Type: application/json
+
+{
+  "name": "Genre 1",
+  "categories_id": [
+    "{{categoryId}}"
+  ]
+}
+
+
+###
+
+@genreId = {{createGenre.response.body.data.id}}
+
+
+###
+
+# @name createCastMember
+
+POST http://localhost:3000/cast-members
+Content-Type: application/json
+
+
+{
+  "name": "Cast Member 1",
+  "type": 1
+}
+
+###
+
+@castMemberId = {{createCastMember.response.body.data.id}}
+
+
+###
+# @name createVideo
+POST http://localhost:3000/videos
+Content-Type: application/json
+
+{
+    "title": "Video 1",
+    "description": "Description 1",
+    "year_launched": 2023,
+    "is_opened": false,
+    "rating": "L",
+    "duration": 90,
+    "categories_id": [
+        "{{categoryId}}"
+    ],
+    "genres_id": [
+        "{{genreId}}"
+    ],
+    "cast_members_id": [
+        "{{castMemberId}}"
+    ]
+}
+
+###
+
+
+@videoId = {{createVideo.response.body.data.id}}
+
+
+###
+
+GET http://localhost:3000/videos/{{videoId}}
+Content-Type: application/json
+
+
+
+###
+# @name updateVideo
+PATCH http://localhost:3000/videos/{{videoId}}
+Content-Type: application/json
+
+{
+    "title": "Video 1aaaa",
+    "description": "Description 1aaaa",
+    "year_launched": 2025,
+    "is_opened": false,
+    "rating": "L",
+    "duration": 90,
+    "categories_id": [
+        "{{categoryId}}"
+    ],
+    "genres_id": [
+        "{{genreId}}"
+    ],
+    "cast_members_id": [
+        "{{castMemberId}}"
+    ]
+}
+
+###
+
+# @name uploadVideo
+PATCH http://localhost:3000/videos/{{videoId}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary1234
+
+
+------WebKitFormBoundary1234
+Content-Disposition: form-data; name="banner"; filename="video.mp4"
+Content-type: video/mp4
+
+< ./package.json
+------WebKitFormBoundary1234
+Content-Disposition: form-data; name="title"
+Content-type: text/plain
+
+video Teste
+------WebKitFormBoundary1234--
+
+
+###
+
+# @name uploadVideo
+PATCH http://localhost:3000/videos/{{videoId}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary1234
+
+
+------WebKitFormBoundary1234
+Content-Disposition: form-data; name="banner"; filename="video.mp4"
+Content-type: video/mp4
+
+< ./package.json
+------WebKitFormBoundary1234
+Content-Disposition: form-data; name="video"; filename="video.mp4"
+Content-type: video/mp4
+
+
+video Teste
+------WebKitFormBoundary1234--
+
+
+
+###
+
+# @name uploadVideo
+PATCH http://localhost:3000/videos/{{videoId}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary1234
+
+
+------WebKitFormBoundary1234
+Content-Disposition: form-data; name="video"; filename="video.mp4"
+Content-type: video/mp4
+
+< ./package.json
+
+
+------WebKitFormBoundary1234--
+
+
+###
+
+
+GET http://localhost:3000/fake-event
+
+###
+
+GET http://localhost:3000/rabbitmq-fake
+
+
+
+###
+
+
+POST http://host.docker.internal:8080/realms/codeflix/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+username=admin@user.com
+&password=secret
+&grant_type=password
+&client_id=codeflix-admin-frontend
+
+###
+
+POST http://localhost:3000/auth
+Content-Type: application/json
+
+{
+  "email": "admin@user.com",
+  "password": "secret"
+}
+
+###
+
+
+### configuração do openid connect server
+GET http://host.docker.internal:8080/realms/codeflix/.well-known/openid-configuration
+
+### certificados
+GET http://host.docker.internal:8080/realms/codeflix/protocol/openid-connect/certs
+###
+
+
+@jwtToken = eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiYWRtaW4tY2F0YWxvZyJdfSwiaWF0IjoxNzQ3Mzk2MzM0LCJleHAiOjE3NDc0ODI3MzR9.OCZ-ZlA05XBHo9ej6GqPOxQtISskkvY4WOzMCpei1Hv7zuguNDKtmu-0NqqkO8clWST1k1KqOe6Za0LAu337dJoX_zpYzB3tKoZRye2K1Hc7LFAvMiDuURwaBcZXC161avmWQadjQgMOppK5awfDCJq0Mlnisbizi26qLgIPIypqVGcpYdIYE8CtICJNxrkkOmT_visRRKNcM8-AC59fJWv6Xje2ZK0DLAgS8EpdK0suPltyxO6OVGSxFPadM3-M-3LuOI9COloq3TLmy-Eq5-Woh9fh4UoQOt-o3hoiDNlbMGjZRQc-FR-8IJUZ93884DhA2nDfBEgYeZQq539i1g
+
+###
+GET http://localhost:3000/auth
+Content-Type: application/json
+Authorization: Bearer {{jwtToken}}

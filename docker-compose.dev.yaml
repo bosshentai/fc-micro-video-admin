@@ -7,17 +7,31 @@ services:
       - 3000:3000
     volumes:
       - .:/home/node/app
+      - '/etc/timezone:/etc/timezone:ro'
+      - '/etc/localtime:/etc/localtime:ro'
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    labels:
+      filebeat_collector: true
 
   db:
-    platform: linux/amd64
     image: mysql:8.0.30-debian
     container_name: micro-videos-admin-db
     environment:
       - MYSQL_DATABASE=micro_videos
       - MYSQL_ROOT_PASSWORD=root
     volumes:
-      - .docker/dbdata:/var/lib/mysql:delegated
+      - ./.docker/dbdata:/var/lib/mysql:delegated
     security_opt:
       - seccomp:unconfined
     ports:
       - 3306:3306
+
+  rabbitmq:
+    build: ./.docker/rabbitmq
+    container_name: micro-videos-admin-rabbitmq
+    ports:
+      - 15672:15672
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin

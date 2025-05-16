@@ -8,7 +8,7 @@ import { GENRES_PROVIDERS } from '../../src/nest-modules/genres-module/genres.pr
 import { GenresController } from '../../src/nest-modules/genres-module/genres.controller';
 import { ICategoryRepository } from '../../src/core/category/domain/category.repository';
 import { CATEGORY_PROVIDERS } from '../../src/nest-modules/categories-module/categories.providers';
-import { GenreOutputMapper } from '@core/genre/application/use=cases/common/genre-output';
+import { GenreOutputMapper } from '@core/genre/application/use-cases/common/genre-output';
 
 describe('GenresController (e2e)', () => {
   describe('/genres (POST)', () => {

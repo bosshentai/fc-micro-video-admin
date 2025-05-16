@@ -3,9 +3,10 @@ import { CastMember } from '@core/cast-member/domain/cast-member.aggregate';
 import { ICastMemberRepository } from '@core/cast-member/domain/cast-member.repository';
 import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
 import { instanceToPlain } from 'class-transformer';
-import { CastMembersController } from 'src/nest-modules/cast-members/cast-members.controller';
-import { CAST_MEMBER_PROVIDERS } from 'src/nest-modules/cast-members/cast-members.providers';
-import { UpdateCastMemberFixture } from 'src/nest-modules/cast-members/testing/cast-member-fixture';
+import { CastMembersController } from 'src/nest-modules/cast-members-module/cast-members.controller';
+import { CAST_MEMBER_PROVIDERS } from 'src/nest-modules/cast-members-module/cast-members.providers';
+import { UpdateCastMemberFixture } from 'src/nest-modules/cast-members-module/testing/cast-member-fixture';
+
 import { UpdateCategoryFixture } from 'src/nest-modules/categories-module/testing/category-fixture';
 import { startApp } from 'src/nest-modules/shared-module/testing/helpers';
 import request from 'supertest';

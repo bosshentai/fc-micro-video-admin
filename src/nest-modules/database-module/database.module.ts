@@ -9,8 +9,25 @@ import { Sequelize } from 'sequelize';
 import { GenreModel } from '../../core/genre/infra/db/sequelize/genre-model';
 import { GenreCategoryModel } from '../../core/genre/infra/db/sequelize/genre-category-model';
 import { CastMemberModel } from '../../core/cast-member/infra/db/sequelize/cast-member.model';
+import { VideoModel } from '../../core/video/infra/db/sequelize/video.model';
+import { VideoCategoryModel } from '../../core/video/infra/db/sequelize/video-category.model';
+import { VideoCastMemberModel } from '../../core/video/infra/db/sequelize/video-cast-member.model';
+import { VideoGenreModel } from '../../core/video/infra/db/sequelize/video-genre.model';
+import { ImageMediaModel } from '../../core/video/infra/db/sequelize/image-media.model';
+import { AudioVideoMediaModel } from '../../core/video/infra/db/sequelize/audio-video-media.model';
 
-const models = [CategoryModel, GenreModel, GenreCategoryModel, CastMemberModel];
+const models = [
+  CategoryModel,
+  GenreModel,
+  GenreCategoryModel,
+  CastMemberModel,
+  VideoModel,
+  VideoCategoryModel,
+  VideoCastMemberModel,
+  VideoGenreModel,
+  ImageMediaModel,
+  AudioVideoMediaModel,
+];
 
 @Global()
 @Module({

@@ -9,7 +9,7 @@ import { GetGenreFixture } from '../../src/nest-modules/genres-module/testing/ge
 import { ICategoryRepository } from '../../src/core/category/domain/category.repository';
 import { CATEGORY_PROVIDERS } from '../../src/nest-modules/categories-module/categories.providers';
 import { Category } from '../../src/core/category/domain/category.aggregate';
-import { GenreOutputMapper } from '../../src/core/genre/application/use=cases/common/genre-output';
+import { GenreOutputMapper } from '../../src/core/genre/application/use-cases/common/genre-output';
 
 describe('GenresController (e2e)', () => {
   const nestApp = startApp();

@@ -1,4 +1,4 @@
-import { GenreCategoryOutput } from '@core/genre/application/use=cases/common/genre-output';
+import { GenreCategoryOutput } from '@core/genre/application/use-cases/common/genre-output';
 import { Transform } from 'class-transformer';
 
 export class GenreCategoryPresenter {

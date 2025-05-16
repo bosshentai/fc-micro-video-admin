@@ -8,7 +8,7 @@ import { VideoMedia } from '../value-object/video-media.vo';
 import { VideoId } from '../video.aggregate';
 import { CastMemberId } from '@core/cast-member/domain/cast-member.aggregate';
 import { CategoryId } from '@core/category/domain/category.aggregate';
-import { IDomainEvent } from '@core/shared/domain/events/domain-event.internface';
+import { IDomainEvent } from '@core/shared/domain/events/domain-event.interface';
 
 export type VideoCreatedEventProps = {
   video_id: VideoId;

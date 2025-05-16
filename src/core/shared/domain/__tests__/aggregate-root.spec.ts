@@ -1,5 +1,5 @@
 import { AggregateRoot } from '../aggregate-root';
-import { IDomainEvent } from '../events/domain-event.internface';
+import { IDomainEvent } from '../events/domain-event.interface';
 import { ValueObject } from '../value-object';
 import { Uuid } from '../value-objects/uuid.vo';
 

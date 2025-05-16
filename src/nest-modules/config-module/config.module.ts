@@ -6,6 +6,27 @@ import {
 import Joi from 'joi';
 import { join } from 'path';
 
+const joinJson = Joi.extend((joi) => ({
+  type: 'object',
+  base: joi.object(),
+  coerce: {
+    from: 'string',
+    method(value, _helpers) {
+      if (typeof value !== 'string') return { value };
+
+      const isJsonString = value.trim().startsWith('{');
+      if (!isJsonString) return { value };
+
+      try {
+        return { value: JSON.parse(value) };
+      } catch (err) {
+        console.error(err);
+        return { value };
+      }
+    },
+  },
+}));
+
 type DB_SCHEMA_TYPE = {
   DB_VENDOR: 'mysql' | 'sqlite';
   DB_HOST: string;
@@ -41,6 +62,37 @@ export const CONFIG_BD_SCHEMA: Joi.StrictSchemaMap<DB_SCHEMA_TYPE> = {
 };
 
 export type CONFIG_SCHEMA_TYPE = DB_SCHEMA_TYPE;
+export type CONFIG_GOOGLE_SCHEMA_TYPE = {
+  GOOGLE_CLOUD_CREDENTIALS: object;
+  GOOGLE_CLOUD_STORAGE_BUCKET_NAME: string;
+};
+
+export const CONFIG_GOOGLE_SCHEMA: Joi.StrictSchemaMap<CONFIG_GOOGLE_SCHEMA_TYPE> =
+  {
+    GOOGLE_CLOUD_CREDENTIALS: joinJson.object().required(),
+    GOOGLE_CLOUD_STORAGE_BUCKET_NAME: Joi.string().required(),
+  };
+
+type CONFIG_RABBITMQ_SCHEMA_TYPE = {
+  RABBITMQ_URI: string;
+  RABBITMQ_REGISTER_HANDLERS: boolean;
+};
+
+export const CONFIG_RABBITMQ_SCHEMA: Joi.StrictSchemaMap<CONFIG_RABBITMQ_SCHEMA_TYPE> =
+  {
+    RABBITMQ_URI: Joi.string().required(),
+    RABBITMQ_REGISTER_HANDLERS: Joi.boolean().required(),
+  };
+
+type CONFIG_JWTF_SCHEMA_TYPE = {
+  JWT_PUBLIC_KEY: string;
+  JWT_PRIVATE_KEY: string;
+};
+
+export const CONFIG_JWT_SCHEMA: Joi.StrictSchemaMap<CONFIG_JWTF_SCHEMA_TYPE> = {
+  JWT_PUBLIC_KEY: Joi.string().required(),
+  JWT_PRIVATE_KEY: Joi.string().optional(),
+};
 
 @Module({})
 export class ConfigModule extends NestConfigModule {
@@ -56,6 +108,9 @@ export class ConfigModule extends NestConfigModule {
       ],
       validationSchema: Joi.object({
         ...CONFIG_BD_SCHEMA,
+        ...CONFIG_GOOGLE_SCHEMA,
+        ...CONFIG_RABBITMQ_SCHEMA,
+        ...CONFIG_JWT_SCHEMA,
       }),
       ...otherOptions,
     });

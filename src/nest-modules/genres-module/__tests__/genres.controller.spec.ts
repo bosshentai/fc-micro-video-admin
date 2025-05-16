@@ -1,7 +1,7 @@
 import {
   CreateGenreOutput,
   CreateGenreUseCase,
-} from '@core/genre/application/use=cases/create-genre/create-genre.use-case';
+} from '@core/genre/application/use-cases/create-genre/create-genre.use-case';
 import { GenresController } from '../genres.controller';
 import { CreateGenreDto } from '../dto/create-genre.dto';
 import { GenreCollectionPresenter, GenrePresenter } from '../genres.presenter';
@@ -12,17 +12,17 @@ import {
 import {
   UpdateGenreOutput,
   UpdateGenreUseCase,
-} from '@core/genre/application/use=cases/update-genre/update-genre.use-case';
+} from '@core/genre/application/use-cases/update-genre/update-genre.use-case';
 import { Genre } from '@core/genre/domain/genre.aggregate';
-import { DeleteGenreUseCase } from '@core/genre/application/use=cases/delete-genre/delete-genre.use-case';
+import { DeleteGenreUseCase } from '@core/genre/application/use-cases/delete-genre/delete-genre.use-case';
 import {
   GetGenreOutput,
   GetGenreUseCase,
-} from '@core/genre/application/use=cases/get-genre/get-genre.use-case';
+} from '@core/genre/application/use-cases/get-genre/get-genre.use-case';
 import {
   ListGenresOutput,
   ListGenresUseCase,
-} from '@core/genre/application/use=cases/list-genres/list-genres.use-case';
+} from '@core/genre/application/use-cases/list-genres/list-genres.use-case';
 import { SortDirection } from '@core/shared/domain/repository/search-params';
 
 describe('GenresController Unit Tests', () => {

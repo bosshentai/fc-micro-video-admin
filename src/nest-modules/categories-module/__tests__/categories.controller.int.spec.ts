@@ -23,6 +23,7 @@ import {
   CategoryPresenter,
 } from '../categories.presenter';
 import { Category } from '@core/category/domain/category.aggregate';
+import { AuthModule } from 'src/nest-modules/auth-module/auth.module';
 
 describe('Categories Integration Tests', () => {
   let controller: CategoriesController;
@@ -30,7 +31,12 @@ describe('Categories Integration Tests', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [ConfigModule.forRoot(), DatabaseModule, CategoriesModule],
+      imports: [
+        ConfigModule.forRoot(),
+        DatabaseModule,
+        AuthModule,
+        CategoriesModule,
+      ],
     }).compile();
 
     controller = module.get<CategoriesController>(CategoriesController);

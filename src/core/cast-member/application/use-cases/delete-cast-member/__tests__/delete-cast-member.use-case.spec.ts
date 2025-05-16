@@ -1,12 +1,12 @@
 import { CastMemberInMemoryRepository } from '@core/cast-member/infra/db/in-memory/cast-member-in-memory.repository';
 import { DeleteCastMemberUseCase } from '../delete-cast-member.use-case';
-import {
-  InvalidUuidError,
-  Uuid,
-} from '@core/shared/domain/value-objects/uuid.vo';
+import { InvalidUuidError } from '@core/shared/domain/value-objects/uuid.vo';
 import { NotFoundError } from '@core/shared/domain/errors/not-found.error';
 import { CastMemberType } from '@core/cast-member/domain/value-object/cast-member-type.vo';
-import { CastMember } from '@core/cast-member/domain/cast-member.aggregate';
+import {
+  CastMember,
+  CastMemberId,
+} from '@core/cast-member/domain/cast-member.aggregate';
 
 describe('DeleteCastMemberUseCase Unit Tests', () => {
   let useCase: DeleteCastMemberUseCase;
@@ -22,7 +22,7 @@ describe('DeleteCastMemberUseCase Unit Tests', () => {
       new InvalidUuidError(),
     );
 
-    const uuid = new Uuid();
+    const uuid = new CastMemberId();
 
     await expect(() => useCase.execute({ id: uuid.id })).rejects.toThrow(
       new NotFoundError(uuid.id, CastMember),

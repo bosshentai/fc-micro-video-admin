@@ -6,7 +6,7 @@ export class DeleteCategoryUseCase
   implements IUseCase<DeleteCategoryInput, DeleteCategoryOutput>
 {
   constructor(private categoryRepo: ICategoryRepository) {}
-  async execute(input: DeleteCategoryInput): Promise<void> {
+  async execute(input: DeleteCategoryInput): Promise<DeleteCategoryOutput> {
     const uuid = new CategoryId(input.id);
     await this.categoryRepo.delete(uuid);
   }

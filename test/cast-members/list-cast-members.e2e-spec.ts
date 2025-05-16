@@ -2,9 +2,10 @@ import { CastMemberOutputMapper } from '@core/cast-member/application/use-cases/
 import { ICastMemberRepository } from '@core/cast-member/domain/cast-member.repository';
 import { instanceToPlain } from 'class-transformer';
 import qs from 'qs';
-import { CastMembersController } from 'src/nest-modules/cast-members/cast-members.controller';
-import { CAST_MEMBER_PROVIDERS } from 'src/nest-modules/cast-members/cast-members.providers';
-import { ListCastMembersFixture } from 'src/nest-modules/cast-members/testing/cast-member-fixture';
+import { CastMembersController } from 'src/nest-modules/cast-members-module/cast-members.controller';
+import { CAST_MEMBER_PROVIDERS } from 'src/nest-modules/cast-members-module/cast-members.providers';
+import { ListCastMembersFixture } from 'src/nest-modules/cast-members-module/testing/cast-member-fixture';
+
 import { startApp } from 'src/nest-modules/shared-module/testing/helpers';
 import request from 'supertest';
 

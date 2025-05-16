@@ -1,5 +1,5 @@
-import { Either } from '@core/shared/domain/either';
-import { ValueObject } from '@core/shared/domain/value-object';
+import { Either } from '../../../../core/shared/domain/either';
+import { ValueObject } from '../../../../core/shared/domain/value-object';
 
 export enum RatingValues {
   RL = 'L',

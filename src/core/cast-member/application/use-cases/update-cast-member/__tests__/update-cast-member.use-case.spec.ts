@@ -1,10 +1,12 @@
 import { CastMemberInMemoryRepository } from '@core/cast-member/infra/db/in-memory/cast-member-in-memory.repository';
 import { UpdateCastMemberUseCase } from '../update-cast-member.use-case';
-import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
 import { UpdateCastMemberInput } from '../update-cast-member.input';
 import { NotFoundError } from '@core/shared/domain/errors/not-found.error';
 import { CastMemberTypes } from '@core/cast-member/domain/value-object/cast-member-type.vo';
-import { CastMember } from '@core/cast-member/domain/cast-member.aggregate';
+import {
+  CastMember,
+  CastMemberId,
+} from '@core/cast-member/domain/cast-member.aggregate';
 
 describe('UpdateCastMemberUseCase Unit Tests', () => {
   let useCase: UpdateCastMemberUseCase;
@@ -16,7 +18,7 @@ describe('UpdateCastMemberUseCase Unit Tests', () => {
   });
 
   it('should throws an error when entity not found', async () => {
-    const uuid = new Uuid();
+    const uuid = new CastMemberId();
 
     await expect(() =>
       useCase.execute(new UpdateCastMemberInput({ id: uuid.id, name: 'fake' })),
@@ -80,7 +82,9 @@ describe('UpdateCastMemberUseCase Unit Tests', () => {
         type: item.input.type,
       });
 
-      const entityUpdated = await repository.findById(new Uuid(item.input.id));
+      const entityUpdated = await repository.findById(
+        new CastMemberId(item.input.id),
+      );
       expect(output).toStrictEqual({
         id: entityUpdated!.cast_member_id.id,
         name: item.expected.name,
