@@ -7,18 +7,18 @@ name: CI/CD
 
 on:
   push:
-    branches: ['main']
+    branches: ['main', 'develop']
     # Publish semver tags as releases.
     tags: ['v*.*.*']
   pull_request:
-    branches: ['main']
+    branches: ['main', 'develop']
 
 env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
-  FOLDER_NAME: ${{ github.repository.name }}-app
+  FOLDER_NAME: ${{ github.event.repository.name }}-app
 
 jobs:
   ci:
