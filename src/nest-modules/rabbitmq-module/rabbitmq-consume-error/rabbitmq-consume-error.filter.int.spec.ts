@@ -94,7 +94,7 @@ describe('RabbitmqConsumeErrorFilter Integration tests', () => {
     module = await Test.createTestingModule({
       imports: [
         ConfigModule.forRoot(),
-        RabbitmqModule.forRoot({ enableconsumers: true }),
+        RabbitmqModule.forRoot({ enableConsumers: true }),
       ],
       providers: [RabbitmqConsumeErrorFilter, StubConsumer, PurgeRetryQueue],
     }).compile();
