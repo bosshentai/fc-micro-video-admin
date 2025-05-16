@@ -9,6 +9,8 @@ services:
       - .:/home/node/app
       - '/etc/timezone:/etc/localtime:ro'
       - '/etc/localtime:/etc/localtime:ro'
+    labels:
+      filebeat_collector: true
 
   db:
     platform: linux/amd64

@@ -2,6 +2,7 @@
 # @name createCategory
 POST http://localhost:3000/categories
 Content-Type: application/json
+Authorization: Bearer {{jwtToken}}
 
 
 {
@@ -18,7 +19,7 @@ Content-Type: application/json
 ###
 
 GET http://localhost:3000/categories
-
+Authorization: Bearer {{jwtToken}}
 
 
 ### 
@@ -228,7 +229,7 @@ GET http://host.docker.internal:8080/realms/codeflix/protocol/openid-connect/cer
 ###
 
 
-@jwtToken = eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiYWRtaW4tY2F0YWxvZyJdfSwiaWF0IjoxNzQ3MTM1OTY2LCJleHAiOjE3NDcyMjIzNjZ9.Vb5GMDfzeMGOW-qtAzuUlVOV_8u1ehZbqaDug9cPdYReH319xIr8jRjwoWGUyzqp5stZpKM4MwsgqW5PNX7zHDV5ppFjjLlFQ7YEoiE5T_PVYWd5YTd3PCwmA6SilE9S8iOIni4-zm697ID-NZl1zpXn2CbnGeMPuZI1s0HV2iMtyCWWX3nRGzUNAmf0dwTfZG3CL8r-arE1mKwS7QnNrzYyFehJaSBA1nZsffeQG88hnl6h-mZyJG3ufFUsGu8_pBo6w9tC7K1D1ZdexpBwrW4BufUpJCNOL2cC0IJQ5hIFNJFayr34xgEqiK35AJmfJyfTYizHighatyCk4XXHUg
+@jwtToken = eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiYWRtaW4tY2F0YWxvZyJdfSwiaWF0IjoxNzQ3Mzk2MzM0LCJleHAiOjE3NDc0ODI3MzR9.OCZ-ZlA05XBHo9ej6GqPOxQtISskkvY4WOzMCpei1Hv7zuguNDKtmu-0NqqkO8clWST1k1KqOe6Za0LAu337dJoX_zpYzB3tKoZRye2K1Hc7LFAvMiDuURwaBcZXC161avmWQadjQgMOppK5awfDCJq0Mlnisbizi26qLgIPIypqVGcpYdIYE8CtICJNxrkkOmT_visRRKNcM8-AC59fJWv6Xje2ZK0DLAgS8EpdK0suPltyxO6OVGSxFPadM3-M-3LuOI9COloq3TLmy-Eq5-Woh9fh4UoQOt-o3hoiDNlbMGjZRQc-FR-8IJUZ93884DhA2nDfBEgYeZQq539i1g
 
 ###
 GET http://localhost:3000/auth
