@@ -26,7 +26,7 @@ describe('GetVideoUseCase Integration Tests', () => {
   const sequeliezeHelper = setupSequelizeForVideo();
 
   beforeEach(() => {
-    let uow = new UnitOfWorkSequelize(sequeliezeHelper.sequelize);
+    const uow = new UnitOfWorkSequelize(sequeliezeHelper.sequelize);
 
     categoryRepo = new CategorySequelizeRepository(CategoryModel);
     genreRepo = new GenreSequelizeRepository(GenreModel, uow);
