@@ -87,6 +87,9 @@ jobs:
           docker compose -f docker-compose.ci.yaml exec -u root -T app cp ./envs/.env.test.example ./envs/.env.test
           docker compose -f docker-compose.ci.yaml exec -u root -T app cp ./envs/.env.e2e.example ./envs/.env.e2e
 
+      - name: Show package-lock.json in container
+        run: docker compose -f docker-compose.ci.yaml exec -T app cat package-lock.json
+
       - name: run unit and integration tests
         run: docker compose -f docker-compose.ci.yaml exec -T app npm run test
 
