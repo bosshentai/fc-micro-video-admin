@@ -4,7 +4,6 @@ services:
       context: .
       dockerfile: Dockerfile.prod
     restart: on-failure
-
     # container_name: micro-videos-admin
     ports:
       - 3000:3000
