@@ -4,11 +4,9 @@ services:
       context: .
       dockerfile: Dockerfile.prod
     restart: on-failure
-    # container_name: micro-videos-admin
     ports:
       - 3000:3000
     volumes:
-      - .:/home/node/app
       - '/etc/timezone:/etc/timezone:ro'
       - '/etc/localtime:/etc/localtime:ro'
       - ./envs:/home/node/app/envs
@@ -23,7 +21,6 @@ services:
 
   db:
     image: mysql:8.0.30-debian
-    # container_name: micro-videos-admin-db
     environment:
       - MYSQL_DATABASE=micro_videos
       - MYSQL_ROOT_PASSWORD=root
@@ -31,12 +28,9 @@ services:
       - /var/lib/mysql
     security_opt:
       - seccomp:unconfined
-    # ports:
-    #   - 3306:3306
 
   rabbitmq:
     build: ./.docker/rabbitmq
-    # container_name: micro-videos-admin-rabbitmq
     ports:
       - 15672:15672
     environment:
