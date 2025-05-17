@@ -21,6 +21,6 @@ export function setupSequelize(options: SequelizeOptions = {}) {
   };
 }
 
-const sequelizeInstance = setupSequelize();
+// const sequelizeInstance = setupSequelize();
 
-sequelizeInstance.sequelize;
+// sequelizeInstance.sequelize;

@@ -3,7 +3,7 @@ import { MigrationsModule } from './nest-modules/database-module/migrations.modu
 import { getConnectionToken } from '@nestjs/sequelize';
 import { migrator } from './core/shared/infra/db/sequelize/migrator';
 
-async function boostrap() {
+async function bootstrap() {
   const app = await NestFactory.createApplicationContext(MigrationsModule, {
     logger: ['error'],
   });
@@ -13,4 +13,4 @@ async function boostrap() {
   migrator(sequelize).runAsCLI();
 }
 
-boostrap();
+bootstrap();
