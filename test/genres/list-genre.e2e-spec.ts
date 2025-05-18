@@ -77,9 +77,11 @@ describe('GenresController (e2e)', () => {
         categoryRepo = nestApp.app.get<ICategoryRepository>(
           CATEGORY_PROVIDERS.REPOSITORIES.CATEGORY_REPOSITORY.provide,
         );
+
         await categoryRepo.bulkInsert(
           Array.from(relations.categories.values()),
         );
+
         await genreRepo.bulkInsert(Object.values(entitiesMap));
       });
 
@@ -87,6 +89,7 @@ describe('GenresController (e2e)', () => {
         'when send_data is $label',
         async ({ send_data, expected }) => {
           const queryParams = qs.stringify(send_data as any);
+
           const data = expected.entities.map((e) => ({
             id: e.genre_id.id,
             name: e.name,
@@ -108,6 +111,7 @@ describe('GenresController (e2e)', () => {
           const response = await request(nestApp.app.getHttpServer())
             .get(`/genres/?${queryParams}`)
             .expect(200);
+
           expect(response.body).toStrictEqual({
             data: data,
             meta: expected.meta,

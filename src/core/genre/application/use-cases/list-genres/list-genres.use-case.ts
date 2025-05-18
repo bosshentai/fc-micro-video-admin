@@ -23,6 +23,7 @@ export class ListGenresUseCase
 
   async execute(input: ListGenresInput): Promise<ListGenresOutput> {
     const params = GenreSearchParams.create(input);
+
     const searchResult = await this.genreRepo.search(params);
     return this.toOutput(searchResult);
   }

@@ -6,7 +6,7 @@ import {
 } from '@core/genre/domain/genre.repository';
 import { SortDirection } from '@core/shared/domain/repository/search-params';
 import { GenreModel } from './genre-model';
-import { GenreModelMapper } from './genre-model/mapper';
+import { GenreModelMapper } from './genre-model-mapper';
 import { literal, Op } from 'sequelize';
 
 import { InvalidArgumentError } from '@core/shared/domain/errors/invalid-argument.error';
@@ -238,16 +238,7 @@ export class GenreSequelizeRepository implements IGenreRepository {
       include: (props.filter?.categories_id ? ['categories_id'] : []).filter(
         (i) => i,
       ),
-      // include: props.filter?.categories_id
-      //   ? [
-      //       {
-      //         model: CategoryModel,
-      //         as: 'categories',
-      //         where: { category_id: props.filter.categories_id },
-      //         through: { attributes: [] },
-      //       },
-      //     ]
-      //   : [],
+
       where: wheres.length ? { [Op.and]: wheres.map((w) => w.condition) } : {},
       transaction: this.uow.getTransaction(),
     });
