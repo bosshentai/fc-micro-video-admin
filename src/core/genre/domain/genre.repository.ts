@@ -1,3 +1,4 @@
+import { ISearchableRepository } from '@core/shared/domain/repository/repository-interface';
 import { CategoryId } from '@core/category/domain/category.aggregate';
 import {
   SearchParams,
@@ -5,7 +6,6 @@ import {
 } from '@core/shared/domain/repository/search-params';
 import { SearchResult } from '@core/shared/domain/repository/search-result';
 import { Genre, GenreId } from './genre.aggregate';
-import { ISearchableRepository } from '@core/shared/domain/repository/repository-interface';
 
 export type GenreFilter = {
   name?: string;
@@ -53,7 +53,7 @@ export class GenreSearchParams extends SearchParams<GenreFilter> {
         : value;
 
     const filter = {
-      ...(_value?.name && { name: `${_value?.name}` }),
+      ...(_value?.name && { name: `${_value.name}` }),
       ...(_value?.categories_id &&
         _value?.categories_id.length && {
           categories_id: _value?.categories_id,

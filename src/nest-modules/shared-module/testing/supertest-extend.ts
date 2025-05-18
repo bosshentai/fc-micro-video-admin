@@ -1,6 +1,6 @@
 import { INestApplication } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-// import { Test } from 'supertest';
+import { Test } from 'supertest';
 import supertest from 'supertest'; // IMPORTANTE: isso importa o módulo real
 
 (supertest as any).Test.prototype.authenticate = function (

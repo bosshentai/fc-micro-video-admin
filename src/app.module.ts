@@ -16,8 +16,8 @@ import { CastMembersModule } from './nest-modules/cast-members-module/cast-membe
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    DatabaseModule,
     SharedModule,
+    DatabaseModule,
     EventModule,
     UseCaseModule,
     RabbitmqModule.forRoot(),
