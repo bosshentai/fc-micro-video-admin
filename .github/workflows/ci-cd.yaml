@@ -115,7 +115,7 @@ jobs:
     needs: ci
     runs-on: ubuntu-latest
 
-    if: ${{ github.event_name != 'pull_request' }}
+    if: ${{ github.event_name == 'pull_request' }}
 
     steps:
       - name: show version
