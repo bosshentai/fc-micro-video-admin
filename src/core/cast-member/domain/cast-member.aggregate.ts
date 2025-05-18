@@ -61,7 +61,7 @@ export class CastMember extends Entity {
     return CastMemberFakeBuilder;
   }
 
-  get entity_id(): ValueObject {
+  get entity_id() {
     return this.cast_member_id;
   }
   toJSON() {

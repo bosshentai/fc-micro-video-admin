@@ -26,7 +26,7 @@ describe('GetVideoUseCase Integration Tests', () => {
   const sequeliezeHelper = setupSequelizeForVideo();
 
   beforeEach(() => {
-    let uow = new UnitOfWorkSequelize(sequeliezeHelper.sequelize);
+    const uow = new UnitOfWorkSequelize(sequeliezeHelper.sequelize);
 
     categoryRepo = new CategorySequelizeRepository(CategoryModel);
     genreRepo = new GenreSequelizeRepository(GenreModel, uow);
@@ -56,15 +56,15 @@ describe('GetVideoUseCase Integration Tests', () => {
     genres[1].syncCategoriesId([categories[1].category_id]);
     await genreRepo.bulkInsert(genres);
 
-    const castMembers = CastMember.fake().theCastMembers(2).build();
-    await castMemberRepo.bulkInsert(castMembers);
+    const castMember = CastMember.fake().anActor().build();
+    await castMemberRepo.insert(castMember);
 
     const video = Video.fake()
       .aVideoWithoutMedias()
       .addCategoryId(new CategoryId(categories[0].category_id.id))
       .addGenreId(new GenreId(genres[0].genre_id.id))
-      .addCastMemberId(new CastMemberId(castMembers[0].cast_member_id.id))
-      .addCastMemberId(new CastMemberId(castMembers[1].cast_member_id.id))
+      .addCastMemberId(new CastMemberId(castMember.cast_member_id.id))
+
       .build();
     await videoRepo.insert(video);
 
@@ -103,22 +103,13 @@ describe('GetVideoUseCase Integration Tests', () => {
           created_at: genres[0].created_at,
         },
       ],
-      cast_members_id: [
-        castMembers[1].cast_member_id.id,
-        castMembers[0].cast_member_id.id,
-      ],
+      cast_members_id: [castMember.cast_member_id.id],
       cast_members: [
         {
-          id: castMembers[1].cast_member_id.id,
-          name: castMembers[1].name,
-          type: castMembers[1].member_type.type,
-          created_at: castMembers[1].created_at,
-        },
-        {
-          id: castMembers[0].cast_member_id.id,
-          name: castMembers[0].name,
-          type: castMembers[0].member_type.type,
-          created_at: castMembers[0].created_at,
+          id: castMember.cast_member_id.id,
+          name: castMember.name,
+          type: castMember.member_type.type,
+          created_at: castMember.created_at,
         },
       ],
       created_at: video.created_at,

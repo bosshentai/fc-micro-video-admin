@@ -98,12 +98,12 @@ export class Genre extends AggregateRoot {
   toJSON() {
     return {
       genre_id: this.genre_id.id,
-      created_at: this.created_at,
       name: this.name,
       categories_id: Array.from(this.categories_id.values()).map(
         (categories_id) => categories_id.id,
       ),
       is_active: this.is_active,
+      created_at: this.created_at,
     };
   }
 }

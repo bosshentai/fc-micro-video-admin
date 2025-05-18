@@ -4,7 +4,7 @@ import { GenreModel } from '../genre-model';
 import { CategoryModel } from '@core/category/infra/db/sequelize/category.model';
 import { GenreCategoryModel } from '../genre-category-model';
 import { CategorySequelizeRepository } from '@core/category/infra/db/sequelize/category-sequelize.repository';
-import { GenreModelMapper } from '../genre-model/mapper';
+import { GenreModelMapper } from '../genre-model-mapper';
 import { LoadEntityError } from '@core/shared/domain/validator/validation.error';
 import { Category } from '@core/category/domain/category.aggregate';
 import { Genre, GenreId } from '@core/genre/domain/genre.aggregate';

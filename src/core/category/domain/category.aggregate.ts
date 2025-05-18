@@ -1,6 +1,5 @@
 import { Uuid } from '../../shared/domain/value-objects/uuid.vo';
 import { CategoryValidatorFactory } from './category.validator';
-import { ValueObject } from '../../shared/domain/value-object';
 import { CategoryFakeBuilder } from './category-fake.builder';
 import { AggregateRoot } from '@core/shared/domain/aggregate-root';
 
@@ -64,7 +63,7 @@ export class Category extends AggregateRoot {
     this.is_active = false;
   }
 
-  get entity_id(): ValueObject {
+  get entity_id() {
     return this.category_id;
   }
 

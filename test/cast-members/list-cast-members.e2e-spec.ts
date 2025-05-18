@@ -69,7 +69,7 @@ describe('CastMemberController (e2e)', () => {
       test.each([arrange])(
         'when query params is $send_data',
         ({ send_data, expected }) => {
-          const queryParams = qs.stringify(send_data);
+          const queryParams = qs.stringify(send_data as any);
 
           return request(appHelper.app.getHttpServer())
             .get(`/cast-members/?${queryParams}`)

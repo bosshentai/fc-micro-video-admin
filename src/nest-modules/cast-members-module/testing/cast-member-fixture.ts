@@ -1,5 +1,6 @@
 import { CastMember } from '@core/cast-member/domain/cast-member.aggregate';
 import { CastMemberTypes } from '@core/cast-member/domain/value-object/cast-member-type.vo';
+import { SortDirection } from '@core/shared/domain/repository/search-params';
 
 const _keyInResponse = ['id', 'name', 'type', 'created_at'];
 
@@ -277,28 +278,50 @@ export class ListCastMembersFixture {
   }
 
   static arrangeUnsorted() {
-    const faker = CastMember.fake().anActor();
-
+    const actor = CastMember.fake().anActor();
+    const director = CastMember.fake().aDirector();
+    const created_at = new Date();
     const entitiesMap = {
-      a: faker.withName('a').build(),
-      AAA: faker.withName('AAA').build(),
-      AaA: faker.withName('AaA').build(),
-      b: faker.withName('b').build(),
-      c: faker.withName('c').build(),
+      actor_a: actor
+        .withName('a')
+        .withCreatedAt(new Date(created_at.getTime() + 1000))
+        .build(),
+      actor_AAA: actor
+        .withName('AAA')
+        .withCreatedAt(new Date(created_at.getTime() + 2000))
+        .build(),
+      actor_AaA: actor
+        .withName('AaA')
+        .withCreatedAt(new Date(created_at.getTime() + 3000))
+        .build(),
+      actor_b: actor
+        .withName('b')
+        .withCreatedAt(new Date(created_at.getTime() + 4000))
+        .build(),
+      actor_c: actor
+        .withName('c')
+        .withCreatedAt(new Date(created_at.getTime() + 5000))
+        .build(),
+      director_f: director
+        .withName('f')
+        .withCreatedAt(new Date(created_at.getTime() + 6000))
+        .build(),
+      director_e: director
+        .withName('e')
+        .withCreatedAt(new Date(created_at.getTime() + 7000))
+        .build(),
     };
 
-    const arrange = [
+    const arrange_filter_by_name_sort_name_asc = [
       {
         send_data: {
           page: 1,
           per_page: 2,
           sort: 'name',
-          filter: {
-            name: 'a',
-          },
+          filter: { name: 'a' },
         },
         expected: {
-          entities: [entitiesMap.AAA, entitiesMap.AaA],
+          entities: [entitiesMap.actor_AAA, entitiesMap.actor_AaA],
           meta: {
             total: 3,
             current_page: 1,
@@ -312,12 +335,10 @@ export class ListCastMembersFixture {
           page: 2,
           per_page: 2,
           sort: 'name',
-          filter: {
-            name: 'a',
-          },
+          filter: { name: 'a' },
         },
         expected: {
-          entities: [entitiesMap.a],
+          entities: [entitiesMap.actor_a],
           meta: {
             total: 3,
             current_page: 2,
@@ -326,28 +347,75 @@ export class ListCastMembersFixture {
           },
         },
       },
+    ];
+
+    const arrange_filter_actors_sort_by_created_desc = [
       {
         send_data: {
           page: 1,
           per_page: 2,
-          sort: 'name',
-          filter: {
-            name: 'a',
-            type: CastMemberTypes.DIRECTOR,
-          },
+          sort: 'created_at',
+          sort_dir: 'desc' as SortDirection,
+          filter: { type: CastMemberTypes.ACTOR },
         },
         expected: {
-          entities: [],
+          entities: [entitiesMap.actor_c, entitiesMap.actor_b],
           meta: {
+            total: 5,
             current_page: 1,
-            last_page: 0,
+            last_page: 3,
             per_page: 2,
-            total: 0,
+          },
+        },
+      },
+      {
+        send_data: {
+          page: 2,
+          per_page: 2,
+          sort: 'created_at',
+          sort_dir: 'desc' as SortDirection,
+          filter: { type: CastMemberTypes.ACTOR },
+        },
+        expected: {
+          entities: [entitiesMap.actor_AaA, entitiesMap.actor_AAA],
+          meta: {
+            total: 5,
+            current_page: 2,
+            last_page: 3,
+            per_page: 2,
           },
         },
       },
     ];
 
-    return { entitiesMap, arrange };
+    const arrange_filter_directors_sort_by_created_desc = [
+      {
+        send_data: {
+          page: 1,
+          per_page: 2,
+          sort: 'created_at',
+          sort_dir: 'desc' as SortDirection,
+          filter: { type: CastMemberTypes.DIRECTOR },
+        },
+        expected: {
+          entities: [entitiesMap.director_e, entitiesMap.director_f],
+          meta: {
+            total: 2,
+            current_page: 1,
+            last_page: 1,
+            per_page: 2,
+          },
+        },
+      },
+    ];
+
+    return {
+      arrange: [
+        ...arrange_filter_by_name_sort_name_asc,
+        ...arrange_filter_actors_sort_by_created_desc,
+        ...arrange_filter_directors_sort_by_created_desc,
+      ],
+      entitiesMap,
+    };
   }
 }
