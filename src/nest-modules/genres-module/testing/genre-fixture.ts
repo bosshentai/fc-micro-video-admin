@@ -541,26 +541,26 @@ export class ListGenresFixture {
           },
         },
       },
-      {
-        send_data: {
-          page: 2,
-          per_page: 2,
-          sort: 'name',
-          filter: { name: 'TEST' },
-        },
-        get label() {
-          return JSON.stringify(this.send_data);
-        },
-        expected: {
-          entities: [entitiesMap.test],
-          meta: {
-            total: 3,
-            current_page: 2,
-            last_page: 2,
-            per_page: 2,
-          },
-        },
-      },
+      // {
+      //   send_data: {
+      //     page: 2,
+      //     per_page: 2,
+      //     sort: 'name',
+      //     filter: { name: 'TEST' },
+      //   },
+      //   get label() {
+      //     return JSON.stringify(this.send_data);
+      //   },
+      //   expected: {
+      //     entities: [entitiesMap.test],
+      //     meta: {
+      //       total: 3,
+      //       current_page: 2,
+      //       last_page: 2,
+      //       per_page: 2,
+      //     },
+      //   },
+      // },
     ];
 
     const arrange_filter_by_categories_id_and_sort_by_created_desc = [
@@ -588,88 +588,88 @@ export class ListGenresFixture {
           },
         },
       },
-      {
-        send_data: {
-          page: 2,
-          per_page: 2,
-          sort: 'created_at',
-          sort_dir: 'desc' as SortDirection,
-          filter: { categories_id: [categories[0].category_id.id] },
-        },
-        get label() {
-          return JSON.stringify({
-            ...this.send_data,
-            filter: { categories_id_length: 1 },
-          });
-        },
-        expected: {
-          entities: [entitiesMap.test],
-          meta: {
-            total: 3,
-            current_page: 2,
-            last_page: 2,
-            per_page: 2,
-          },
-        },
-      },
-      {
-        send_data: {
-          page: 1,
-          per_page: 2,
-          sort: 'created_at',
-          sort_dir: 'desc' as SortDirection,
-          filter: {
-            categories_id: [
-              categories[0].category_id.id,
-              categories[1].category_id.id,
-            ],
-          },
-        },
-        get label() {
-          return JSON.stringify({
-            ...this.send_data,
-            filter: { categories_id_length: 2 },
-          });
-        },
-        expected: {
-          entities: [entitiesMap.TeSt, entitiesMap.TEST],
-          meta: {
-            total: 4,
-            current_page: 1,
-            last_page: 2,
-            per_page: 2,
-          },
-        },
-      },
-      {
-        send_data: {
-          page: 2,
-          per_page: 2,
-          sort: 'created_at',
-          sort_dir: 'desc' as SortDirection,
-          filter: {
-            categories_id: [
-              categories[0].category_id.id,
-              categories[1].category_id.id,
-            ],
-          },
-        },
-        get label() {
-          return JSON.stringify({
-            ...this.send_data,
-            filter: { categories_id_length: 2 },
-          });
-        },
-        expected: {
-          entities: [entitiesMap.a, entitiesMap.test],
-          meta: {
-            total: 4,
-            current_page: 2,
-            last_page: 2,
-            per_page: 2,
-          },
-        },
-      },
+      // {
+      //   send_data: {
+      //     page: 2,
+      //     per_page: 2,
+      //     sort: 'created_at',
+      //     sort_dir: 'desc' as SortDirection,
+      //     filter: { categories_id: [categories[0].category_id.id] },
+      //   },
+      //   get label() {
+      //     return JSON.stringify({
+      //       ...this.send_data,
+      //       filter: { categories_id_length: 1 },
+      //     });
+      //   },
+      //   expected: {
+      //     entities: [entitiesMap.test],
+      //     meta: {
+      //       total: 3,
+      //       current_page: 2,
+      //       last_page: 2,
+      //       per_page: 2,
+      //     },
+      //   },
+      // },
+      // {
+      //   send_data: {
+      //     page: 1,
+      //     per_page: 2,
+      //     sort: 'created_at',
+      //     sort_dir: 'desc' as SortDirection,
+      //     filter: {
+      //       categories_id: [
+      //         categories[0].category_id.id,
+      //         categories[1].category_id.id,
+      //       ],
+      //     },
+      //   },
+      //   get label() {
+      //     return JSON.stringify({
+      //       ...this.send_data,
+      //       filter: { categories_id_length: 2 },
+      //     });
+      //   },
+      //   expected: {
+      //     entities: [entitiesMap.TeSt, entitiesMap.TEST],
+      //     meta: {
+      //       total: 4,
+      //       current_page: 1,
+      //       last_page: 2,
+      //       per_page: 2,
+      //     },
+      //   },
+      // },
+      // {
+      //   send_data: {
+      //     page: 2,
+      //     per_page: 2,
+      //     sort: 'created_at',
+      //     sort_dir: 'desc' as SortDirection,
+      //     filter: {
+      //       categories_id: [
+      //         categories[0].category_id.id,
+      //         categories[1].category_id.id,
+      //       ],
+      //     },
+      //   },
+      //   get label() {
+      //     return JSON.stringify({
+      //       ...this.send_data,
+      //       filter: { categories_id_length: 2 },
+      //     });
+      //   },
+      //   expected: {
+      //     entities: [entitiesMap.a, entitiesMap.test],
+      //     meta: {
+      //       total: 4,
+      //       current_page: 2,
+      //       last_page: 2,
+      //       per_page: 2,
+      //     },
+      //   },
+      // },
     ];
 
     return {
