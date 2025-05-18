@@ -1,9 +1,9 @@
 import { CategoryId } from '@core/category/domain/category.aggregate';
-import { GenreModel } from '../genre-model';
+import { GenreModel } from './genre-model';
 import { Notification } from '@core/shared/domain/validator/notification';
 import { Genre, GenreId } from '@core/genre/domain/genre.aggregate';
 import { LoadEntityError } from '@core/shared/domain/validator/validation.error';
-import { GenreCategoryModel } from '../genre-category-model';
+import { GenreCategoryModel } from './genre-category-model';
 
 export class GenreModelMapper {
   static toEntity(model: GenreModel) {

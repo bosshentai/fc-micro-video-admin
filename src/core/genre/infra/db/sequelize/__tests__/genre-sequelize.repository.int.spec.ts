@@ -7,7 +7,7 @@ import { CategorySequelizeRepository } from '@core/category/infra/db/sequelize/c
 import { Category } from '@core/category/domain/category.aggregate';
 import { Genre, GenreId } from '@core/genre/domain/genre.aggregate';
 import { NotFoundError } from '@core/shared/domain/errors/not-found.error';
-import { GenreModelMapper } from '../genre-model/mapper';
+import { GenreModelMapper } from '../genre-model-mapper';
 import {
   GenreSearchParams,
   GenreSearchResult,
