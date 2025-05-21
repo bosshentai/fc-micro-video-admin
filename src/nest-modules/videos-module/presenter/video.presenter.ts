@@ -4,7 +4,8 @@ import { CollectionPresenter } from 'src/nest-modules/shared-module/collection.p
 import { VideoCategoryPresenter } from './video-category.presenter';
 import { VideoGenrePresenter } from './video-genre.presenter';
 import { VideoCastMemberPresenter } from './video-cast.member.presenter';
-import { Transform } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
+import { ListVideoOutput } from '@core/video/application/use-cases/list-video/list-video.use-case';
 
 export class VideoPresenter {
   id: string;
@@ -16,10 +17,16 @@ export class VideoPresenter {
   is_opened: boolean;
   is_published: boolean;
   categories_id: string[];
+
+  @Type(() => VideoCategoryPresenter)
   categories: VideoCategoryPresenter[];
   genres_id: string[];
+
+  @Type(() => VideoGenrePresenter)
   genres: VideoGenrePresenter[];
   cast_members_id: string[];
+
+  @Type(() => VideoCastMemberPresenter)
   cast_members: VideoCastMemberPresenter[];
 
   @Transform(({ value }: { value: Date }) => value.toISOString())
@@ -52,5 +59,13 @@ export class VideoPresenter {
 
 // TODO: finish the collection Presenter
 export class VideoCollectionPresenter extends CollectionPresenter<VideoPresenter> {
+  @Type(() => VideoPresenter)
   data: VideoPresenter[];
+
+  constructor(output: ListVideoOutput) {
+    const { items, ...paginationProps } = output;
+
+    super(paginationProps);
+    this.data = items.map((item) => new VideoPresenter(item));
+  }
 }
