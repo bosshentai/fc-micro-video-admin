@@ -12,13 +12,21 @@ import { literal, Op } from 'sequelize';
 import { InvalidArgumentError } from '@core/shared/domain/errors/invalid-argument.error';
 import { NotFoundError } from '@core/shared/domain/errors/not-found.error';
 
+type WhereConditions = {
+  field: string;
+  value: string | string[];
+  get condition(): {
+    [key: string]: { [Op.like]: string } | { [Op.in]: string };
+  };
+  rawCondition: string;
+};
 export class VideoSequelizeRepository implements IVideoRepository {
-  sortableFields: string[] = ['name', 'created_at'];
+  sortableFields: string[] = ['title', 'created_at'];
 
   orderBy = {
     mysql: {
-      name: (sort_dir: SortDirection) =>
-        `binary ${this.videoModel.name}.name ${sort_dir}`,
+      title: (sort_dir: SortDirection) =>
+        `binary ${this.videoModel.name}.title ${sort_dir}`,
     },
   };
 
@@ -44,6 +52,7 @@ export class VideoSequelizeRepository implements IVideoRepository {
   }
   async bulkInsert(entities: Video[]): Promise<void> {
     const model = entities.map((e) => VideoModelMapper.toModelProps(e));
+
     await this.videoModel.bulkCreate(model, {
       include: this.relations_include,
       transaction: this.uow.getTransaction(),
@@ -255,7 +264,9 @@ export class VideoSequelizeRepository implements IVideoRepository {
   async search(props: VideoSearchParams): Promise<VideoSearchResult> {
     const offset = (props.page - 1) * props.per_page;
     const limit = props.per_page;
+
     const videoTableName = this.videoModel.getTableName();
+
     const videoCategoryRelation =
       this.videoModel.associations.categories_id.target;
     const videoCategoryTableName = videoCategoryRelation.getTableName();
@@ -266,7 +277,7 @@ export class VideoSequelizeRepository implements IVideoRepository {
     const videoCastMemberTableName = videoCastMemberRelation.getTableName();
     const videoAlias = this.videoModel.name;
 
-    const wheres: any[] = [];
+    const wheres: WhereConditions[] = [];
 
     if (
       props.filter &&
@@ -338,7 +349,7 @@ export class VideoSequelizeRepository implements IVideoRepository {
 
     const orderBy =
       props.sort && this.sortableFields.includes(props.sort)
-        ? this.formatSort(props.sort, props.sort_dir)
+        ? this.formatSort(props.sort, props.sort_dir!)
         : `${videoAlias}.\`created_at\` DESC`;
 
     const count = await this.videoModel.count({
@@ -358,13 +369,13 @@ export class VideoSequelizeRepository implements IVideoRepository {
       'SELECT',
       `DISTINCT ${videoAlias}.\`video_id\`,${columnOrder} FROM ${videoTableName} as ${videoAlias}`,
       props.filter?.categories_id
-        ? `INNER JOIN ${videoCategoryTableName} ON ${videoAlias}.\`video_id\` = ${videoCategoryTableName}.\`category_id\``
+        ? `INNER JOIN ${videoCategoryTableName} ON ${videoAlias}.\`video_id\` = ${videoCategoryTableName}.\`video_id\``
         : '',
       props.filter?.genres_id
-        ? `INNER JOIN ${videoGenreTableName} ON ${videoAlias}.\`video_id\` = ${videoGenreTableName}.\`genre_id\``
+        ? `INNER JOIN ${videoGenreTableName} ON ${videoAlias}.\`video_id\` = ${videoGenreTableName}.\`video_id\``
         : '',
       props.filter?.cast_members_id
-        ? `INNER JOIN ${videoGenreTableName} ON ${videoAlias}.\`video_id\` = ${videoGenreTableName}.\`cast_member_id\``
+        ? `INNER JOIN ${videoCastMemberTableName} ON ${videoAlias}.\`video_id\` = ${videoCastMemberTableName}.\`video_id\``
         : '',
       wheres.length
         ? `WHERE ${wheres.map((w) => w.rawCondition).join(' AND ')}`

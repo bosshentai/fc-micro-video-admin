@@ -29,6 +29,7 @@ export class ListVideoUseCase
   ) {}
   async execute(input: ListVideoInput): Promise<ListVideoOutput> {
     const params = VideoSearchParams.create(input);
+
     const searchResult = await this.videoRepo.search(params);
 
     return this.toOutput(searchResult);
