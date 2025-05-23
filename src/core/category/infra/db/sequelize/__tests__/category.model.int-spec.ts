@@ -79,16 +79,4 @@ describe('CategoryModel Integration Tests', () => {
     const category = await CategoryModel.create(arrange);
     expect(category.toJSON()).toStrictEqual(arrange);
   });
-
-  // test("should create a category", async () => {
-  //   const category = Category.fake().aCategory().build();
-
-  //   await CategoryModel.create({
-  //     category_id: category.category_id.id,
-  //     name: category.name,
-  //     description: category.description,
-  //     is_active: category.is_active,
-  //     created_at: category.created_at,
-  //   });
-  // });
 });
