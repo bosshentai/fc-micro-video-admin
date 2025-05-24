@@ -385,13 +385,13 @@ describe('Video Unit Tests', () => {
     });
   });
 
-  // test('should add category id', () => {
-  //   const categoryId = new CategoryId();
-  //   const video = Video.fake().aVideoWithouMedias().build();
-  //   video.addCategoryId(categoryId);
-  //   expect(video.categories_id.size).toBe(2);
-  //   expect(video.categories_id.get(categoryId.id)).toBe(categoryId);
-  // });
+  test('should add category id', () => {
+    const categoryId = new CategoryId();
+    const video = Video.fake().aVideoWithoutMedias().build();
+    video.addCategoryId(categoryId);
+    expect(video.categories_id.size).toBe(2);
+    expect(video.categories_id.get(categoryId.id)).toBe(categoryId);
+  });
 
   test('tryMarkAsPublished method', () => {
     let video = Video.fake().aVideoWithoutMedias().build();

@@ -54,11 +54,6 @@ export class CategorySequelizeRepository implements ICategoryRepository {
   }
   async delete(category_id: CategoryId): Promise<void> {
     const id = category_id.id;
-    // const model = await this._get(id);
-
-    // if (!model) {
-    //   throw new NotFoundError(id, this.getEntity());
-    // }
 
     const deleteCount = await this.categoryModel.destroy({
       where: { category_id: id },
